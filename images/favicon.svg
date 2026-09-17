@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7B4BA8"/>
+      <stop offset="0.55" stop-color="#502579"/>
+      <stop offset="1" stop-color="#3A1A5A"/>
+    </linearGradient>
+    <linearGradient id="spark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F0D9FF"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#C39BE8" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#C39BE8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bg)"/>
+  <circle cx="32" cy="28" r="22" fill="url(#glow)"/>
+  <!-- four-point AI spark -->
+  <path d="M32 8 C34 22 42 30 56 32 C42 34 34 42 32 56 C30 42 22 34 8 32 C22 30 30 22 32 8 Z" fill="url(#spark)"/>
+  <!-- small accent spark -->
+  <path d="M50 12 C50.8 16 53 18.2 57 19 C53 19.8 50.8 22 50 26 C49.2 22 47 19.8 43 19 C47 18.2 49.2 16 50 12 Z" fill="#F6C9FF"/>
+</svg>
