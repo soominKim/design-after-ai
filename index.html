@@ -1,0 +1,2306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design After AI : How AI Is Changing the Design Process — AI 시대의 서비스 디자인</title>
+<meta name="description" content="AI 시대의 서비스 디자인 — Design After AI: How AI Is Changing the Design Process. 강의 슬라이드 138장 (Soomin Kim). 방향키 · 스페이스 · 스와이프로 넘기세요.">
+<meta name="author" content="Soomin Kim">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Design After AI : How AI Is Changing the Design Process">
+<meta property="og:description" content="AI 시대의 서비스 디자인 — 강의 슬라이드 138장. Soomin Kim">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#502579; --brand-deep:#3A1A5A; --brand-lite:#7B4BA8; --brand-glow:#C39BE8;
+  --ink:#17121C; --paper:#fff; --soft:#F6F2FA; --soft2:#EDE6F4;
+  --dim:#6B6377; --line:#E6DEEF;
+  --font:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --stage-bg:#0E0A12; --slide-bg:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--stage-bg,#000)}
+.deck-viewport{position:fixed;inset:0;overflow:hidden;background:var(--stage-bg,#000)}
+.deck-stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;background:var(--slide-bg,#fff)}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;display:block;visibility:hidden;opacity:0;pointer-events:none;background:var(--slide-bg,#fff)}
+.slide.active,.slide.visible{visibility:visible;opacity:1;pointer-events:auto;z-index:1}
+img,video,canvas,svg{max-width:100%;max-height:100%}
+@media print{
+  html,body{width:1920px;height:auto;overflow:visible;background:#fff}
+  .deck-viewport{position:static;overflow:visible;background:#fff}
+  .deck-stage{position:static;width:auto;height:auto;transform:none!important;background:none}
+  .slide{position:relative;display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;width:1920px;height:1080px;break-after:page;page-break-after:always}
+  .slide:last-child{break-after:auto;page-break-after:auto}
+  .reveal{opacity:1!important;transform:none!important}
+}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}}
+.slide{font-family:var(--font);color:var(--ink);word-break:keep-all;font-feature-settings:'ss01','tnum'}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.slide.visible .reveal{opacity:1;transform:none}
+.reveal:nth-child(1){transition-delay:.05s}.reveal:nth-child(2){transition-delay:.13s}
+.reveal:nth-child(3){transition-delay:.21s}.reveal:nth-child(4){transition-delay:.29s}
+.reveal:nth-child(5){transition-delay:.37s}.reveal:nth-child(6){transition-delay:.45s}
+.orb{position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 32% 28%,var(--brand-lite),var(--brand) 52%,var(--brand-deep) 100%)}
+.ring{position:absolute;border-radius:50%;pointer-events:none;border:2px solid var(--brand);opacity:.16}
+.toc{position:absolute;top:62px;left:110px;right:110px;font-size:27px;font-weight:600;color:#A79CB3;letter-spacing:.005em;z-index:5}
+.kicker{font-size:22px;letter-spacing:.3em;font-weight:700;color:var(--brand);margin-bottom:28px}
+.content{position:absolute;left:110px;right:110px;top:126px;bottom:88px}
+.slide:not(.s-title):not(.s-hook):not(.s-close) .content{display:flex;flex-direction:column;justify-content:flex-start}
+h2.big{font-size:58px;line-height:1.24;font-weight:800;letter-spacing:-.025em;color:var(--brand);margin-bottom:20px}
+h2.big em{font-style:normal;color:var(--brand)}
+.lede{margin-top:-6px;margin-bottom:10px;font-size:26px;color:var(--dim);line-height:1.5}
+.lede b{color:var(--ink);font-weight:700}
+.mono{font-family:var(--mono)}
+.keep{margin-top:40px;font-size:27px;color:var(--dim);line-height:1.6}
+.keep b{color:var(--ink);font-weight:700}
+.bigline{margin-top:60px;font-size:33px;color:var(--dim);text-align:center;line-height:1.55}
+.bigline b{color:var(--ink);font-weight:700}
+.src{position:absolute;left:110px;bottom:44px;font-family:var(--mono);font-size:17px;color:#bdb3c6;letter-spacing:.02em}
+.pageno{position:fixed;right:26px;bottom:18px;font-family:var(--mono);font-size:14px;color:#8d8397;z-index:1001}
+.edit-hotzone{position:fixed;top:0;left:0;width:80px;height:80px;z-index:10000;cursor:pointer}
+.edit-toggle{position:fixed;top:18px;left:18px;z-index:10001;opacity:0;pointer-events:none;transition:opacity .3s ease;background:#fff;border:1px solid var(--line);border-radius:10px;width:44px;height:44px;font-size:20px;cursor:pointer}
+.edit-toggle.show,.edit-toggle.active{opacity:1;pointer-events:auto}
+.edit-toggle.active{background:var(--brand);color:#fff}
+[contenteditable="true"]{outline:2px dashed var(--brand);outline-offset:4px}
+
+/* 타이틀 */
+.s-title{background:var(--paper)}
+.s-title .orb{width:1340px;height:1340px;right:-650px;top:-400px}
+.s-title .ring{width:1700px;height:1700px;right:-830px;top:-580px;border-color:var(--brand-lite);opacity:.2}
+.s-title .topbar{position:absolute;top:70px;left:120px;display:flex;align-items:center;gap:22px;z-index:3}
+.s-title .topbar .mark{width:44px;height:44px;border-radius:50%;background:var(--brand);position:relative}
+.s-title .topbar .mark::after{content:'';position:absolute;inset:14px;border-radius:50%;background:#fff}
+.s-title .topbar span{font-size:24px;font-weight:600;color:var(--ink)}
+.s-title .tcontent{position:absolute;left:110px;bottom:150px;max-width:1180px;z-index:3}
+.s-title h1{font-size:100px;line-height:1.14;font-weight:800;letter-spacing:-.035em}
+.s-title h1 em{font-style:normal;color:var(--brand)}
+.s-title .sub{margin-top:40px;font-size:30px;color:#5c5468;line-height:1.55}
+.s-title .meta{position:absolute;top:84px;right:110px;font-family:var(--mono);font-size:22px;color:rgba(255,255,255,.9);text-align:right;line-height:1.7;z-index:3}
+
+/* 훅 */
+.s-hook{background:var(--ink);color:#fff}
+.s-hook .orb{width:620px;height:620px;left:-230px;bottom:-230px;opacity:.95}
+.s-hook .ring{width:900px;height:900px;left:-360px;bottom:-360px;border-color:var(--brand-glow);opacity:.22}
+.s-hook .q{position:absolute;left:150px;top:230px;max-width:1560px;z-index:3}
+.s-hook .q h2{font-size:88px;line-height:1.26;font-weight:800;letter-spacing:-.035em;color:#fff}
+.s-hook .q h2 em{font-style:normal;color:var(--brand-glow)}
+.s-hook .a{position:absolute;left:150px;bottom:170px;font-size:32px;color:#a59bae;line-height:1.6;z-index:3;max-width:1560px}
+.s-hook .a b{color:#fff;font-weight:700}
+
+/* 섹션 전환 */
+.s-divider{background:var(--brand-deep);color:#fff}
+.s-divider .orb{width:980px;height:980px;right:-330px;top:-300px;opacity:.6}
+.s-divider .ring{width:1300px;height:1300px;right:-490px;top:-460px;border-color:var(--brand-glow);opacity:.24}
+.s-divider .dwrap{position:absolute;left:110px;top:300px;max-width:1380px;z-index:3}
+.s-divider .dlabel{font-family:var(--mono);font-size:30px;font-weight:700;color:var(--brand-glow);letter-spacing:.2em;margin-bottom:34px}
+.s-divider h2{font-size:80px;font-weight:800;letter-spacing:-.035em;line-height:1.18;color:#fff}
+.s-divider .dsub{margin-top:32px;font-size:29px;color:rgba(255,255,255,.66);line-height:1.6}
+
+/* 클로징 */
+.s-close{background:var(--brand);color:#fff}
+.s-close .orb{width:1300px;height:1300px;right:-500px;bottom:-520px;background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.22),rgba(255,255,255,.05) 60%,transparent 100%)}
+.s-close .ring{width:1660px;height:1660px;right:-660px;bottom:-680px;border-color:#fff;opacity:.14}
+.s-close .kicker{color:rgba(255,255,255,.78)}
+.s-close h2{font-size:66px;line-height:1.3;font-weight:800;color:#fff;letter-spacing:-.03em}
+.habits{margin-top:66px;display:flex;gap:28px}
+.habit{flex:1;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.26);border-radius:20px;padding:42px 38px}
+.habit .hn{font-family:var(--mono);font-size:23px;margin-bottom:18px;color:rgba(255,255,255,.75)}
+.habit p{font-size:30px;font-weight:800;line-height:1.4;letter-spacing:-.02em}
+.habit small{display:block;margin-top:14px;font-size:22px;font-weight:400;color:rgba(255,255,255,.75);line-height:1.5}
+
+/* 통계 타일 */
+.stats{display:flex;gap:22px;margin-top:56px}
+.stat{flex:1;background:var(--soft);border-radius:20px;padding:38px 34px}
+.stat .v{font-family:var(--mono);font-size:58px;font-weight:700;color:var(--brand);letter-spacing:-.03em;line-height:1}
+.stat .k{margin-top:18px;font-size:24px;font-weight:600;color:var(--ink)}
+.stat .d{margin-top:8px;font-size:20px;color:var(--dim);line-height:1.45}
+
+/* 불릿 */
+.blist{margin-top:44px;display:flex;flex-direction:column;gap:28px}
+.bli{position:relative;padding-left:40px;line-height:1.5;letter-spacing:-.012em}
+.bli::before{content:'';position:absolute;left:0;top:.55em;width:14px;height:14px;border-radius:50%;background:var(--brand)}
+.bli b{font-weight:700}
+.bli small{display:block;margin-top:8px;font-size:.78em;color:var(--dim);line-height:1.55}
+
+/* 정의 목록 */
+.plist{display:flex;flex-direction:column;gap:16px;margin-top:44px}
+.pitem{display:flex;align-items:flex-start;gap:30px;background:var(--soft);border-radius:16px;padding:24px 34px}
+.pitem.hot{background:var(--brand);color:#fff}
+.pitem .pn{font-family:var(--mono);font-size:21px;font-weight:700;color:var(--brand);min-width:46px;padding-top:5px}
+.pitem.hot .pn{color:rgba(255,255,255,.8)}
+.pitem .pk{font-size:27px;font-weight:700;width:290px;flex:none;letter-spacing:-.01em;line-height:1.35}
+.pitem .pv{font-size:23px;line-height:1.5;color:var(--dim);padding-top:3px}
+.pitem.hot .pv{color:rgba(255,255,255,.88)}
+.pitem .pv b{color:var(--ink);font-weight:700}
+.pitem.hot .pv b{color:#fff}
+
+/* 막대 */
+.bars{display:flex;flex-direction:column;gap:26px;margin-top:60px}
+.brow{display:flex;align-items:center;gap:34px}
+.brow .bl{width:410px;font-size:29px;font-weight:600;text-align:right}
+.brow .bl small{display:block;font-size:20px;color:#9d94a8;font-weight:400;margin-top:4px}
+.btrack{flex:1;height:70px;position:relative}
+.bfill{height:100%;border-radius:14px;background:#4B4156;display:flex;align-items:center;justify-content:flex-end;padding-right:26px;color:#fff;font-family:var(--mono);font-size:27px;font-weight:700;min-width:150px;transform-origin:left;transform:scaleX(0);transition:transform .9s var(--ease) .3s}
+.slide.visible .bfill{transform:none}
+.brow.hit .bfill{background:var(--brand)}
+.brow.pale .bfill{background:#B9AEC4}
+
+/* 변화 행 */
+.shifts{display:flex;flex-direction:column;gap:18px;margin-top:48px}
+.sh{display:flex;align-items:center;gap:26px;background:var(--soft);border-radius:16px;padding:26px 40px}
+.sh.up{background:var(--brand);color:#fff}
+.sh .shk{font-size:28px;font-weight:700;width:520px;flex:none;letter-spacing:-.01em;line-height:1.35}
+.sh .shv{font-family:var(--mono);font-size:32px;font-weight:700;color:var(--brand);letter-spacing:-.01em}
+.sh.up .shv{color:#fff}
+.sh .shd{margin-left:auto;font-size:22px;color:var(--dim);text-align:right;max-width:560px;line-height:1.45}
+.sh.up .shd{color:rgba(255,255,255,.78)}
+
+/* 비교 2열 */
+.cmp{display:flex;gap:30px;margin-top:38px}
+.ccol{flex:1;border-radius:22px;padding:32px 42px 26px}
+.ccol.bad{background:var(--soft);border:3px solid var(--line)}
+.ccol.good{background:var(--brand);color:#fff}
+.ccol .ct{font-size:20px;font-family:var(--mono);letter-spacing:.08em;margin-bottom:10px;opacity:.78}
+.ccol.bad .ct{color:var(--brand)}
+.ccol h3{font-size:36px;font-weight:800;margin-bottom:18px;letter-spacing:-.02em;line-height:1.3}
+.ccol .row{display:flex;gap:22px;padding:13px 0;border-top:1px solid rgba(0,0,0,.09);font-size:23px;line-height:1.5}
+.ccol.good .row{border-top-color:rgba(255,255,255,.25)}
+.ccol .row .k{width:96px;flex:none;font-size:19px;color:#9d94a8;padding-top:4px}
+.ccol.good .row .k{color:rgba(255,255,255,.66)}
+.ccol .row b{font-weight:700}
+
+/* 대화 스텝 */
+.lab-steps{margin-top:52px;display:flex;flex-direction:column;gap:24px}
+.lstep{display:flex;align-items:flex-start;gap:32px}
+.lstep .num{font-family:var(--mono);background:var(--ink);color:#fff;border-radius:14px;min-width:64px;height:64px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;flex:none}
+.lstep.hot .num{background:var(--brand)}
+.lstep .tx{font-size:30px;line-height:1.5;padding-top:8px}
+.lstep .tx small{display:block;font-size:22px;color:var(--dim);margin-top:8px}
+
+/* 좋음·나쁨 행 */
+.brk{display:flex;align-items:center;gap:32px;background:var(--soft);border-radius:16px;padding:26px 42px}
+.brk.ok{border:3px solid var(--brand);background:#fff}
+.brk .x{font-family:var(--mono);color:#b0a5bb;font-size:32px;font-weight:700;width:42px;flex:none}
+.brk.ok .x{color:var(--brand)}
+.brk .w{font-size:28px;font-weight:700;width:640px;flex:none;line-height:1.4}
+.brk .why{font-size:23px;color:var(--dim);line-height:1.45}
+.brk .why b{color:var(--ink)}
+
+/* 카드 */
+.cards{display:flex;gap:24px;margin-top:56px}
+.card{flex:1;background:var(--soft);border-radius:20px;padding:34px 30px;position:relative}
+.card .no{font-family:var(--mono);font-size:21px;color:var(--brand);font-weight:700;margin-bottom:18px}
+.card h3{font-size:28px;font-weight:800;line-height:1.35;letter-spacing:-.02em}
+.card p{font-size:22px;line-height:1.55;color:var(--dim);margin-top:14px}
+.card p b{color:var(--ink)}
+.card.hot{background:var(--brand);color:#fff}
+.card.hot .no{color:rgba(255,255,255,.8)}
+.card.hot p{color:rgba(255,255,255,.85)}
+.card.hot p b{color:#fff}
+
+/* 인용 */
+.quote{margin-top:56px;border-left:6px solid var(--brand);padding:8px 0 8px 44px}
+.quote p{font-size:40px;font-weight:700;line-height:1.45;letter-spacing:-.02em}
+.quote p em{font-style:normal;color:var(--brand)}
+.quote cite{display:block;margin-top:22px;font-style:normal;font-family:var(--mono);font-size:21px;color:var(--dim)}
+
+/* 결론 3열 */
+.concl{display:flex;gap:24px;margin-top:52px}
+.cbox{flex:1;border-radius:20px;padding:36px 34px;background:var(--soft)}
+.cbox.hot{background:var(--brand);color:#fff}
+.cbox .cn{font-family:var(--mono);font-size:21px;color:var(--brand);font-weight:700;margin-bottom:18px}
+.cbox.hot .cn{color:rgba(255,255,255,.8)}
+.cbox h3{font-size:29px;font-weight:800;line-height:1.4;letter-spacing:-.02em;margin-bottom:14px}
+.cbox p{font-size:22px;line-height:1.55;color:var(--dim)}
+.cbox.hot p{color:rgba(255,255,255,.85)}
+
+/* 프로세스 단계 */
+.steps{display:flex;align-items:stretch;margin-top:56px}
+.step{flex:1;text-align:center}
+.step .sbox{background:var(--soft);border:3px solid var(--line);border-radius:20px;padding:30px 16px;font-size:29px;font-weight:800;letter-spacing:-.02em;line-height:1.3}
+.step .sbox small{display:block;font-family:var(--mono);font-size:18px;font-weight:400;color:#9d94a8;margin-bottom:10px;letter-spacing:.1em}
+.step.now .sbox{background:var(--brand);border-color:var(--brand);color:#fff}
+.step.now .sbox small{color:rgba(255,255,255,.8)}
+.step .ssub{margin-top:18px;font-size:22px;color:var(--dim);line-height:1.5;padding:0 10px}
+.step.now .ssub{color:var(--brand);font-weight:700}
+.sarrow{display:flex;align-items:center;justify-content:center;width:52px;font-size:40px;color:#cfc5d8;font-weight:700;padding-bottom:66px}
+
+/* 표 */
+.tbl{width:100%;border-collapse:collapse;margin-top:44px;font-size:24px}
+.tbl th,.tbl td{text-align:left;padding:18px 22px;border-bottom:1px solid var(--line);line-height:1.45;vertical-align:top}
+.tbl th{font-size:20px;font-weight:700;color:var(--brand);background:var(--soft);border-bottom:2px solid var(--brand);letter-spacing:.04em}
+.tbl tr.hot td{background:var(--soft2)}
+.tbl .num{font-family:var(--mono);font-weight:700;color:var(--brand)}
+.tbl td b{font-weight:700}
+
+/* 실습 안내 */
+.lab-url{position:absolute;left:110px;bottom:86px;font-family:var(--mono);font-size:26px;color:var(--brand);background:var(--soft);padding:18px 34px;border-radius:14px;border:1px solid var(--line)}
+.lab-note{position:absolute;right:110px;bottom:92px;font-size:23px;color:#9d94a8;max-width:820px;text-align:right;line-height:1.5}
+
+/* ===== 이미지 레이아웃 (추가) ===== */
+.shot{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--soft);position:relative}
+.shot img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;background:#fff}
+.shot.cover img{object-fit:cover;object-position:top}
+.shot.contain img{object-fit:contain;background:#fff}
+.cap{margin-top:12px;font-size:20px;color:var(--dim);line-height:1.45}
+.cap b{color:var(--ink)}
+.split{display:flex;align-items:flex-start}
+.split .txt{min-width:0}
+.split .pic{flex:1;min-width:0}
+.gal{display:flex;gap:24px}
+.gal .g{flex:1;min-width:0}
+.bio{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bio .b{background:var(--soft);border-radius:14px;padding:14px 20px}
+.bio .b .k{font-family:var(--mono);font-size:16px;color:var(--brand);font-weight:700;letter-spacing:.04em}
+.bio .b .v{font-size:20px;line-height:1.45;margin-top:4px}
+.bio .b .v b{font-weight:700}
+.tag{display:inline-block;font-family:var(--mono);font-size:18px;color:var(--brand);background:var(--soft);border-radius:8px;padding:4px 12px;margin-right:8px;vertical-align:middle}
+.tag.dark{background:var(--brand);color:#fff}
+.oneliner{margin-top:22px;background:var(--brand);color:#fff;border-radius:16px;padding:20px 30px;font-size:25px;line-height:1.5;font-weight:600}
+.oneliner b{color:var(--brand-glow)}
+.para{font-size:26px;line-height:1.6;color:var(--ink)}
+.para b{font-weight:700;color:var(--brand)}
+.para small{display:block;font-size:21px;color:var(--dim);margin-top:10px;line-height:1.5}
+.deckgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.dcard{background:var(--ink);color:#fff;border-radius:18px;padding:22px 22px 20px;min-height:180px;position:relative;background-image:radial-gradient(circle at 30% 20%,rgba(123,75,168,.45),transparent 55%)}
+.dcard .e{font-size:50px;line-height:1}
+.dcard .n{position:absolute;top:18px;right:20px;font-family:var(--mono);font-size:16px;color:#9a8fa6}
+.dcard b{display:block;font-size:24px;margin-top:10px;line-height:1.3}
+.dcard small{display:block;font-size:18px;color:#b9aec4;margin-top:6px;line-height:1.4}
+.qblock{margin-top:30px;display:flex;flex-direction:column;gap:14px}
+.qrow{display:flex;gap:26px;background:var(--soft);border-radius:16px;padding:20px 30px}
+.qrow .qk{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--brand);width:170px;flex:none;padding-top:4px;letter-spacing:.02em}
+.qrow .qv{font-size:23px;line-height:1.5;color:var(--ink)}
+.qrow.ask{background:var(--brand);color:#fff}
+.qrow.ask .qk{color:var(--brand-glow)}
+.qrow.ask .qv{color:#fff;font-weight:600}
+.vote{display:flex;gap:26px;margin-top:40px}
+.vote .vbox{flex:1;background:var(--soft);border-radius:20px;padding:34px 36px}
+.vote .vbox .vq{font-size:30px;font-weight:800;line-height:1.4;letter-spacing:-.02em}
+.vote .vbox .vo{margin-top:22px;font-size:23px;color:var(--dim);line-height:1.7}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
+.tile{background:var(--soft);border-radius:18px;padding:26px 28px}
+.tile .th{font-size:26px;font-weight:800;line-height:1.35;letter-spacing:-.02em}
+.tile .tp{margin-top:12px;font-size:21px;line-height:1.5;color:var(--dim)}
+.tile .tp b{color:var(--ink)}
+.tile.hot{background:var(--brand);color:#fff}.tile.hot .tp{color:rgba(255,255,255,.85)}.tile.hot .tp b{color:#fff}
+.cm{display:grid;grid-template-columns:200px 1fr 1fr;gap:10px;margin-top:8px}
+.cm .h{font-size:19px;font-weight:700;color:var(--dim);display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;line-height:1.35}
+.cm .h.row{justify-content:flex-start;text-align:left}
+.cm .c{border-radius:16px;padding:22px 20px;min-height:150px}
+.cm .c .cn{font-family:var(--mono);font-size:17px;font-weight:700;letter-spacing:.06em;margin-bottom:8px}
+.cm .c .ct2{font-size:24px;font-weight:800;line-height:1.3;letter-spacing:-.02em}
+.cm .c .cd{font-size:19px;line-height:1.45;margin-top:8px;color:var(--dim)}
+.cm .good{background:var(--soft);border:2px solid var(--line)}.cm .good .cn{color:var(--brand)}
+.cm .bad{background:var(--brand);color:#fff}.cm .bad .cn{color:var(--brand-glow)}.cm .bad .cd{color:rgba(255,255,255,.82)}
+.agenda{margin-top:30px;display:flex;flex-direction:column;gap:12px}
+.arow{display:flex;align-items:center;gap:30px;background:var(--soft);border-radius:16px;padding:20px 34px}
+.arow .al{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--brand);width:150px;flex:none}
+.arow .at{font-size:30px;font-weight:700;letter-spacing:-.015em}
+.arow .ad{margin-left:auto;font-size:21px;color:var(--dim);text-align:right;max-width:640px;line-height:1.4}
+.arow.now{background:var(--brand);color:#fff}.arow.now .al{color:var(--brand-glow)}.arow.now .ad{color:rgba(255,255,255,.8)}
+
+.navhint{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);z-index:1002;background:rgba(23,18,28,.82);color:#fff;font-family:var(--font);font-size:14px;letter-spacing:.01em;padding:10px 18px;border-radius:999px;pointer-events:none;opacity:0;transition:opacity .5s ease}.navhint.show{opacity:1}
+/* ===== 최종본(Keynote 수정 반영) 추가 스타일 ===== */
+/* 표지 제목 위치 위로 */
+.s-title .tcontent{bottom:215px}
+/* 매 장표 하단 크레딧 */
+.credit{position:absolute;left:0;right:0;bottom:14px;text-align:center;font-family:var(--mono);font-size:14px;letter-spacing:.06em;color:rgba(23,18,28,.26);z-index:6;pointer-events:none}
+.s-hook .credit,.s-divider .credit,.s-close .credit,.s-dark .credit,.s-hero .credit{color:rgba(255,255,255,.4)}
+/* 간지 + 이미지 */
+.s-divider .dwrap.narrow{max-width:1000px}
+.s-divider .dpic{position:absolute;right:110px;top:130px;height:820px;z-index:3;border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.s-divider .dpic img{height:100%;width:auto;display:block}
+/* 다크 · 전면 이미지 */
+.s-dark{background:var(--ink)}
+.full{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:40px}
+.full img{width:100%;height:100%;object-fit:contain;display:block}
+.duo{position:absolute;inset:0;display:flex;background:var(--ink)}
+.duo .d1,.duo .d2{height:100%;overflow:hidden;position:relative}
+.duo img{height:100%;width:100%;object-fit:cover;display:block}
+.overlay-quote{position:absolute;left:0;right:0;bottom:0;padding:70px 70px 76px;background:linear-gradient(to top,rgba(14,10,18,.94),rgba(14,10,18,.65) 60%,transparent);z-index:2}
+.qtext{font-size:30px;line-height:1.55;color:#fff;font-weight:500;letter-spacing:-.005em}
+.qtext cite{display:block;margin-top:22px;font-style:normal;font-family:var(--mono);font-size:20px;color:rgba(255,255,255,.72)}
+/* 히어로(배경 이미지 + 큰 제목) */
+.s-hero{background:var(--ink)}
+.s-hero .hero{position:absolute;inset:0}
+.s-hero .hero img{width:100%;height:100%;object-fit:cover;display:block}
+.s-hero .ht{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 120px;font-size:100px;font-weight:800;color:#fff;letter-spacing:-.025em;line-height:1.2;text-shadow:0 6px 40px rgba(0,0,0,.65),0 2px 8px rgba(0,0,0,.5);z-index:2}
+/* 한 문장 슬라이드 (Build! / Share) */
+.s-stmt{background:var(--paper)}
+.s-stmt .st{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 160px}
+.s-stmt .st h2{font-size:110px;font-weight:800;letter-spacing:-.03em;color:var(--brand);line-height:1.2}
+.s-stmt .st .sub2{margin-top:30px;font-size:52px;font-weight:600;color:var(--brand-lite);letter-spacing:-.015em;line-height:1.3}
+/* 이미지 프레임 변형 */
+.shot.auto{height:auto}.shot.auto img{height:auto}
+.shot.dark{background:#111}.shot.dark img{background:#111}
+.shot.plain{border:none;background:none;border-radius:12px}
+.pin{position:absolute;pointer-events:none}
+/* 컨퓨전 매트릭스 라벨 칩 */
+.chip{position:absolute;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:19px;line-height:1.15;text-align:center;border-radius:8px;padding:4px 8px;background:#1F6FE5;box-shadow:0 2px 8px rgba(0,0,0,.25);word-break:keep-all}
+.chip.red{background:#C6210F}
+/* 3x3 뉴스 콜라주 */
+.collage9{position:absolute;inset:0;background:#0E0A12;display:grid;grid-template-columns:625fr 620fr 625fr;grid-template-rows:1fr 1fr 1fr;gap:10px;padding:10px}
+.collage9 .c{overflow:hidden;border-radius:6px;min-height:0}
+.collage9 .c img{width:100%;height:100%;object-fit:cover;display:block}
+.collage9 .tall{grid-row:1/4;grid-column:3}
+/* 사례 카드 그리드 (Norman 11사례) */
+.gridcards{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:24px;flex:1;min-height:0}
+.gcard{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.gcard .gimg{height:236px;flex:none;overflow:hidden;background:var(--soft)}
+.gcard .gimg img{width:100%;height:100%;object-fit:cover;display:block}
+.gcard .gb{padding:18px 22px 18px;flex:1;min-height:0;overflow:hidden}
+.gcard .gt{font-size:23px;font-weight:800;letter-spacing:-.02em;line-height:1.3}
+.gcard .gd{margin-top:8px;font-size:17px;line-height:1.5;color:var(--ink)}
+.gcard .gs{margin-top:10px;font-size:15px;line-height:1.45;color:#9d94a8}
+.gcard.txtonly .gb{padding:26px 26px}
+.gcard.txtonly .gd{font-size:18px;line-height:1.6}
+/* 댓글 콜라주 */
+.cmt .tr{margin-top:12px;font-size:19px;line-height:1.55;color:var(--ink)}
+/* 큰 숫자 */
+.stat-big{font-family:var(--mono);font-size:118px;font-weight:700;color:var(--brand);letter-spacing:-.04em;line-height:1.05}
+.stat-big .u{font-size:46px;font-weight:600;font-family:var(--font);letter-spacing:-.01em}
+.stat-k{font-size:42px;font-weight:800;letter-spacing:-.02em;line-height:1.25}
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- 001 -->
+<section class="slide s-title active">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="topbar"><div class="mark"></div><span>Design After AI</span></div>
+  <div class="meta reveal">Soomin Kim · smsoominkim@gmail.com<br>soominkim.github.io</div>
+  <div class="tcontent">
+    <div class="kicker reveal">AI 시대의 서비스 디자인</div>
+    <h1 class="reveal">Design After AI:<br><em>How AI Is Changing</em><br>the Design Process</h1>
+    <div class="sub reveal">Anthropic은 왜 일단 만들어보고 시작할까</div>
+  </div>
+</section>
+
+<!-- 002 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap narrow">
+    <div class="dlabel reveal">CHAPTER</div>
+    <h2 class="reveal">왜 지금 디자인 프로세스를<br>다시 봐야 하는가</h2>
+  </div>
+  <div class="dpic reveal"><img src="images/kn_pigeon_meme.jpg" alt="When your program is a complete mess, but it does its job — 작성한 프로그램이 엉망진창이지만 의도한 일을 하긴 할 때"></div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 003 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · 오프닝</div>
+  <div class="content" style="">
+    <h2 class="big reveal">"완벽한 프로세스"를 따랐습니다. <em>맞죠? … 맞나요?</em></h2>
+    <div class="lede reveal">전통적인 사용자 중심 디자인(UCD)의 순서. 이 순서를 부정하는 것이 아니라, 이 순서와 결과가 자주 분리된다는 것을 본다.</div>
+    <div class="steps reveal" style="margin-top:40px"><div class="step"><div class="sbox"><small>STEP 1</small>사용자 조사</div><div class="ssub">인터뷰 · 관찰</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>STEP 2</small>페르소나 · 저니맵</div><div class="ssub">문제와 감정 곡선</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>STEP 3</small>문제 정의</div><div class="ssub">As a ___ I want to ___ so that ___</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>STEP 4</small>아이데이션 · 와이어프레임</div><div class="ssub">포스트잇 → 로우파이</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>STEP 5</small>사용성 테스트</div><div class="ssub">리서치로 검증</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>STEP 6</small>하이파이 · 출시</div><div class="ssub"></div></div></div><div class="keep reveal" style="margin-top:56px;font-size:27px;">"분기가 시작됐습니다. 여러분은 뭘 해야 할지 정확히 압니다. … 완벽한 프로세스를 따랐고, 회사의 모든 문제를 해결했고, 수백만 달러를 벌었고, 사용자들이 사랑하는 제품이 나왔습니다. 맞죠?"</div>
+  </div>
+  <div class="src">Jenny Wen, Hatch Conference 2025 keynote "Don’t trust the Process"</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 004 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · Jenny Wen</div>
+  <div class="content" style="">
+    <h2 class="big reveal">"프로세스를 <em>믿지 마세요</em>"</h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:36px"><div class="txt" style="flex:0 0 860px"><div class="para">Anthropic 디자인 리드(claude.ai 담당). 전 Figma 디자인 디렉터(FigJam · Slides · Community · Buzz · Sites, FigJam의 첫 디자이너), 그 전 Dropbox Paper 디자이너.<small>Hatch Conference 2025(베를린) 키노트 "Don’t trust the Process" → 영상 제목 "The design process is dead. Why Designers can no longer trust it." → Lenny’s Podcast 2026.3 "The design process is dead. Here’s what’s replacing it."</small></div><div class="oneliner" style="margin-top:34px">프로세스 산출물은 "우리가 제대로 일했다는 증거"가 되지만, 사용자는 <b>최종 경험</b>만 평가한다. "포트폴리오의 80%가 프로세스 산출물이고 맨 끝에 화면 한 장이 있다."</div></div><div class="pic"><div class="shot cover" style="height:560px;"><img src="images/s1_jenny_wen_hatch2025.jpg" alt="Jenny Wen, Hatch Conference 2025 (베를린, 2025.9)"></div><div class="cap">Jenny Wen, Hatch Conference 2025 (베를린, 2025.9)</div></div></div>
+  </div>
+  <div class="src">Hatch Conference 2025 · Lenny’s Podcast 2026.3.1</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 005 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · 리얼리티 체크</div>
+  <div class="content" style="">
+    <h2 class="big reveal">AI가 "<em>누가 프로토타입을 만드는가</em>"를 바꿨다</h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:36px"><div class="txt" style="flex:0 0 820px"><div class="para">"PM이 완벽한 문제 정의문을 쓰는 것보다 <b>빨리 작동하는 프로토타입에 도달한다.</b> 리서치도, 페르소나도 없이." 몇몇 회사에서는 PM이 바이브 코딩으로 프로토타입을 만드는 것이 이미 기대치다.<small>동시에 디자이너도 강해졌다 : "should designers code"가 아니라 "designers can code". 정적인 그림만 만들 필요가 없다. 직접 프로토타입을 만들고 마감(fit and finish)까지 구현할 수 있다.</small></div><div class="oneliner" style="margin-top:30px">프로세스가 오늘의 도구와 기술에 <b>맞지 않는다.</b></div></div><div class="pic"><div class="shot cover" style="height:560px;"><img src="images/ui_e_figma_make_point_and_edit.jpg" alt="Figma Make : 프롬프트 · 디자인에서 바로 동작하는 프로토타입. "Prototypes are the new PRDs"(2025.12)"></div><div class="cap">Figma Make : 프롬프트 · 디자인에서 바로 동작하는 프로토타입. "Prototypes are the new PRDs"(2025.12)</div></div></div>
+  </div>
+  <div class="src">Jenny Wen, Hatch 2025 · Figma blog 2025.12.15</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 006 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · 리얼리티 체크</div>
+  <div class="content" style="">
+    <h2 class="big reveal">프로세스는 오늘의 <em>팀 · 취향 · 프로젝트</em>에도 맞지 않는다</h2>
+    
+    <div class="cards reveal" style="margin-top:40px"><div class="card"><div class="no">작은 팀</div><h3>팀은 작아지고<br>역할은 넓어졌다</h3><p>감원 뒤에 "작은 팀이 오히려 더 효과적"이라는 것을 깨달았다. 디자이너는 더 PM처럼 전략적이 되고 직접 구현도 한다. "이 경직된 프로세스를 따를 시간이 있는가?"</p></div><div class="card hot"><div class="no">취향 · 크래프트</div><h3>무엇이든 만들 수 있으면<br>고르는 능력이 중요해진다</h3><p>원샷 프롬프트 화면은 훌륭하지 않지만 <b>바닥(floor)을 올린다.</b> Not Boring 카메라, Linear, Notion Calendar는 "안티 AI 슬롭". 프로세스에는 크래프트를 격려하는 단계가 없다.</p></div><div class="card"><div class="no">모든 프로젝트</div><h3>같은 단계가<br>모든 회사에 통할 리 없다</h3><p>이해관계자 · 복잡도 · 문제 공간 · 미지수 · 기술 제약 · 일정 · 인력이 매번 다르다. 그런데도 업계는 "프로세스를 믿어라, 단계를 따르라"고 했다.</p></div></div><div class="keep reveal" style="margin-top:40px;font-size:24px;">Wen의 역사 해석 : 2000년대 디자인이 "예쁘게 만드는 사람"에서 벗어나 자리(seat at the table)가 필요했고, 디자인 씽킹 · UCD의 폭발은 좋은 일이었지만 <b>전략을 크래프트보다 지나치게 우선</b>해 전체 크래프트가 약해졌다. 여기에 AI · 낮아진 진입장벽 · 역할 이동 · 새 도구가 한꺼번에 얹혔다.</div>
+  </div>
+  <div class="src">Jenny Wen, Hatch 2025 · 리얼리티 체크 4가지 중 2 · 3 · 4</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 007 -->
+<section class="slide">
+  <div class="toc reveal">왜 지금 · 리얼리티 체크</div>
+  <div class="content">
+    <h2 class="big reveal">프로세스는 오늘의 <em>팀 · 취향 · 프로젝트</em>에도 맞지 않는다</h2>
+    <div class="reveal" style="display:flex;justify-content:center;margin-top:70px"><div class="shot" style="width:1080px;height:578px"><img src="images/kn_not_boring_camera.jpg" alt="(Not Boring) Camera — Pro Camera with Natural Photos, App Store"></div></div>
+  </div>
+  <div class="src">(Not Boring) Camera · App Store · "안티 AI 슬롭" 사례</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 008 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · IKEA 비유</div>
+  <div class="content" style="">
+    <h2 class="big reveal">프로세스는 IKEA 설명서다. 그런데 디자인은 <em>무엇이 나올지 모른다</em></h2>
+    
+    <div class="cmp reveal">
+    <div class="ccol bad"><div class="ct">IKEA 조립 설명서</div><h3>같은 단계 → 같은 책장</h3>
+      <div class="row"><span class="k">전제</span><span>완성품이 무엇인지 처음부터 안다</span></div>
+      <div class="row"><span class="k">가치</span><span>순서를 정확히 따르는 것</span></div>
+      <div class="row"><span class="k">결과</span><span>누가 해도 같은 책장</span></div></div>
+    <div class="ccol good"><div class="ct">디자인</div><h3>책장일 수도, 의자일 수도, 핫도그일 수도</h3>
+      <div class="row"><span class="k">전제</span><span>시작할 때 <b>무엇이 나올지 모른다</b></span></div>
+      <div class="row"><span class="k">가치</span><span>지도와 목적지를 매번 함께 그리는 것</span></div>
+      <div class="row"><span class="k">결과</span><span>프로젝트마다 다른 단계, 다른 산출물</span></div></div>
+  </div><div class="keep reveal" style="margin-top:36px;font-size:27px;">"무엇을 만들지 모르는데 어떻게 단계를 미리 알겠는가." 그래서 Wen은 프로세스 대신 <b>좋은 작업이 실제로 어떻게 나왔는지</b>를 봤다. 다음 다섯 가지 패턴이다.</div>
+  </div>
+  <div class="src">Jenny Wen, Hatch 2025</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 009 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · 좋은 작업의 5가지 패턴</div>
+  <div class="content" style="">
+    <h2 class="big reveal">좋은 작업의 공통점은 프로세스가 아니라 <em>다섯 가지 패턴</em>이었다</h2>
+    
+    <div class="grid3 reveal" style="grid-template-columns:repeat(5,1fr);gap:18px">
+    <div class="tile hot"><div class="th">Solution first</div><div class="tp">먼저 작동하는 해법을 보고 나서 "이게 풀 가치가 있는 문제였구나"를 발견한다. 옛 프로세스에선 "불법"처럼 느껴졌던 일</div></div>
+    <div class="tile"><div class="th">Long tail of craft</div><div class="tp">출시 이후에도 세부 인터랙션을 오래 다듬는다. 더블 다이아몬드에는 이 긴 꼬리가 들어갈 자리가 없다</div></div>
+    <div class="tile"><div class="th">Intuition</div><div class="tp">사용자 · 시장 · 제품 경험이 축적된 전문가는 매 결정을 다시 연구하지 않고도 빠르게 판단한다</div></div>
+    <div class="tile"><div class="th">Process adaptation</div><div class="tp">필요 없는 단계는 건너뛰고, 팀에 맞는 새 단계를 만든다. "따르기만 하면 되는 거라면 누구나 디자이너다"</div></div>
+    <div class="tile"><div class="th">Delight as signal</div><div class="tp">프로토타입이 사람을 웃게 하거나 반복 사용하게 하는 반응 자체가 신호가 된다</div></div>
+  </div><div class="keep reveal" style="margin-top:40px;font-size:27px;">Wen이 "가장 자랑스럽고 가장 감탄한 작업"을 되짚었을 때 공통점은 순서가 아니었다. 다섯 개를 하나씩 사례와 함께 본다. 첫 번째가 오늘 워크샵의 뼈대다.</div>
+  </div>
+  <div class="src">Jenny Wen, Hatch 2025 · Lenny’s Podcast 2026.3</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 010 -->
+<section class="slide">
+  <div class="toc reveal">왜 지금 · Solution first</div>
+  <div class="content">
+    <h2 class="big reveal">Claude Artifacts : <em>솔루션을 보기 전에는</em> 풀 가치가 있는 문제인지 몰랐다</h2>
+    <div class="blist reveal" style="margin-top:22px;font-size:28px"><div class="bli">클로드 아티팩트는 Claude Code의 작업 내용을 실시간으로 갱신되는 공유 웹 페이지로 만들어 주는 기능</div></div>
+    <div class="gal reveal" style="margin-top:32px;gap:28px">
+      <div class="g"><div class="shot" style="height:560px"><img src="images/kn_artifacts_remix_synesthesia.jpg" alt="Claude Artifacts : Remix of Interactive Synesthesia Experience"></div></div>
+      <div class="g"><div class="shot dark" style="height:560px"><img src="images/kn_chatgpt_canvas_invaders.jpg" alt="ChatGPT canvas : cyberpunk-invaders.html 실행 화면"></div></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 011 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · Solution first</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Claude Artifacts : <em>솔루션을 보기 전에는</em> 풀 가치가 있는 문제인지 몰랐다</h2>
+    
+    <div class="gal reveal" style="margin-top:30px"><div class="g"><div class="shot cover" style="height:470px;"><img src="images/ui_c_artifacts_before_multiwindow.jpg" alt="이전 : Claude가 만든 HTML을 복사 · 저장 · 열어보는 왕복. 창 여러 개"></div><div class="cap">이전 : Claude가 만든 HTML을 복사 · 저장 · 열어보는 왕복. 창 여러 개</div></div><div class="g"><div class="shot cover" style="height:470px;"><img src="images/ui_c_artifacts_alex_rough_prototype.jpg" alt="2024.3 연구원 Alex Tamkin의 러프 데모 : "What if I could just see it right away?" 옆 패널에 렌더링"></div><div class="cap">2024.3 연구원 Alex Tamkin의 러프 데모 : "What if I could just see it right away?" 옆 패널에 렌더링</div></div><div class="g"><div class="shot cover" style="height:470px;"><img src="images/ui_c_artifacts_michael_wang_polished.jpg" alt="디자이너 Michael Wang이 본 리포에 만든 프로토타입 → Slack 게시 → CEO 포함 강한 반응"></div><div class="cap">디자이너 Michael Wang이 본 리포에 만든 프로토타입 → Slack 게시 → CEO 포함 강한 반응</div></div></div><div class="keep reveal" style="margin-top:30px;font-size:24px;">사내 "WIP Wednesday" 데모를 본 디자이너가 "그 데모를 머릿속에서 계속 재생"하다가 직접 만들었다. <b>약 1.5주 만에 전사 도그푸딩</b>, 2024.6.20 Claude 3.5 Sonnet과 함께 출시. 풀타임 1명 + 파트타임 1명, 첫 데모부터 출시까지 3개월.</div>
+  </div>
+  <div class="src">Jenny Wen, Hatch 2025 · Anthropic "How we built Artifacts"</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 012 -->
+<section class="slide">
+  <div class="toc reveal">왜 지금 · Solution first</div>
+  <div class="content">
+    <h2 class="big reveal">Claude Artifacts : <em>솔루션을 보기 전에는</em> 풀 가치가 있는 문제인지 몰랐다</h2>
+    <div class="gal reveal" style="margin-top:120px;gap:22px">
+      <div class="g"><div class="shot" style="height:262px"><img src="images/ui_c_artifacts_before_multiwindow.jpg" alt="이전 : Claude가 만든 코드를 복사 · 저장 · 브라우저로 여는 왕복"></div><div class="cap">이전 : Claude가 만든 코드를 복사 · 저장 · 브라우저로 여는 왕복 · Pragmatic Engineer</div></div>
+      <div class="g"><div class="shot" style="height:262px"><img src="images/ui_c_artifacts_alex_rough_prototype.jpg" alt="2024.3 연구원 Alex Tamkin의 러프 사이드 뷰 데모"></div><div class="cap">2024.3 연구원 Alex Tamkin의 러프 사이드 뷰 데모(사내 WIP Wednesday) · Pragmatic Engineer</div></div>
+      <div class="g"><div class="shot" style="height:262px"><img src="images/ui_c_artifacts_michael_wang_polished.jpg" alt="디자이너 Michael Wang의 프로토타입"></div><div class="cap">디자이너 Michael Wang의 프로토타입 → Slack 게시 → 1.5주 만에 전사 도그푸딩 · Pragmatic Engineer</div></div>
+      <div class="g"><div class="shot" style="height:262px"><img src="images/ui_c_artifacts_colorpicker_output.jpg" alt="2024.6.20 출시 : 채팅 옆에서 바로 실행되는 인터랙티브 앱"></div><div class="cap">2024.6.20 출시 : 채팅 옆에서 바로 실행되는 인터랙티브 앱 · Pragmatic Engineer</div></div>
+    </div>
+  </div>
+  <div class="src">Anthropic "How we built Artifacts" · Pragmatic Engineer</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 013 -->
+<section class="slide s-dark">
+  <div class="full" style="padding:60px"><img src="images/kn_steve_jobs_quote.jpg" alt="People don't know what they want until you show it to them. That's why I never rely on marketing research. Our task is to read things that are not yet on the page. — Steve Jobs" style="border-radius:8px"></div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 014 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · Solution first</div>
+  <div class="content" style="">
+    <h2 class="big reveal">문제 정의문 등장 횟수 <em>0회</em>. 대신 다른 프로세스가 있었다</h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:36px"><div class="txt" style="flex:0 0 1000px"><div class="steps reveal" style="margin-top:10px"><div class="step"><div class="sbox"><small>1</small>관찰</div><div class="ssub">연구원의 개인적 마찰 : 왕복이 지겹다</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>2</small>재현</div><div class="ssub">디자이너가 본 리포에 프로토타입</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>3</small>유통</div><div class="ssub">Slack 게시, 동료 · CEO 반응</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>4</small>검증</div><div class="ssub">전사 도그푸딩 1.5주</div></div></div><div class="oneliner" style="margin-top:30px">아무리 잘 만들어도 <b>보여줄 곳이 없으면 죽는다.</b></div><div class="keep reveal" style="margin-top:24px;font-size:23px;">그리고 Anthropic은 모델이 좋아질 때마다 이 일을 반복한다 : 더 긴 컨텍스트, 도구 사용, 에이전트, 다단계 추론 → Research 기능. "기술이 먼저 우리를 거기로 데려갔다."</div></div><div class="pic"><div class="shot auto"><img src="images/kn_slack_michael_artifact_demo.jpg" alt="michael — Artifact/Iteration Mode Demo : TL;DR I took @alex tamkin's demo and built it into claude.ai, and it kind of rocks."></div></div></div>
+  </div>
+  <div class="src">Jenny Wen, Hatch 2025</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 015 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · Long tail of craft</div>
+  <div class="content" style="">
+    <h2 class="big reveal">출시는 끝이 아니다. FigJam은 <em>몇 년을 더 다듬었다</em></h2>
+    
+    <div class="blist reveal" style="margin-top:40px;gap:28px;font-size:30px"><div class="bli">FigJam(2021 출시) 이후 몇 년 : 스냅 · 정렬, 선택 테두리의 노이즈, 색 범위, 폰트 크기 조절, 이미지 테두리, 도형 오버플로, 툴바 인터랙션을 <b>끝없이</b> 고쳤다.</div><div class="bli">"프로세스가 아니라 <b>시간을 따로 떼어 놓고 신경 써야 하는 일</b>." 더블 다이아몬드의 마지막 꼭짓점 뒤에는 이 긴 꼬리가 들어갈 칸이 없다.</div><div class="bli">3장에서 보게 될 Claude Code도 같다 : TODO 리스트 UI 하나를 20여 회 프로토타입했다. "새 모델이 나올 때마다 코드를 한 뭉치씩 지운다."</div></div><div class="gal reveal" style="margin-top:34px;gap:40px"><div class="g"><div class="shot" style="height:410px"><img src="images/kn_figjam_board_flow.jpg" alt="FigJam 보드 : 플로우 다이어그램 · 스탬프 · 코멘트"></div></div><div class="g"><div class="shot" style="height:410px"><img src="images/kn_figjam_timer_board.jpg" alt="FigJam : 타이머 · 음악 · 스탬프 · 투표 기능"></div></div></div>
+  </div>
+  <div class="src">Jenny Wen, Hatch 2025 · Boris Cherny, Claude Code 인터뷰 2025</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 016 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · Intuition</div>
+  <div class="content" style="">
+    <h2 class="big reveal">직관은 찍기가 아니다. <em>매일 쌓은 내부 모델</em>이다</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:36px"><div class="txt" style="flex:0 0 820px"><div class="para">"직관은 그 분야를 깊이 알기 때문에 생기는, 빠르게 합리적 판단을 내리는 능력이다." 충분한 사용자 · 시장 · 제품 경험이 축적된 전문가는 매 의사결정을 다시 연구하지 않는다.<small>→ "사용자와 제품에 대한 내부 모델을 만들어, 모든 결정을 A/B 테스트하지 않고도 빠르게 움직인다"</small></div>
+  <div class="oneliner" style="margin-top:30px">데이터와 사용자는 사라지지 않는다. <b>매 프로젝트마다 동일한 순서의 의례로 호출되지 않을 뿐이다.</b></div></div><div class="pic"><div class="plist reveal" style="margin-top:0px;gap:14px"><div class="pitem" style="padding:18px 28px"><div class="pn">01</div><div class="pk" style="width:200px">매일 읽기</div><div class="pv">트위터 · 레딧 · 사내 피드백 보드 · 세일즈팀의 제품 피드백</div></div><div class="pitem" style="padding:18px 28px"><div class="pn">02</div><div class="pk" style="width:200px">리서치 세션</div><div class="pv">내 영역이 아니어도 정기적으로 참석</div></div><div class="pitem" style="padding:18px 28px"><div class="pn">03</div><div class="pk" style="width:200px">옛 리포트</div><div class="pv">다시 읽기. 대시보드로 사용 추이 보기</div></div><div class="pitem" style="padding:18px 28px"><div class="pn">04</div><div class="pk" style="width:200px">원칙 학습</div><div class="pv">인지 편향 · 디자인 원칙</div></div></div></div></div>
+  </div>
+  <div class="src">Jenny Wen, Hatch 2025 · "Wen이 직관을 기르는 방법"</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 017 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · Process adaptation</div>
+  <div class="content" style="">
+    <h2 class="big reveal">단계를 따르는 게 아니라 <em>단계를 다듬는 것</em>이 디자이너의 가치다</h2>
+    
+    <div class="cmp reveal">
+    <div class="ccol bad"><div class="ct">건너뛰기</div><h3>GV 디자인 스프린트 5일 → 3일</h3>
+      <div class="row"><span class="k">무엇을</span><span>대부분의 시간을 프로토타이핑 · 아이데이션에 쓴다</span></div>
+      <div class="row"><span class="k">왜</span><span>팀이 이미 아는 것을 다시 "이해"하는 단계는 비용이다</span></div></div>
+    <div class="ccol good"><div class="ct">새로 만들기</div><h3>보도자료 대신 "가상의 트윗"</h3>
+      <div class="row"><span class="k">무엇을</span><span>Amazon의 working backwards 보도자료 대신 Figma에서는 <b>가상 트윗 컴포넌트</b>와 <b>가짜 랜딩페이지 헤드라인</b>으로 브레인스토밍</span></div>
+      <div class="row"><span class="k">결과</span><span>FigJam의 cursor chat · 하이파이브 · 이모트 · 스탬프의 첫 스케치가 여기서 나왔고, 출시 후 실제로 비슷한 트윗이 올라왔다</span></div></div>
+  </div><div class="keep reveal" style="margin-top:22px;font-size:24px;">"여러분의 가치는 프로세스를 따르는 것이 아니라 최고의 결과를 내도록 프로세스를 다듬는 데 있다. <b>따르기만 하면 되는 거라면 누구나 디자이너다.</b>"</div><div class="split reveal" style="gap:44px;margin-top:24px;align-items:center"><div class="pic" style="flex:0 0 440px"><div class="shot auto"><img src="images/kn_figjam_cursor_chat.jpg" alt="FigJam cursor chat : 너무 재밌어요!!!!카카카"></div></div><div class="txt" style="flex:1;min-width:0"><div class="blist" style="margin-top:0;gap:14px;font-size:24px"><div class="bli"><b>Amazon의 미래 보도자료</b> : “커서챗이 출시되었다고 가정하면 어떤 기사로 소개될까?”</div><div class="bli"><b>Figjam의 가상 트윗</b> : “커서챗이 출시되면 사용자는 Twitter에 뭐라고 쓸까?”<small style="font-size:22px;color:var(--ink)">→ “회의 중에 커서로 바로 대화할 수 있다니 너무 재밌다.”<br>→ 사용자가 느끼기를 원하는 감정과 반응을 더 선명하게 파악</small></div></div></div></div>
+  </div>
+  <div class="src">Jenny Wen, Hatch 2025</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 018 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · Delight as signal</div>
+  <div class="content" style="">
+    <h2 class="big reveal">사용성 문제투성이였지만, <em>사람들이 웃었다</em></h2>
+    
+    <div class="blist reveal" style="margin-top:40px;gap:28px;font-size:30px"><div class="bli">FigJam 스탬프 · 이모트 · cursor chat : 실제 코드로 프로토타입을 만들어 <b>남의 회의에 들어가 써 보게 했다.</b></div><div class="bli">사용성 문제가 가득했다. 그러나 사람들이 웃고, 회의 분위기가 바뀌는 것을 보고 계속 갔다. 출시 후 FigJam과 Figma 전체 기능의 선례가 됐다.</div><div class="bli">"문제 정의문에서 나오지 않았다. 프로세스에 그런 단계는 없다. <b>깊이 신경 쓰는 팀에서 나왔다.</b>"</div></div><div class="keep reveal" style="margin-top:44px;font-size:27px;">모든 가치가 사전 페르소나나 저니에서 나오지 않는다. 프로토타입에 대한 반응 자체가 신호가 될 수 있다. 워크샵 공유 시간에 듣는 사람이 남기는 한 줄("예상과 달랐던 것")이 이 신호다.</div>
+  </div>
+  <div class="src">Jenny Wen, Hatch 2025</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 019 -->
+<section class="slide">
+  <div class="toc reveal">왜 지금 · Delight as signal</div>
+  <div class="content">
+    <h2 class="big reveal">사용성 문제투성이였지만, <em>사람들이 웃었다</em></h2>
+    <div class="reveal" style="display:flex;gap:36px;margin-top:44px;height:560px;align-items:stretch">
+      <div class="shot" style="flex:0 0 446px"><img src="images/kn_cat_collect_app.jpg" alt="A guy made an app that lets you collect cats you see on the street, like Pokémon"></div>
+      <div class="shot" style="flex:0 0 446px"><img src="images/kn_seokgamoney_news.jpg" alt="염주 굴리는 앱 '석가머니' 3개국 앱스토어 1위 찍었다"></div>
+      <div class="shot" style="flex:0 0 300px"><img src="images/kn_seokgamoney_appstore.jpg" alt="석가머니 – 운 모으는 부처 (App Store 건강 및 피트니스 1위)"></div>
+      <div class="shot" style="flex:1"><img src="images/kn_saju_app.jpg" alt="사주아이 : 990원 사주 · 궁합 해설"></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 020 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap" style="max-width:1500px">
+    <div class="dlabel reveal">CHAPTER</div>
+    <h2 class="reveal" style="font-size:72px">AI Revives an Old Design Question:<br>Where Does Radical Innovation Begin?</h2>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 021 -->
+<section class="slide s-dark">
+  <div class="duo">
+    <div class="d1" style="width:807px;flex:none;background:#fff"><img src="images/kn_norman_2009_paper.jpg" alt="Donald A. Norman, Technology First, Needs Last: The Research-Product Gulf (interactions, 2010)" style="object-fit:contain;background:#fff"></div>
+    <div class="d2" style="flex:1"><img src="images/kn_don_norman_portrait.jpg" alt="Don Norman" style="object-position:center top">
+      <div class="overlay-quote reveal"><div class="qtext">I’ve come to a disconcerting conclusion: design research is great when it comes to improving existing product categories but essentially useless when it comes to new, innovative breakthroughs.<cite>— Don Norman, Technology First, Needs Last, 2009.</cite></div></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 022 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · Norman & Verganti</div>
+  <div class="content" style="">
+    <h2 class="big reveal">HCD는 <em>언덕 오르기</em>다. 새 언덕으로의 점프는 다른 데서 온다</h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:36px"><div class="txt" style="flex:0 0 880px"><div class="para"><b>점진적 혁신</b>은 지금 언덕의 정상(B)을 찾는다. HCD(관찰 → 아이데이션 → 테스트의 반복)는 이 일에 매우 강하다.<small>급진적 혁신은 <b>더 높은 다른 언덕</b>을 찾는 일이고, 그 점프(B → C)는 기술 변화(Technology Change) 또는 의미 변화(Meaning Change)에서만 온다. 점프 뒤에는 다시 HCD가 C → D를 올린다.</small></div>
+  <div class="oneliner" style="margin-top:30px">HCD를 만든 사람이 "HCD로는 급진적 혁신을 만들 수 없다"고 했다. 정말 그런지는 <b>1.5장에서 사례 11개로</b> 따로 본다.</div></div><div class="pic"><div class="shot" style="height:540px;"><img src="images/s1_norman_verganti_fig1_hill_climbing.jpg" alt="Norman &amp; Verganti 2014, Figure 1 : Hill climbing. A → B는 HCD, B → C는 기술 · 의미의 점프"></div><div class="cap">Norman & Verganti 2014, Figure 1 : Hill climbing. A → B는 HCD, B → C는 기술 · 의미의 점프</div></div></div>
+  </div>
+  <div class="src">Norman &amp; Verganti, "Incremental and Radical Innovation", Design Issues 30(1), 2014</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 023 -->
+<section class="slide">
+  <div style="position:absolute;inset:0;display:flex;align-items:stretch">
+    <div style="flex:0 0 772px;height:1080px;overflow:hidden;border-right:1px solid var(--line)"><img src="images/kn_norman_verganti_2014_paper.jpg" alt="Incremental and Radical Innovation: Design Research vs. Technology and Meaning Change — Donald A. Norman, Roberto Verganti (Design Issues, 2014)" style="height:100%;width:100%;object-fit:contain;display:block"></div>
+    <div style="flex:1;display:flex;align-items:flex-end;padding:0 110px 130px 70px">
+      <div class="quote reveal" style="margin-top:0">
+        <p style="font-size:34px;font-weight:600;line-height:1.5">Norman was bothered by his analysis and tried to find examples that refuted this conclusion; <em>he failed.</em> Every radical innovation he investigated was done without design research, without careful analysis of a person’s or even a society’s needs.</p>
+        <cite>Norman &amp; Verganti, "Incremental and Radical Innovation", Design Issues 30(1), 2014</cite>
+      </div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 024 -->
+<section class="slide s-dark">
+  <div class="duo">
+    <div class="d1" style="width:847px;flex:none"><img src="images/kn_faster_horses_quote.jpg" alt="If I had asked people what they wanted, they would have said faster horses. — Henry Ford"></div>
+    <div class="d2" style="flex:1"><img src="images/kn_henry_ford.jpg" alt="Henry Ford와 자동차"></div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 025 -->
+<section class="slide">
+  <div class="content" style="top:40px;bottom:44px">
+    <div class="gridcards reveal">
+      <div class="gcard"><div class="gimg"><img src="images/hist_television.jpg" alt="5 · Television (1950년대)" style="object-position:center"></div><div class="gb"><div class="gt">5 · Television (1950년대)</div><div class="gd">기술 주도. 새로운 medium이 behavior(저녁 시간 · 거실 배치 · 가족 의례)를 형성</div><div class="gs">1958 TV 보는 가족 · NARA · PD</div></div></div>
+      <div class="gcard"><div class="gimg"><img src="images/hist_computer.jpg" alt="6 · Computer (1946)" style="object-position:center"></div><div class="gb"><div class="gt">6 · Computer (1946)</div><div class="gd">기술 주도. 최초 발명은 user research 산물로 보기 어려움(군사 · 과학 계산)</div><div class="gs">ENIAC 프로그래머 Betty Snyder · Glen Beck · 미 육군 · PD</div></div></div>
+      <div class="gcard"><div class="gimg"><img src="images/hist_personal_computer.jpg" alt="7 · Personal Computer (1975)" style="object-position:center"></div><div class="gb"><div class="gt">7 · Personal Computer (1975)</div><div class="gd">기술 주도. 기술을 개인 사용 맥락으로 재해석. 취미가들의 "갖고 싶다"가 시장 조사보다 먼저</div><div class="gs">Altair 8800 · Michael Holley · PD</div></div></div>
+      <div class="gcard"><div class="gimg"><img src="images/hist_internet.jpg" alt="8 · Internet (ARPANET 1969 → 1977)" style="object-position:center"></div><div class="gb"><div class="gt">8 · Internet (ARPANET 1969 → 1977)</div><div class="gd">기술 · infrastructure 주도. 응용 · meaning(이메일, 웹, SNS)이 이후 폭발적으로 등장</div><div class="gs">ARPANET 논리 지도 1977 · PD</div></div></div>
+      <div class="gcard"><div class="gimg"><img src="images/hist_sms.jpg" alt="9 · SMS (1992~)" style="object-position:center 22%"></div><div class="gb"><div class="gt">9 · SMS (1992~)</div><div class="gd">기술 affordance의 예상 밖 사용. 제어 채널에 남는 160자가 문자 문화로 성장. 3장 C 패턴의 원형</div><div class="gs">Nokia 3310 · Michael Brandtner · PD</div></div></div>
+      <div class="gcard"><div class="gimg"><img src="images/hist_cellphone.jpg" alt="10 · Cellphone (1983)" style="object-position:center 45%"></div><div class="gb"><div class="gt">10 · Cellphone (1983)</div><div class="gd">기술 주도. 이후 수많은 UCD 개선(크기 · 배터리 · UI)이 축적. 급진 혁신 뒤에 HCD가 온다는 원문의 예</div><div class="gs">Motorola DynaTAC 8000X · Redrum0486 · CC BY SA 3.0</div></div></div>
+      <div class="gcard"><div class="gimg"><img src="images/hist_infrastructure.jpg" alt="11 · Electric lighting · plumbing" style="object-position:center 40%"></div><div class="gb"><div class="gt">11 · Electric lighting · plumbing</div><div class="gd">후속 글(2014)의 논지. 급진적 infrastructure 변화와 need articulation의 시차. 사람들은 전등을 "요구"하기 전에 전등을 받았다</div><div class="gs">에디슨 전구 1879~80 · HumanisticRationale · CC BY 3.0</div></div></div>
+      <div class="gcard txtonly"><div class="gb"><div class="gt">+ 논문 본문의 사례</div><div class="gd">Facebook · Twitter("그냥 재미있어 보여서") / 에디슨 전구(전구가 아니라 발전 · 배전 시스템 전체의 발명) / 닌텐도 Wii(소니 · MS도 같은 센서를 알았지만 유저 리서치가 "더 좋은 그래픽"을 답함) / Swatch(아무도 패션 시계를 원하지 않았고 첫 반응은 미지근) / HP 계산기(마케팅 반대, 창업자가 갖고 싶어서) / Apple Newton · QuickTake(옳은 아이디어도 시점이 틀리면 죽는다, 당시 임원이 Norman 본인)</div></div></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 026 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · AI 시대</div>
+  <div class="content" style="">
+    <h2 class="big reveal">파운데이션 모델은 <em>새 언덕 후보</em>를 분기마다 만든다</h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:36px"><div class="txt" style="flex:0 0 900px"><div class="para">실시간 멀티모달, 롱컨텍스트, 도구 · 컴퓨터 사용, 코드 생성, 이미지 · 음성 생성, 에이전트 계획. 이 역량들은 사용자가 미리 언어화한 요구가 아니라 <b>먼저 보여줘야 가치와 위험을 판단할 수 있는 경험</b>이다.<small>Anthropic Joel Lewenstein : "모델 역량이 열어주는 것에 따라 상황별로 다른 것을 배치하는 football playbook." OpenAI CPO Kevin Weil : "model maximalism, 막 등장하는 능력을 위해 만들어라." 1920년대 라디오와 2024년 Audio Overviews, 1992년 SMS와 2023년 Bark로 노래 만들기는 같은 구조다.</small></div></div><div class="pic"><div class="shot cover" style="height:520px;"><img src="images/ui_a_gemini_app_io2025_ss.jpg" alt="Google I/O 2025 : Gemini 앱(Live · Deep Research · Agent Mode · Veo). 실시간 멀티모달이라는 역량이 2024년 먼저 무대에 올랐고, 제품은 1년 뒤에 왔다"></div><div class="cap">Google I/O 2025 : Gemini 앱(Live · Deep Research · Agent Mode · Veo). 실시간 멀티모달이라는 역량이 2024년 먼저 무대에 올랐고, 제품은 1년 뒤에 왔다</div></div></div>
+  </div>
+  <div class="src">Anthropic · OpenAI 인터뷰 2025 · 3장 A1</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 027 -->
+<section class="slide s-dark">
+  <div class="full" style="padding:36px 220px"><img src="images/kn_characterai_screens.jpg" alt="Character.AI : Infinite possibilities · Unlimited free messages (and no ads) · Bring anyone to life" style="border-radius:10px"></div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 028 -->
+<section class="slide">
+  <div class="toc reveal">급진적 혁신 · 사례 · Character.AI</div>
+  <div class="content">
+    <h2 class="big reveal">AI와의 관계를 <em>하나의 제품 범주</em>로 만든 Character.AI</h2>
+    <div class="reveal" style="display:flex;gap:28px;margin-top:26px;height:700px;align-items:flex-start">
+      <div class="shot" style="flex:0 0 413px;height:700px"><img src="images/kn_nyt_characterai.jpg" alt="The New York Times : Chatbot Start-Up Character.AI Valued at $1 Billion in New Funding Round" style="object-fit:cover;object-position:top"></div>
+      <div style="flex:0 0 487px;display:flex;flex-direction:column;gap:22px">
+        <div class="shot auto" style="position:relative"><img src="images/kn_lamda_authors.jpg" alt="LaMDA: Language Models for Dialog Applications — 저자 목록 (Noam Shazeer 체크)"><img class="pin" src="images/kn_check_mark.png" alt="" style="left:59.9%;top:12.3%;width:11.7%"></div>
+        <div class="shot auto" style="position:relative"><img src="images/kn_attention_authors.jpg" alt="Attention Is All You Need — 저자 목록 (Noam Shazeer 체크)"><img class="pin" src="images/kn_check_mark.png" alt="" style="left:32.7%;top:22.2%;width:17.7%"></div>
+      </div>
+      <div class="shot" style="flex:0 0 667px;height:700px"><img src="images/kn_shazeer_openai_news.jpg" alt="오픈AI, '트랜스포머' 노암 샤지어 영입… 고문도 합류 (2026.08.19)" style="object-fit:cover;object-position:top"></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 029 -->
+<section class="slide s-dark">
+  <div class="collage9">
+    <div class="c"><img src="images/kn_ai_romance_sbs.jpg" alt="SBS '기기안 연애'"></div>
+    <div class="c"><img src="images/kn_ai_romance_klab.jpg" alt="용서받지 못한 금단의 사랑? 'AI 연인' 박살내기 시작한 중국 (klab)"></div>
+    <div class="c tall"><img src="images/kn_ai_romance_mbn_col.jpg" alt="MBN 뉴스센터 : '현실로 돌아와라' 중국, '가상 연애' 강제 이별령 · '가상 연애' 규제 나선 당국"></div>
+    <div class="c"><img src="images/kn_ai_romance_pd.jpg" alt="PD수첩 : '이런 게 사랑이 아니면 뭐겠어?' 현실이 된 AI와의 연애"></div>
+    <div class="c"><img src="images/kn_ai_romance_phone_diary.jpg" alt="AI 연인 사진을 세워 두고 쓰는 일기"></div>
+    <div class="c"><img src="images/kn_ai_romance_mbc.jpg" alt="MBC 뉴스.zip : '남편보다 AI' 달라진 아내, 곡기까지 끊더니 결국.."></div>
+    <div class="c"><img src="images/kn_ai_romance_wedding.jpg" alt="AI 연인과의 결혼식"></div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 030 -->
+<section class="slide">
+  <div class="toc reveal">급진적 혁신 · 사례 · Twelve Labs</div>
+  <div class="content">
+    <h2 class="big reveal">AI가 영상을 보고 세상을 배우게 한 <em>Twelve Labs</em></h2>
+    <div class="split reveal" style="gap:40px;margin-top:28px;align-items:flex-start">
+      <div class="txt" style="flex:0 0 720px">
+        <div class="shot" style="height:405px"><img src="images/kn_twelvelabs_youtube.jpg" alt="REAL Valley : 엔비디아가 발빠르게 투자한 한국 스타트업"></div>
+        <div class="quote" style="margin-top:26px;padding:6px 0 6px 30px"><p style="font-size:23px;font-weight:500;line-height:1.6;letter-spacing:-.01em">“인간은 영유아 시절부터 무언가를 보고 듣고 만지고 느끼면서 부지불식간에 세상을 이해합니다. 이렇게 뇌에 차곡차곡 쌓인 지식은 언어를 만나 거대하게 증폭되죠. 우리는 AI도 인간의 이러한 학습 과정을 모방할 수 있다는 가설을 세웠습니다. 그렇다면 어떤 데이터가 AI의 학습에 가장 적합할까요? 우리는 이를 영상 데이터라고 봤습니다.”</p></div>
+      </div>
+      <div class="pic"><div class="shot dark" style="height:560px"><img src="images/kn_twelvelabs_search_demo.jpg" alt="Twelve Labs 영상 검색 API 데모 : Search the scene where Amy and her team are discussing marketing strategies…"></div></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 031 -->
+<section class="slide">
+  <div class="toc reveal">급진적 혁신 · 사례 · LM Arena</div>
+  <div class="content">
+    <h2 class="big reveal">AI 평가 방식을 <em>사용자 선택</em>으로 바꾼 LM Arena, 기업가치 2조</h2>
+    <div class="lede reveal">AI 신용 평가사 (pairwise comparison + crowdsourced human preference)</div>
+    <div class="split reveal" style="gap:44px;margin-top:22px;align-items:flex-start">
+      <div class="pic" style="flex:0 0 700px"><div class="shot auto"><img src="images/kn_lmarena_techcrunch.jpg" alt="TechCrunch : LMArena lands $1.7B valuation four months after launching its product (Julie Bort, 2026.1.6)"></div></div>
+      <div class="txt" style="flex:1;min-width:0">
+        <div class="blist" style="margin-top:6px;gap:14px;font-size:26px"><div class="bli">UC Berkeley 쪽 학술/오픈소스 연구 프로젝트가 너무 커져서 회사화된 케이스</div><div class="bli">LLM 평가 문제 해결에서 시작한 프로젝트</div></div>
+        <div class="shot auto" style="position:relative;margin-top:26px"><img src="images/kn_chatbot_arena_paper.jpg" alt="Chatbot Arena: An Open Platform for Evaluating LLMs by Human Preference — 저자 목록 (Wei-Lin Chiang · Anastasios N. Angelopoulos · Ion Stoica 체크)"><img class="pin" src="images/kn_check_mark.png" alt="" style="left:5.7%;top:38.3%;width:5.4%"><img class="pin" src="images/kn_check_mark.png" alt="" style="left:52.4%;top:38.3%;width:5.4%"><img class="pin" src="images/kn_check_mark.png" alt="" style="left:73.5%;top:46.6%;width:5.4%"></div>
+        <div class="cap">1 UC Berkeley · 2 Stanford · 3 UCSD</div>
+      </div>
+    </div>
+  </div>
+  <div class="src">TechCrunch 2026.1.6 · Chiang et al., "Chatbot Arena" 2024</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 032 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap" style="max-width:1500px">
+    <div class="dlabel reveal">CHAPTER</div>
+    <h2 class="reveal">What Do We Design Now?:<br>From Interfaces to Outcomes</h2>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 033 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · NN/g</div>
+  <div class="content" style="">
+    <h2 class="big reveal">60년 만의 새 패러다임 : <em>의도 기반 결과 명세</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:36px"><div class="txt" style="flex:0 0 760px"><div class="para"><b>배치 처리(Batch Processing, 1945)</b> → <b>명령 기반 상호작용(Command based Interaction, 1964)</b> → <b>의도 기반 결과 명세(Intent based Outcome Specification, 2023~)</b>. 휴가 계획을 세우려면 항공권 · 호텔 · 액티비티를 따로 검색하고 날짜를 맞춰야 했다. 이제 사용자는 "어떻게"가 아니라 <b>"무엇을 원하는지"</b>를 말한다.<small>Jakob Nielsen, "AI : First New UI Paradigm in 60 Years"(2023.6). 이 글이 NN/g의 Outcome Oriented Design(2024.3)의 뿌리다.</small></div></div><div class="pic"><div class="shot" style="height:540px;"><img src="images/s1_nielsen_3_paradigms.jpg" alt="Nielsen의 3 패러다임 : 컴퓨터가 "어떻게"를 맡고 사람은 "무엇"을 말한다"></div><div class="cap">Nielsen의 3 패러다임 : 컴퓨터가 "어떻게"를 맡고 사람은 "무엇"을 말한다</div></div></div>
+  </div>
+  <div class="src">Jakob Nielsen, uxtigers.com 2023.6 · NN/g 2024.3</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 034 -->
+<section class="slide ">
+  <div class="toc reveal">왜 지금 · NN/g</div>
+  <div class="content" style="">
+    <h2 class="big reveal">화면이 아니라 <em>결과</em>를 디자인한다</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:36px"><div class="txt" style="flex:0 0 1000px"><div class="quote reveal" style="margin-top:0px"><p>"Orchestrating experience design with a greater focus on <em>user goals and final outcomes</em>, while strategically automating aspects of interaction and interface design."</p><cite>Kate Moran & Sarah Gibbons, NN/g "Generative UI and Outcome Oriented Design" 2024.3</cite></div><div class="para" style="margin-top:30px">항공권 예약이라면 완벽한 검색 필터를 대다수에게 최적화하는 대신, 시스템이 작동할 <b>경계와 좋은 경로의 기준</b>을 정한다. 숲에 하나의 길을 내는 대신 길이 갈 수 있는 범위와 좋은 길의 조건을 정하면, AI가 여행자마다 길을 낸다.<small>"평균을 위한 디자인에서 개인을 위한 디자인으로." 역할은 사라지지 않고 이동한다 : "We’ll need to shift from designing interfaces to designing outcomes."</small></div></div><div class="pic"><div class="shot" style="height:560px;"><img src="images/s1_nng_genui_personalized.jpg" alt="NN/g : 생성형 UI는 사용자마다 다른 화면을 낸다. 디자이너는 그 범위와 기준을 설계한다"></div><div class="cap">NN/g : 생성형 UI는 사용자마다 다른 화면을 낸다. 디자이너는 그 범위와 기준을 설계한다</div></div></div>
+  </div>
+  <div class="src">NN/g 2024.3.22 · 영상 "Outcome Oriented Design : The Era of AI Design" 2026.3</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 035 -->
+<section class="slide">
+  <div class="toc reveal">왜 지금 · 반론 : Jenny Wen 영상 댓글</div>
+  <div class="content" style="top:118px">
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:34px;align-items:start;font-size:19px">
+      <div class="cmt"><div class="shot plain"><img src="images/kn_yt_comment_1.jpg" alt="@kassawashere4171 : Design has always been a not linear process, but you'll understand that properly only with experience. The process has always been a tool box of things you can use if and when they matter" style="height:auto"></div><div class="tr">디자인은 원래부터 선형적인 과정이 아니었다. 다만 그 사실은 경험이 쌓여야 제대로 이해하게 된다. 디자인 프로세스는 언제나, 필요할 때 필요한 것을 꺼내 쓰는 도구상자(toolbox)에 가까웠다.</div></div>
+      <div class="cmt"><div class="shot plain"><img src="images/kn_yt_comment_2.jpg" alt="@paz0r : Teresa Torres has a counter argument: in age of free delivery, you need to spend more on discovery" style="height:auto"></div><div class="tr">Teresa Torres는 이에 대한 반대 주장을 한다. 만드는 비용(delivery)이 거의 공짜가 되는 시대일수록 오히려 discovery에 더 많이 투자해야 한다는 것이다.</div></div>
+      <div class="cmt"><div class="shot plain"><img src="images/kn_yt_comment_4.jpg" alt="@chrisgielow : Unconvincing examples for pushing the 'design with intuition' angle…" style="height:auto"></div><div class="tr">‘직관으로 디자인하자’는 주장을 뒷받침하기에는 제시된 사례들이 설득력이 부족하다. Google Docs나 Miro처럼 이미 성숙한 경쟁 제품을 참고할 수 있는 상황이라면 괜찮을 수도 있다. 하지만 병원의 안전을 개선하거나 더 효율적인 창고관리 시스템을 설계하는 것처럼 진짜 복잡한 문제에는 Design Thinking이 필요하다.</div></div>
+      <div class="cmt"><div class="shot plain" style="width:360px"><img src="images/kn_yt_comment_5.jpg" alt="@ksenyast4316 : Imagine describe this on the design interview 😅" style="height:auto"></div><div class="tr">디자인 면접에서 이 철학을 설명한다고 상상해봐.&nbsp;😅</div></div>
+    </div>
+    <div class="reveal cmt" style="display:flex;gap:40px;margin-top:34px;align-items:center;background:var(--soft);border-radius:20px;padding:26px 30px">
+      <div class="shot plain" style="flex:0 0 260px"><img src="images/kn_yt_comment_3.jpg" alt="@figliodimercurio : Dismissing process undermines decades of progress that established design as a strategic function rather than a decorative one…" style="height:auto"></div>
+      <div class="tr" style="margin-top:0;flex:1;font-size:21px;line-height:1.6">프로세스를 가볍게 무시하는 것은 디자인을 단순한 장식이 아니라 전략적 기능으로 자리 잡게 만든 수십 년간의 발전을 훼손하는 일이다. AI가 등장했다고 해서 엄격한 문제 정의(problem framing)의 필요성이 사라지는 것은 아니다. 오히려 실행 속도가 빨라질수록 잘못된 문제를 더 빠르게 해결해버리는 비용이 커진다. 이런 주장은 디자이너와 업계 전체에 위험할 수 있다. 디자인 프로세스를 “헛소리(BS)”라고 부르고 문제보다 솔루션에서 시작해야 한다고 말하는 것은 진보가 아니라 오히려 퇴보다. 디자인이 조직에서 전략적 자리를 얻을 수 있었던 것은 미적 감각과 직관을 넘어섰기 때문이다. ….</div>
+    </div>
+  </div>
+  <div class="src">YouTube 댓글 · Jenny Wen "The design process is dead" (Lenny’s Podcast)</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 036 -->
+<section class="slide">
+  <div class="toc reveal">What Do We Design Now · 세 가지 접근</div>
+  <svg class="reveal" viewBox="0 0 1920 1080" width="1920" height="1080" style="position:absolute;inset:0;max-width:none;max-height:none">
+    <g font-family="'Pretendard Variable',Pretendard,-apple-system,sans-serif" font-weight="800" fill="#502579" text-anchor="middle" letter-spacing="-1">
+      <text x="960" y="335" font-size="56">User-Centered Design</text>
+      <text x="470" y="698" font-size="56">Solution-First Design</text>
+      <text x="1450" y="698" font-size="56">Outcome-Oriented Design</text>
+    </g>
+    <line x1="649.8" y1="561.3" x2="744.2" y2="436.7" stroke="#502579" stroke-width="16" stroke-linecap="round"/><polygon points="622.0,598.0 668.9,575.8 630.6,546.8" fill="#502579"/><polygon points="772.0,400.0 763.4,451.2 725.1,422.2" fill="#502579"/><line x1="1276.4" y1="562.0" x2="1176.6" y2="436.0" stroke="#502579" stroke-width="16" stroke-linecap="round"/><polygon points="1305.0,598.0 1295.2,547.0 1257.6,576.9" fill="#502579"/><polygon points="1148.0,400.0 1195.4,421.1 1157.8,451.0" fill="#502579"/><line x1="898.0" y1="678.0" x2="984.0" y2="678.0" stroke="#502579" stroke-width="16" stroke-linecap="round"/><polygon points="852.0,678.0 898.0,702.0 898.0,654.0" fill="#502579"/><polygon points="1030.0,678.0 984.0,702.0 984.0,654.0" fill="#502579"/>
+  </svg>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 037 -->
+<section class="slide s-hero">
+  <div class="hero"><img src="images/kn_blindfolded_judge_dog.jpg" alt="눈을 가린 심판 개와 저울"></div>
+  <div class="ht reveal">What Does “Good” Mean Now?</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 038 -->
+<section class="slide">
+  <div class="toc reveal">좋음의 기준 · Confusion Matrix</div>
+  <div class="content">
+    <h2 class="big reveal">모델은 얼마나 정확한가? <em>어떻게 맞고 틀릴까?</em></h2>
+    <div class="split reveal" style="gap:50px;margin-top:24px;align-items:center">
+      <div class="txt" style="flex:0 0 860px"><div class="blist" style="margin-top:0;gap:20px;font-size:25px">
+        <div class="bli"><b>Confusion Matrix</b>: 분류 모델이 얼마나 정확하게 판단했는지를 보여주는 매트릭스</div>
+        <div class="bli"><b>True/False</b>: 모델의 판단이 맞았는지 틀렸는지</div>
+        <div class="bli"><b>Positive/Negative</b>: 모델이 무엇이라고 예측했는지</div>
+        <div class="bli"><b>정확도 (Accuracy)</b> = 맞춘 예측 수 / 전체 예측 수 = (TP+TN) / (TP+TN+FP+FN)</div>
+        <div class="bli">두 종류의 실수(FP, FN)는 <b>비용이 다르다.</b> 어느 쪽이 더 나쁜지는 도메인 전문가가 정한다.</div>
+      </div></div>
+      <div class="pic"><div style="position:relative;width:790px"><img src="images/kn_confusion_matrix.jpg" alt="Confusion Matrix : Actually Positive/Negative × Predicted Positive/Negative" style="width:100%;height:auto;display:block">
+        <span class="chip" style="left:37%;width:27.5%;top:50%;height:9.5%">암을 암이라 진단</span>
+        <span class="chip" style="left:67.7%;width:27.5%;top:50%;height:9.5%">정상을 암 진단</span>
+        <span class="chip red" style="left:37%;width:27.5%;top:83%;height:9.5%">암을 정상으로 진단</span>
+        <span class="chip" style="left:67.7%;width:27.5%;top:83%;height:9.5%">정상을 정상으로 진단</span>
+      </div></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 039 -->
+<section class="slide">
+  <div class="toc reveal">좋음의 기준 · Precision · Recall</div>
+  <div class="content">
+    <h2 class="big reveal">정밀도와 재현율 : <em>“잡은 것 중 진짜”</em>와 <em>“진짜 중 잡은 것”</em></h2>
+    <div class="split reveal" style="gap:50px;margin-top:24px;align-items:center">
+      <div class="txt" style="flex:0 0 860px"><div class="blist" style="margin-top:0;gap:18px;font-size:25px">
+        <div class="bli"><b>정밀도 (Precision)</b>: 양성이라고 예측한 것 중 실제 양성의 비율.<small>예: 암이라고 진단한 사람 중 실제 암 환자의 % = TP / (TP+FP)</small></div>
+        <div class="bli"><b>재현율 (Recall)</b>: 실제 양성 중 양성이라고 예측한 비율.<small>예: 실제 암 환자 중 암이라고 진단된 % = TP / (TP+FN)</small></div>
+        <div class="bli"><b>F1 점수</b>: 정밀도와 재현율의 균형 = 2 × 정밀도 × 재현율 / (정밀도 + 재현율)</div>
+        <div class="bli">정밀도는 <b>“헛다리를 얼마나 안 짚는가”</b>, 재현율은 <b>“놓치는 게 얼마나 없는가”</b>.</div>
+      </div></div>
+      <div class="pic"><div style="position:relative;width:790px"><img src="images/kn_confusion_matrix.jpg" alt="Confusion Matrix : Actually Positive/Negative × Predicted Positive/Negative" style="width:100%;height:auto;display:block">
+        <span class="chip" style="left:37%;width:27.5%;top:50%;height:9.5%">암을 암이라 진단</span>
+        <span class="chip" style="left:67.7%;width:27.5%;top:50%;height:9.5%">정상을 암 진단</span>
+        <span class="chip red" style="left:37%;width:27.5%;top:83%;height:9.5%">암을 정상으로 진단</span>
+        <span class="chip" style="left:67.7%;width:27.5%;top:83%;height:9.5%">정상을 정상으로 진단</span>
+      </div></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 040 -->
+<section class="slide">
+  <div class="toc reveal">좋음의 기준 · 정확도 vs 신뢰</div>
+  <div class="content">
+    <h2 class="big reveal">더 정확한 AI와 <em>더 믿을 수 있는 AI</em>는 같은가?</h2>
+    <div class="reveal" style="display:flex;justify-content:center;margin-top:60px"><div class="shot auto dark" style="width:1240px;background:#15202B;border-color:#2b3a4a"><img src="images/kn_hinton_tweet.jpg" alt="Geoffrey Hinton (@geoffreyhinton), 2020.2.21 : Suppose you have cancer and you have to choose between a black box AI surgeon that cannot explain how it works but has a 90% cure rate and a human surgeon with an 80% cure rate. Do you want the AI surgeon to be illegal?" style="background:#15202B"></div></div>
+  </div>
+  <div class="src">Geoffrey Hinton, @geoffreyhinton · 2020.2.21</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 041 -->
+<section class="slide">
+  <div class="toc reveal">좋음의 기준 · Safety &amp; Reliability</div>
+  <div class="content">
+    <h2 class="big reveal">Safety &amp; Reliability</h2>
+    <div class="split reveal" style="gap:60px;margin-top:24px;align-items:flex-start">
+      <div class="txt" style="flex:0 0 900px"><div class="blist" style="margin-top:0;gap:18px;font-size:25px">
+        <div class="bli">실제로는 사람인데 고릴라라고 예측했으므로, ‘고릴라’ 클래스에서 발생한 <b>False Positive</b></div>
+        <div class="bli"><b>정확도의 함정</b>: 전체 사진에서 정확도가 99.9%여도 특정 집단에서 심각한 오류가 발생한다면 안전한 모델이라고 할 수 없음.</div>
+        <div class="bli"><b>모든 오류의 비용은 같지 않다!</b></div>
+        <div class="bli">Google은 ‘gorilla’, ‘chimpanzee’, ‘monkey’ 등의 분류 자체를 중단. 유해한 FP를 막았지만 실제 고릴라도 찾지 못하게 만들어 Recall을 희생한 임시 안전조치</div>
+        <div class="bli"><b>“무엇을, 누구에게, 얼마나 위험하게 틀렸는가?”</b></div>
+      </div></div>
+      <div class="pic"><div class="shot auto"><img src="images/kn_google_photos_gorilla.jpg" alt="Google Photos가 친구를 'Gorillas'로 분류했다는 @jackyalcine의 트윗 (2015)"></div></div>
+    </div>
+  </div>
+  <div class="src">@jackyalcine, Twitter 2015.6 · Google Photos</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 042 -->
+<section class="slide ">
+  <div class="toc reveal">워크샵 · 잘 되고 있는지 어떻게 알까</div>
+  <div class="content" style="">
+    <h2 class="big reveal">생성 AI는 <em>"말이 되게"</em> 틀린다</h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:36px"><div class="txt" style="flex:0 0 900px"><div class="para"><b>환각률 · 출처 정확도</b> : 생성 AI가 자신 있게 지어낸 비율. 틀려도 오류 메시지가 뜨지 않는다. 문장은 매끄럽고, 숫자는 그럴듯하고, 출처는 존재하지 않는다.<small>Google Deep Research · Perplexity가 각 문장에 출처를 붙이는 이유. 링크가 있어도 그 링크가 그 말을 하는지는 또 다른 문제다.</small></div>
+  <div class="oneliner" style="margin-top:30px">우리 앱이 지어내면 <b>사용자는 알아차릴 수 있나?</b> 출처를 붙일 수 있나? 확인할 수 없는 답은 답이 아니다.</div></div><div class="pic"><div class="shot cover" style="height:520px;"><img src="images/ui_h_liner_search_citations.webp" alt="라이너 AI 검색 : 문장마다 출처 번호와 인용 원문. 출처가 곧 검증 가능성이다"></div><div class="cap">라이너 AI 검색 : 문장마다 출처 번호와 인용 원문. 출처가 곧 검증 가능성이다</div></div></div>
+  </div>
+  <div class="src">2장 · 2.4 지표 6칸 · 3 환각률 · 출처 정확도</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 043 -->
+<section class="slide">
+  <div class="toc reveal">좋음의 기준 · 할루시네이션</div>
+  <div class="content">
+    <h2 class="big reveal">할루시네이션이 <em>엔진</em>이 되기도 한다</h2>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px;width:1280px;align-self:center">
+      <div class="shot dark" style="height:355px"><img src="images/kn_zeta_interview_1.jpg" alt="제타의 모든 콘텐츠는 할루시네이션이에요"></div>
+      <div class="shot dark" style="height:355px"><img src="images/kn_zeta_interview_2.jpg" alt="LLM의 창의성과 통제할 수 없음을"></div>
+      <div class="shot dark" style="height:355px"><img src="images/kn_zeta_interview_3.jpg" alt="극도로 활용을 하고 있는 거고"></div>
+      <div class="shot dark" style="height:355px"><img src="images/kn_zeta_interview_4.jpg" alt="제타 채팅 화면 : 내러티브의 전개를 전적으로 결정하는"></div>
+    </div>
+  </div>
+  <div class="src">EO 인터뷰 · 스캐터랩 (제타)</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 044 -->
+<section class="slide">
+  <div class="toc reveal">좋음의 기준 · 행동 변화</div>
+  <div class="content">
+    <h2 class="big reveal">인터랙션이 얼마나 <em>행동 변화</em>를 유도하는가?</h2>
+    <div class="lede reveal">원작 소비로의 선순환 : 웹툰 열람 회차수 97%, 결제액 44% 증가</div>
+    <div class="split reveal" style="gap:36px;margin-top:20px;align-items:flex-end">
+      <div class="pic" style="flex:0 0 1110px"><div class="shot" style="height:660px"><img src="images/kn_zeta_webtoon_chat.jpg" alt="제타 : 웹툰 캐릭터 '설효림'과의 채팅 화면 3장"></div></div>
+      <div style="flex:1;display:flex;justify-content:flex-end"><img src="images/kn_zeta_character_art.png" alt="설효림 캐릭터 일러스트" style="height:700px;width:auto;max-width:none"></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 045 -->
+<section class="slide">
+  <div class="toc reveal">좋음의 기준 · 행동 변화</div>
+  <div class="content">
+    <h2 class="big reveal">인터랙션이 얼마나 <em>행동 변화</em>를 유도하는가?</h2>
+    <div class="reveal" style="position:relative;flex:1;margin-top:10px">
+      <div class="shot pin" style="left:25px;top:24px;width:369px;height:800px"><img src="images/kn_zeta_screen_1.jpg" alt="제타 채팅 : 캐릭터가 보낸 웹툰 《별이삼샵》 124화 링크"></div>
+      <div class="shot pin" style="left:420px;top:6px;width:369px;height:800px"><img src="images/kn_zeta_screen_2.jpg" alt="네이버웹툰 《별이삼샵》 124화 화면"></div>
+      <div class="shot pin" style="left:1070px;top:6px;width:369px;height:800px"><img src="images/kn_zeta_screen_3.jpg" alt="제타 채팅 : 립글로즈 · 쿠션 추천 대화"></div>
+      <div class="pin" style="left:62px;top:280px;width:239px;height:274px;border:6px solid #E5261C;border-radius:22px;box-sizing:border-box"></div>
+      <svg class="pin" style="left:0;top:0;max-width:none;max-height:none" width="1700" height="840" viewBox="0 0 1700 840"><path d="M 302 296 C 330 170, 372 110, 418 62" fill="none" stroke="#E5261C" stroke-width="9" stroke-linecap="round"/><polygon points="424,44 396,76 438,84" fill="#E5261C"/></svg>
+      <img class="pin" src="images/kn_peripera_tint.jpg" alt="페리페라 잉크 무드 글로위 틴트" style="left:1478px;top:56px;width:250px;border-radius:12px">
+      <img class="pin" src="images/kn_clio_cushion.jpg" alt="클리오 킬 커버 쿠션" style="left:1430px;top:372px;width:348px;transform:rotate(-10deg);border-radius:12px">
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 046 -->
+<section class="slide">
+  <div class="toc reveal">좋음의 기준 · Engagement</div>
+  <div class="content">
+    <h2 class="big reveal">Engagement! 제타, <em>하루 평균 2시간 40분</em>, 87% 10 · 20대</h2>
+    <div class="reveal" style="display:flex;gap:26px;margin-top:26px;align-items:flex-end">
+      <div class="shot" style="width:295px;height:640px;flex:none"><img src="images/kn_zeta_app_1.jpg" alt="제타 홈 : 랭킹 · 퀴즈 · 캐릭터 목록"></div>
+      <div class="shot" style="width:295px;height:640px;flex:none"><img src="images/kn_zeta_app_2.jpg" alt="제타 캐릭터 상세 : 나탈리에"></div>
+      <div class="shot" style="width:313px;height:640px;flex:none"><img src="images/kn_zeta_app_3.jpg" alt="제타 채팅 : 클라리스 (1)"></div>
+      <div class="shot" style="width:316px;height:640px;flex:none"><img src="images/kn_zeta_app_4.jpg" alt="제타 채팅 : 클라리스 (2)"></div>
+      <div style="flex:1;display:flex;justify-content:flex-end"><div class="shot auto" style="width:360px"><img src="images/kn_zeta_meme_baby.jpg" alt="“나는 ○○시다.” 밈"></div></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 047 -->
+<section class="slide">
+  <div class="toc reveal">좋음의 기준 · 매출</div>
+  <div class="content">
+    <h2 class="big reveal" style="font-size:54px">매출, 매출..! <em>10년 만의 흑자 전환</em> (매출 267억, 영업이익 28억)</h2>
+    <div class="split reveal" style="gap:50px;margin-top:22px;align-items:flex-start">
+      <div class="txt" style="flex:0 0 760px;display:flex;gap:26px;align-items:center">
+        <div style="flex:0 0 430px"><div class="shot auto"><img src="images/kn_scatterlab_revenue.jpg" alt="스캐터랩 매출액 2021–2025 (단위 : 천 원)"></div><div class="shot auto" style="margin-top:14px"><img src="images/kn_scatterlab_profit.jpg" alt="스캐터랩 영업이익 2021–2025 (단위 : 천 원)"></div></div>
+        <div class="oneliner" style="margin-top:0;flex:1;padding:18px 20px;font-size:24px;line-height:1.4">일본 매출 26’<br><b>200억 예상</b></div>
+      </div>
+      <div class="pic" style="flex:1;display:flex;justify-content:flex-end"><div class="shot auto" style="position:relative;width:780px"><img src="images/kn_korea_ai_app_top10.jpg" alt="2026년 1분기 한국 시장 생성형 AI 앱 TOP 10 : 매출 · 활성 사용자 · 웹사이트 방문 수 순위 (Sensor Tower)"><span class="chip" style="left:25%;top:79.5%;width:auto;height:auto;padding:4px 14px;font-size:22px;background:rgba(255,255,255,.94);color:var(--brand);border:2px solid var(--brand)">클링</span></div></div>
+    </div>
+  </div>
+  <div class="src">Sensor Tower · 2026년 1분기 한국 시장 생성형 AI 앱 TOP 10</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 048 -->
+<section class="slide">
+  <div class="toc reveal">좋음의 기준 · 매출</div>
+  <div class="content">
+    <h2 class="big reveal">매출, 매출, <em>매출</em>..!</h2>
+    <div class="split reveal" style="gap:70px;margin-top:22px;align-items:center">
+      <div class="pic" style="flex:0 0 880px;position:relative"><div class="shot auto"><img src="images/kn_36kr_luo_yonghao.jpg" alt="36Kr (2025.6.16) : 罗永浩用 AI 带货发财了，一晚狂卖5500万，行业大为震惊"></div>
+        <div class="oneliner" style="position:absolute;left:26px;right:26px;top:19%;margin:0;padding:16px 24px;font-size:24px;line-height:1.45;background:rgba(80,37,121,.94);box-shadow:0 10px 30px rgba(0,0,0,.25)">뤄융하오, AI로 ‘대박’ 터뜨리다<br>하룻밤에 5,500만 위안(110억 원) 판매… 업계가 충격에 빠졌다</div></div>
+      <div class="txt" style="flex:1">
+        <div class="stat-k">중국 AI 쇼호스트 (24’)</div>
+        <div class="stat-big" style="margin-top:12px">10만+ <span class="u">개</span></div>
+        <div class="stat-k" style="margin-top:48px">매출 (25’)</div>
+        <div class="stat-big" style="margin-top:12px">6,400억<span class="u">위안</span></div>
+        <div style="font-size:26px;color:var(--dim);margin-top:12px;text-align:right;font-family:var(--mono)">≈ 1,331조 원</div>
+      </div>
+    </div>
+  </div>
+  <div class="src">36Kr 2025.6.16</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 049 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap">
+    <div class="dlabel reveal">CASES</div>
+    <h2 class="reveal">AI 시대에 회사들은<br>실제로 어떻게 제품을 만드는가</h2>
+    <div class="dsub reveal">철학 인용이 아니라 기능의 전기(feature biography)를 따라간다. 빅테크 · 스타트업 · 한국의 30여 개 사례를 같은 6칸으로 읽는다. 워크샵에서 여러분이 돈 루프가 바로 이것이다.</div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 050 -->
+<section class="slide ">
+  <div class="toc reveal">회사들은 어떻게 · 보는 법</div>
+  <div class="content" style="">
+    <h2 class="big reveal">모든 사례를 <em>같은 6칸</em>으로 읽는다</h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 1000px"><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">어디서 시작했나 : 사용자 문제 / 모델 역량 / 내부 아이디어</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">무엇을 가장 먼저 작동하게 만들었나, 며칠 걸렸나</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">누가 먼저 썼나 : 사내 · trusted tester · research preview · 공개</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">무엇을 신호로 봤나 : 반응 · 사용 · 결제 · eval · 예상 밖 사용</div></div><div class="b"><div class="k">ITERATION</div><div class="v">무엇이 바뀌었나</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">어느 surface에 정식으로 들어갔나</div></div></div></div><div class="pic"><div class="qblock" style="margin-top:0">
+      <div class="qrow"><div class="qk">A</div><div class="qv"><b>Capability First</b> : 새 모델 역량 → 프로토타입 → 사용 관찰 → 제품</div></div>
+      <div class="qrow"><div class="qk">B</div><div class="qv"><b>Prototype First</b> : 설명 대신 작동물 → 사내 반응 → 도그푸딩 → 제품</div></div>
+      <div class="qrow"><div class="qk">C</div><div class="qv"><b>Usage Discovery</b> : 일단 공개 → 실제 사용에서 의미 발견 → 재정의</div></div>
+    </div><div class="cap" style="margin-top:16px">세 패턴은 회사 유형이 아니라 <b>한 기능이 루프의 어느 지점에서 출발했는가</b>다. 대부분은 두 패턴 이상에 걸친다(Operator는 A → C).</div></div></div>
+  </div>
+  <div class="src">3장 · 3.0 · Feature Biography 프레임</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 051 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap">
+    <div class="dlabel reveal">PATTERN A</div>
+    <h2 class="reveal">Capability First :<br>역량이 먼저 나오고 제품을 찾는다</h2>
+    <div class="dsub reveal">새 모델 역량 → 연구 프로토타입 → 신뢰 테스터 → 제품 surface. 요구사항 문서가 아니라 역량이 출발점이다.</div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 052 -->
+<section class="slide ">
+  <div class="toc reveal">Capability First · Google</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Project Astra → Gemini Live : <em>모델 역량 → 연구 프로토타입 → 신뢰 테스터 → 제품</em></h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">A</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">Gemini 1.5의 실시간 멀티모달 · 스트리밍 오디오. 2024.5 I/O에서 "universal AI agent" <b>연구 프로토타입</b>으로 공개</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">무대 데모용 폰 앱 + 프로토타입 글래스 영상</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">2024 하반기 Android trusted testers. "helped us better understand how a universal AI assistant could work in practice, including implications for safety and ethics"</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">지연 · 메모리 · 언어 혼용 · 안전에 대한 테스터 피드백</div></div><div class="b"><div class="k">ITERATION</div><div class="v">Gemini Live 음성(2024.8) → 카메라 · 화면 공유(2025.3)</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">I/O 2025 "universal AI assistant". Astra 팀은 Gemini 앱 조직으로 합류</div></div></div><div class="oneliner">요구사항 문서가 아니라 <b>모델 역량 → 연구 프로토타입 → 신뢰 테스터 → 제품 surface</b>의 흐름.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/s2a_gemini_live_camera_2025.jpg" alt="Gemini Live 카메라 · 화면 공유(2025.3). I/O 2024의 연구 프로토타입이 1년 뒤 제품 surface가 됐다"></div><div class="cap">Gemini Live 카메라 · 화면 공유(2025.3). I/O 2024의 연구 프로토타입이 1년 뒤 제품 surface가 됐다</div></div></div>
+  </div>
+  <div class="src">Google DeepMind blog 2024.5 · 2024.12 · I/O 2025</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 053 -->
+<section class="slide ">
+  <div class="toc reveal">Capability First · OpenAI</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Operator → ChatGPT agent : <em>출시가 곧 field research</em></h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">A</span><span class="tag dark">→ C</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">스크린샷을 보고 클릭 · 타이핑하는 Computer Using Agent 모델</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">2025.1.23 Operator, 자체 브라우저를 띄우는 단독 웹앱</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">미국 Pro($200) 가입자 한정. Instacart · DoorDash 등 파트너</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">2025.7 ChatGPT agent 발표문 : "<b>many queries users attempted with Operator were actually better suited for deep research</b>"</div></div><div class="b"><div class="k">ITERATION</div><div class="v">사용자가 잘못된 도구로 시도했다는 사용 데이터가 통합의 방아쇠</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">Operator + deep research + 대화를 합친 ChatGPT agent. 단독 사이트 종료</div></div></div><div class="oneliner">역량을 작은 surface에 격리해 실제 세계에서 실패를 수집한 뒤 통합. <b>출시가 field research instrument</b>.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_b_operator_tripadvisor.jpg" alt="Operator(2025.1) : 자체 브라우저를 띄우는 단독 웹앱. "It is currently a research preview … will evolve based on user feedback""></div><div class="cap">Operator(2025.1) : 자체 브라우저를 띄우는 단독 웹앱. "It is currently a research preview … will evolve based on user feedback"</div></div></div>
+  </div>
+  <div class="src">OpenAI "Introducing Operator" 2025.1 · "Introducing ChatGPT agent" 2025.7</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 054 -->
+<section class="slide ">
+  <div class="toc reveal">Capability First · Google → OpenAI</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Deep Research : <em>비동기 장시간 작업</em>이라는 새 제품 형태</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">A</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">롱호라이즌 추론 + 도구 사용. Google이 먼저(2024.12), OpenAI(2025.2, o3 기반), Perplexity · Anthropic(2025.4)</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">계획 승인 UI + 진행 로그. "몇 분 동안 조사하고 보고서를 쓰는" 별도 behavior</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">Gemini Advanced / OpenAI Pro 100회 · 월 → Plus → Free로 단계적 확대</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">"It accomplishes in tens of minutes what would take a human many hours." 벤치마크 + 사용량</div></div><div class="b"><div class="k">ITERATION</div><div class="v">Operator의 사용자들이 이 도구로 흘러온 것(A2)</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">즉답 챗봇 옆에 "기다리는 작업"이라는 두 번째 제품 형태가 생겼다</div></div></div><div class="oneliner">즉답이 아니라 <b>기다릴 가치가 있는 답</b>. 역량(롱호라이즌 추론 + 도구)이 새로운 인터랙션 형태를 만들었다.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/s2a_google_deep_research.jpg" alt="Google Deep Research(2024.12.11) : 질문 → 리서치 계획 제시 · 승인 → 반복 브라우징 → 출처 포함 보고서. Gemini의 "first agentic feature""></div><div class="cap">Google Deep Research(2024.12.11) : 질문 → 리서치 계획 제시 · 승인 → 반복 브라우징 → 출처 포함 보고서. Gemini의 "first agentic feature"</div></div></div>
+  </div>
+  <div class="src">Google blog 2024.12.11 · OpenAI "Introducing deep research" 2025.2.2</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 055 -->
+<section class="slide ">
+  <div class="toc reveal">Capability First · Adobe</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Generative Fill : 역량을 <em>가장 오래된 primitive</em>에 붙였다</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">A</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">상업적으로 안전한 데이터로 학습한 자체 이미지 모델 Firefly(2023.3 웹 베타, 6주 만에 1억 에셋)</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">새 AI 앱이 아니라 <b>Photoshop의 선택 영역에 프롬프트를 붙인 것</b></div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">Photoshop(beta) 공개 → 2023.9 MAX에서 GA</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">크리에이터의 실제 행동 : 확장 · 제거 · 합성 중 무엇을 반복하는가</div></div><div class="b"><div class="k">ITERATION</div><div class="v">Generative Expand, 레퍼런스 이미지, 비파괴 레이어</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">Photoshop 본체의 기본 기능. "create as quickly as you can type"(Pam Clark)</div></div></div><div class="oneliner">역량을 기존 워크플로 한복판에 삽입하고 크리에이터의 실제 행동을 본다. 새 앱을 만들지 않았다.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_d_generative_fill_taskbar_brown.jpg" alt="Photoshop Generative Fill(2023.5 베타) : 선택 영역 + 프롬프트. 원근 · 조명 자동 매칭, 별도 레이어, 프롬프트당 3개 변형"></div><div class="cap">Photoshop Generative Fill(2023.5 베타) : 선택 영역 + 프롬프트. 원근 · 조명 자동 매칭, 별도 레이어, 프롬프트당 3개 변형</div></div></div>
+  </div>
+  <div class="src">Adobe blog 2023.5.23 · MAX 2023</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 056 -->
+<section class="slide ">
+  <div class="toc reveal">Capability First · Anthropic</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Claude Code : 역량은 이미 있었다, <em>제품이 없었을 뿐</em></h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">A</span><span class="tag dark">B</span><span class="tag dark">사내 C</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">새 모델 공개가 아니다. Boris Cherny가 공개 API로 "이상한 프로토타입"을 만들다 <b>Bash 도구 하나를 주자 모델이 스스로 코드를 써서 답을 찾는 것</b>을 봤다. "pure product overhang"</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">터미널 CLI. 첫 버전은 AppleScript로 지금 듣는 음악을 알아내는 장난감</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">Slack 게시 → "좋아요 2개". 2024.11 전사 도그푸딩 → <b>첫날 20%, 5일 만에 50%</b></div></div><div class="b"><div class="k">SIGNAL</div><div class="v">채택 곡선. 인원 2배에 PR 처리량 67% 증가</div></div><div class="b"><div class="k">ITERATION</div><div class="v">TODO 리스트 UI만 20여 회. "새 모델이 나올 때마다 코드를 한 뭉치씩 지운다"</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">2025.2 limited research preview → 2025.5 Claude 4와 함께 폭발 → 2026.1 Cowork(10일 만에 제작)</div></div></div><div class="oneliner">A로 분류했지만 경로는 B(작동물 먼저) + 사내 C(사용에서 용도 발견). <b>패턴은 회사 유형이 아니라 루프</b>라는 것을 가장 잘 보여준다.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_c_claude_code_permission_prompt.jpg" alt="Claude Code의 권한 프롬프트 : 파일을 지우기 전에 묻는다. 터미널이 "모델 진화 속도를 따라갈 수 있는 유일한 폼팩터"였다"></div><div class="cap">Claude Code의 권한 프롬프트 : 파일을 지우기 전에 묻는다. 터미널이 "모델 진화 속도를 따라갈 수 있는 유일한 폼팩터"였다</div></div></div>
+  </div>
+  <div class="src">Boris Cherny 인터뷰 2025 · Anthropic 2025.2 · 2026.1</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 057 -->
+<section class="slide ">
+  <div class="toc reveal">Capability First · 스타트업</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Bolt.new : <em>남의 모델 출시일</em>이 곧 기획 시작일</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">A</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">2024.2 첫 시도는 모델이 만든 코드가 못 쓸 수준이라 <b>2주 만에 접음</b>. 2024.5 Claude 3.5 Sonnet 사전 접근 : "it spat out code that not only worked for zero shot but was beautiful"</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">7.1 제품화 결정 → 90일 빌드</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">10.1 트윗 스레드 하나로 런칭</div></div><div class="b"><div class="k">SIGNAL</div><div class="v"><b>결제</b> : 4주 $4M ARR, 2개월 $20M</div></div><div class="b"><div class="k">ITERATION</div><div class="v">15~20명, 직전까지 회사를 접을지 논의하던 팀</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">핵심 역량은 코드가 아니라 <b>모델 임계점 감지</b></div></div></div><div class="oneliner">같은 아이디어가 2월엔 실패하고 5월엔 성공했다. 달라진 것은 팀이 아니라 모델이었다.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_g_bolt_plan_mode_homepage.jpg" alt="Bolt.new : 프롬프트 → 앱. 2024.10.1 트윗 스레드 하나로 런칭"></div><div class="cap">Bolt.new : 프롬프트 → 앱. 2024.10.1 트윗 스레드 하나로 런칭</div></div></div>
+  </div>
+  <div class="src">StackBlitz 창업자 인터뷰 2024~2025</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 058 -->
+<section class="slide ">
+  <div class="toc reveal">Capability First · 스타트업</div>
+  <div class="content" style="">
+    <h2 class="big reveal">역량이 <em>회사 정체성</em>을 바꾼다 : Wispr · Photo AI · Suno</h2>
+    
+    <div class="gal reveal" style="margin-top:20px"><div class="g"><div class="shot cover" style="height:470px;"><img src="images/st_wispr_flow.jpg" alt="Wispr Flow : 3년 만든 무음 발화 웨어러블의 "소프트웨어 레이어"가 그 자체로 충분히 좋다는 발견. 하드웨어 폐기, 40명 → 5명, 6주 스프린트로 맥 딕테이션 앱(2024.10)"></div><div class="cap">Wispr Flow : 3년 만든 무음 발화 웨어러블의 "소프트웨어 레이어"가 그 자체로 충분히 좋다는 발견. 하드웨어 폐기, 40명 → 5명, 6주 스프린트로 맥 딕테이션 앱(2024.10)</div></div><div class="g"><div class="shot cover" style="height:470px;"><img src="images/ui_g_photoai_app_preview.jpg" alt="Pieter Levels : Stable Diffusion 공개 2개월 안에 Interior AI → Avatar AI → Photo AI 3개 제품. Avatar AI 1주 $150K → Lensa가 피처로 흡수 → 실용(Photo AI)으로 피봇"></div><div class="cap">Pieter Levels : Stable Diffusion 공개 2개월 안에 Interior AI → Avatar AI → Photo AI 3개 제품. Avatar AI 1주 $150K → Lensa가 피처로 흡수 → 실용(Photo AI)으로 피봇</div></div><div class="g"><div class="shot cover" style="height:470px;"><img src="images/ui_g_suno_launch_site_2023.jpg" alt="Suno(A → C) : 2023.4 오픈소스 TTS 모델 Bark → Discord에서 "people were trying to pull music out of a text to speech model" → 음악으로 전환, 2023.12 웹앱, 2026.2 ARR $300M"></div><div class="cap">Suno(A → C) : 2023.4 오픈소스 TTS 모델 Bark → Discord에서 "people were trying to pull music out of a text to speech model" → 음악으로 전환, 2023.12 웹앱, 2026.2 ARR $300M</div></div></div><div class="keep reveal" style="margin-top:26px;font-size:23px;">Wispr의 C 발견 : 앱 안에서만 써 본 사용자는 떠나고, 이메일 · 슬랙 등 "원래 글을 쓰던 곳"에서 쓴 사용자만 남는다 → 온보딩을 "데모 밖으로 내보내는" 구조로 개편. "I launch it very quickly, within two weeks or something."(Levels)</div>
+  </div>
+  <div class="src">Wispr 인터뷰 2024 · levels.io · Suno 인터뷰 2024</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 059 -->
+<section class="slide ">
+  <div class="toc reveal">Capability First · 한국</div>
+  <div class="content" style="">
+    <h2 class="big reveal">라이너 · Vrew : 역량을 먼저 확보하고 <em>용도는 사용에서</em> 찾았다</h2>
+    
+    <div class="gal reveal" style="margin-top:20px"><div class="g"><div class="shot cover" style="height:520px;"><img src="images/ui_h_liner_search_citations.webp" alt="라이너(A → C) : 8년 된 하이라이터가 ChatGPT 이후 6개월간 사용 데이터를 분석한 뒤 AI 검색으로 전환(2023.2 출시, 8월 전환 완료). 8년치 하이라이트가 답변 품질의 자산. "AI는 찾는 도구에서 일하는 도구로""></div><div class="cap">라이너(A → C) : 8년 된 하이라이터가 ChatGPT 이후 6개월간 사용 데이터를 분석한 뒤 AI 검색으로 전환(2023.2 출시, 8월 전환 완료). 8년치 하이라이트가 답변 품질의 자산. "AI는 찾는 도구에서 일하는 도구로"</div></div><div class="g"><div class="shot" style="height:520px;"><img src="images/kr_vrew.jpg" alt="보이저엑스 Vrew : 음성인식을 먼저 확보하고 대표가 직접 유튜브를 만들어 보며 자막 · 컷 편집이라는 용도를 찾음. 초기 사용자 : "보이저엑스 망하지 않게 빨리 유료화해 달라""></div><div class="cap">보이저엑스 Vrew : 음성인식을 먼저 확보하고 대표가 직접 유튜브를 만들어 보며 자막 · 컷 편집이라는 용도를 찾음. 초기 사용자 : "보이저엑스 망하지 않게 빨리 유료화해 달라"</div></div></div>
+  </div>
+  <div class="src">라이너 · 보이저엑스 인터뷰</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 060 -->
+<section class="slide ">
+  <div class="toc reveal">Capability First · 요약</div>
+  <div class="content" style="">
+    <h2 class="big reveal">"능력이 있다"는 <em>"쓸모가 있다"</em>가 아니다</h2>
+    
+    <div class="quote reveal" style="margin-top:30px"><p>"Capability is not valuable. The question isn’t <em>‘can the model do this?’</em> but <em>‘does this solve a real problem better than alternatives?’</em>"</p><cite>LeadDev 2026</cite></div><div class="keep reveal" style="margin-top:44px;font-size:27px;">출발은 역량이지만 <b>모두 trusted tester · preview · 도그푸딩 · 사용 데이터로 돌아온다.</b> Astra는 테스터에게, Operator는 Pro 사용자에게, Claude Code는 사내 엔지니어에게, Bolt는 결제에게 물었다.</div>
+  </div>
+  <div class="src">3장 · A 패턴 요약</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 061 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap">
+    <div class="dlabel reveal">PATTERN B</div>
+    <h2 class="reveal">Prototype First :<br>설명보다 먼저 작동하는 것을 만든다</h2>
+    <div class="dsub reveal">첫 아티팩트가 며칠~몇 주, 1~5명. 설명 대신 작동물 → 사내 반응 → 도그푸딩 → 제품. 미국의 트위터 런칭 = 한국의 카카오톡 채널.</div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 062 -->
+<section class="slide ">
+  <div class="toc reveal">Prototype First · Anthropic</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Claude Artifacts를 <em>6칸</em>으로 다시 읽으면</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">B</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">연구자의 개인적 마찰 : 만든 HTML을 복사 · 저장 · 열어보는 왕복</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">러프한 사이드 뷰(Streamlit) → 디자이너가 본 리포에 프로토타입</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">WIP Wednesday → Slack → 전사 도그푸딩(1.5주)</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">사내 "wow", Dario의 격려, 3.5 Sonnet 조기 접근 시 품질 도약</div></div><div class="b"><div class="k">ITERATION</div><div class="v">iFrame 샌드박스 · CSP · React · SVG · Mermaid 렌더</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">2024.6.20 출시, 8월 공유 · 리믹스, 2025 AI 기능 내장 앱</div></div></div><div class="oneliner">문제 정의문 0회. 대신 <b>관찰 → 재현 → 유통(Slack) → 검증(도그푸딩)</b>. 아무리 잘 만들어도 보여줄 곳이 없으면 죽는다.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_c_artifacts_colorpicker_output.jpg" alt="Artifacts 출시 화면(2024.6.20) : 코드가 옆 패널에서 바로 실행된다"></div><div class="cap">Artifacts 출시 화면(2024.6.20) : 코드가 옆 패널에서 바로 실행된다</div></div></div>
+  </div>
+  <div class="src">Anthropic "How we built Artifacts" · Jenny Wen, Hatch 2025</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 063 -->
+<section class="slide ">
+  <div class="toc reveal">Prototype First · Google</div>
+  <div class="content" style="">
+    <h2 class="big reveal">NotebookLM : <em>20% 프로젝트</em>, 4~5명, 6주</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">B</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">동료의 "작은 코퍼스와 대화" 실험 + PM Raiza Martin의 "교과서와 대화하고 싶다"는 개인 동기</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">4~5명 파트타임, <b>6주 만에</b> PDF 업로드 → 채팅 프로토타입. 작가 Steven Johnson 합류("tool for thought")</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">I/O 2023 → 대기열 → Discord 6.5만 명</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">Johnson : "Things they asked for would show up in our product roadmaps"</div></div><div class="b"><div class="k">ITERATION</div><div class="v">Google Labs 원칙(Josh Woodward) : "아이디어에서 사용자 손까지 50~100일", "주간 활성 1만이면 정말 기뻐한다"</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">Labs는 "한 발은 바깥 세상에, 한 발은 DeepMind 안에". Audio Overviews(C2)로 이어진다</div></div></div><div class="oneliner">빅테크 안에서도 첫 아티팩트는 <b>6주 · 파트타임</b>이었다. 규모가 아니라 노출 채널이 스타트업과 다를 뿐.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_a_notebooklm_tailwind_original_ui.jpg" alt="Project Tailwind(2023) 원형 UI : PDF 업로드 → 채팅. I/O 2023 공개 → 대기열 → 2023.7 미국 출시"></div><div class="cap">Project Tailwind(2023) 원형 UI : PDF 업로드 → 채팅. I/O 2023 공개 → 대기열 → 2023.7 미국 출시</div></div></div>
+  </div>
+  <div class="src">Google Labs 인터뷰 2024 · Steven Johnson 블로그</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 064 -->
+<section class="slide ">
+  <div class="toc reveal">Prototype First · Figma</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Figma Make : <em>"Prototypes are the new PRDs"</em></h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">B</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">2025.5.7 Config에서 Make 공개(프롬프트 · 디자인 → 동작 프로토타입, Claude 3.7 Sonnet 기반)</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">PM Tara Nadella : "I use Figma Make when I don’t feel like I understand a problem space very well"</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">Ezra Mechaber : "PMs constantly live in that space between describing an idea and showing it"</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">회의에 동작 프로토타입을 들고 가면 논의가 바뀐다</div></div><div class="b"><div class="k">ITERATION</div><div class="v">Exploration(빈 캔버스 문제 해결, 여러 변형) → Validation(사용자 · 이해관계자 테스트) → Decision Making → 핸드오프 문서화</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">AI in Design Report 2025 : 생성형 AI로 제품 출시 34%(전년 22%), AI 산출물을 신뢰하는 디자이너 32%</div></div></div><div class="oneliner">문서로 모호함을 없앤 뒤 만들기 → <b>만들어 모호함을 줄인 뒤 남은 것을 문서로</b>. 순서가 뒤집혔다.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/s2b_figma_prototypes_new_prds.jpg" alt="Figma 블로그(2025.12.15) : 내부 PM들이 Make를 어떻게 쓰는가. Exploration → Validation → Decision Making"></div><div class="cap">Figma 블로그(2025.12.15) : 내부 PM들이 Make를 어떻게 쓰는가. Exploration → Validation → Decision Making</div></div></div>
+  </div>
+  <div class="src">Figma blog 2025.12.15 · Figma AI in Design Report 2025</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 065 -->
+<section class="slide ">
+  <div class="toc reveal">Prototype First · GitHub</div>
+  <div class="content" style="">
+    <h2 class="big reveal">GitHub Spark : <em>개인용 마이크로앱</em>이라는 카테고리 탐색</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">B</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">GitHub Next의 질문 : "Can we enable anyone to create or adapt software for themselves, using AI and a fully managed runtime?"</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">2024.10 Universe technical preview(대기열)</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">Discord 주간 반복 → 2025.7 Copilot Pro+ public preview → 2025.9 Enterprise</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">용돈 추적기 · 노래방 같은 개인용 앱. "This is about fun and personal software, not about enterprise productivity apps"</div></div><div class="b"><div class="k">ITERATION</div><div class="v">변형 생성, 관리형 런타임, 데이터 저장 기본 제공</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">Copilot 제품군 안의 한 surface</div></div></div><div class="oneliner">연구 조직이 카테고리 자체("나를 위한 소프트웨어")를 프로토타입으로 탐색했다.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_e_github_spark_variants.jpg" alt="GitHub Spark : 모호한 수정 요청에는 변형 여러 개를 생성해 고르게 한다"></div><div class="cap">GitHub Spark : 모호한 수정 요청에는 변형 여러 개를 생성해 고르게 한다</div></div></div>
+  </div>
+  <div class="src">GitHub Next · GitHub blog 2024.10 · 2025.7</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 066 -->
+<section class="slide ">
+  <div class="toc reveal">Prototype First · Replit</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Replit Agent : <em>코딩 경험 0인 사람</em>이 만든 200만 개 앱</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">B</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">Amjad Masad(2024.9) : "AI is incredible at writing code. But that’s not enough to create software. You need to set up a dev environment, install packages, configure DB, and deploy"</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">Core 구독자 early access. "첫 에이전트 경험을 수분 내에"</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">공개 → 6개월 200만+ 앱</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">ARR $10M(2024 말) → $100M(2025.6). 사용자층이 개발자 인접에서 <b>코딩 경험 0</b>으로 이동</div></div><div class="b"><div class="k">ITERATION</div><div class="v">Agent v2(실시간 프리뷰) → Agent 3(자율 테스트) → Agent 4</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">벤치마크 · A/B · 실제 사용 로그 3층으로 계속 채점(5장 5-4)</div></div></div><div class="oneliner">누가 쓰는지가 바뀌자 제품의 정의가 바뀌었다. 워크샵에서 쓴 AI Studio Build가 같은 카테고리다.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_e_replit_agent3_app_testing.jpg" alt="Replit Agent 3 : 브라우저에서 스스로 테스트하고 수정한다(최대 200분 자율 실행)"></div><div class="cap">Replit Agent 3 : 브라우저에서 스스로 테스트하고 수정한다(최대 200분 자율 실행)</div></div></div>
+  </div>
+  <div class="src">Replit blog 2024.9 · 2025 · "Closing the loop" 2026</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 067 -->
+<section class="slide ">
+  <div class="toc reveal">Prototype First · 스타트업</div>
+  <div class="content" style="">
+    <h2 class="big reveal">며칠 안에 만들고, 보여주고, 고친다 : <em>Lovable · TypingMind · Granola · Formula Bot</em></h2>
+    
+    <div class="gal reveal" style="margin-top:16px"><div class="g"><div class="shot cover" style="height:400px;"><img src="images/ui_g_lovable_dashboard.jpg" alt="Lovable : 오픈소스 GPT Engineer(2023) → 2024년 두 번 실패한 런칭 → Supabase 통합 · 재구축 → 2024.11 재런칭 → 8개월 $100M ARR. "The biggest bottleneck is shifting from Who can build it? to Who knows what to build?""></div><div class="cap">Lovable : 오픈소스 GPT Engineer(2023) → 2024년 두 번 실패한 런칭 → Supabase 통합 · 재구축 → 2024.11 재런칭 → 8개월 $100M ARR. "The biggest bottleneck is shifting from Who can build it? to Who knows what to build?"</div></div><div class="g"><div class="shot cover" style="height:400px;"><img src="images/ui_g_typingmind_launch_2023.jpg" alt="TypingMind : ChatGPT API 공개 5일 뒤 BYO API key 대체 UI 출시 → 7일 $22K. "When you’re first to the niche, your first version doesn’t have to be so amazing""></div><div class="cap">TypingMind : ChatGPT API 공개 5일 뒤 BYO API key 대체 UI 출시 → 7일 $22K. "When you’re first to the niche, your first version doesn’t have to be so amazing"</div></div><div class="g"><div class="shot cover" style="height:400px;"><img src="images/ui_g_granola_note_beside_call.webp" alt="Granola : 회의 봇 대신 "사용자가 쓴 메모를 AI가 보강하는 노트패드". 노트 기본 비공개. 1년 뒤 사용자가 "second brain"이라 부르기 시작 → 팀 메모리로 확장"></div><div class="cap">Granola : 회의 봇 대신 "사용자가 쓴 메모를 AI가 보강하는 노트패드". 노트 기본 비공개. 1년 뒤 사용자가 "second brain"이라 부르기 시작 → 팀 메모리로 확장</div></div><div class="g"><div class="shot cover" style="height:400px;"><img src="images/st_formula_bot_bubble.webp" alt="Formula Bot : 비개발자 애널리스트가 주말에 Bubble + GPT API로 "말로 설명하면 엑셀 수식" → Reddit → 하룻밤 10만 방문, API 청구서 $4~5K → 강제 유료화"></div><div class="cap">Formula Bot : 비개발자 애널리스트가 주말에 Bubble + GPT API로 "말로 설명하면 엑셀 수식" → Reddit → 하룻밤 10만 방문, API 청구서 $4~5K → 강제 유료화</div></div></div><div class="keep reveal" style="margin-top:24px;font-size:23px;">Formula Bot은 이 워크샵과 1:1 대응이다 : 코딩 없음 · 주말 하나 · 검증은 커뮤니티 게시. 첫 아티팩트가 <b>며칠~몇 주, 1~5명</b>.</div>
+  </div>
+  <div class="src">lovable.dev · typingmind.com · granola.ai · Formula Bot 인터뷰</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 068 -->
+<section class="slide ">
+  <div class="toc reveal">Prototype First · 한국</div>
+  <div class="content" style="">
+    <h2 class="big reveal">카카오톡 채널이 <em>트위터 런칭</em>이다 : AskUp · 마이리얼트립</h2>
+    
+    <div class="gal reveal" style="margin-top:20px"><div class="g"><div class="shot cover" style="height:520px;"><img src="images/kr_askup_upstage.jpg" alt="업스테이지 AskUp(B → C) : 사내 인턴이 쓰던 OCR + ChatGPT 봇을 2023.3.5 카카오톡 채널에 붙임 → 광고 없이 3일 3만, 한 달 60만. 텍스트보다 "사진 질문"(문서 · 메뉴판 · 손글씨)이 화제 → OCR이 정체성 → AskUp Biz → 자체 LLM Solar"></div><div class="cap">업스테이지 AskUp(B → C) : 사내 인턴이 쓰던 OCR + ChatGPT 봇을 2023.3.5 카카오톡 채널에 붙임 → 광고 없이 3일 3만, 한 달 60만. 텍스트보다 "사진 질문"(문서 · 메뉴판 · 손글씨)이 화제 → OCR이 정체성 → AskUp Biz → 자체 LLM Solar</div></div><div class="g"><div class="shot cover" style="height:520px;"><img src="images/ui_h_myrealtrip_ai_planner.jpg" alt="마이리얼트립 AI 여행플래너 : 2023.2.23 업계 최초 ChatGPT 연동, "제안부터 구현까지 단 이틀". 답변 속 명소를 상품 페이지로 연결"></div><div class="cap">마이리얼트립 AI 여행플래너 : 2023.2.23 업계 최초 ChatGPT 연동, "제안부터 구현까지 단 이틀". 답변 속 명소를 상품 페이지로 연결</div></div></div>
+  </div>
+  <div class="src">업스테이지 · 마이리얼트립 보도자료 2023</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 069 -->
+<section class="slide ">
+  <div class="toc reveal">Prototype First · 요약</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Demo is <em>works.any()</em>, product is <em>works.all()</em></h2>
+    
+    <div class="quote reveal" style="margin-top:24px"><p>"You can’t bullshit in a prototype."</p><cite>Joel Lewenstein, Anthropic</cite></div><div class="quote reveal" style="margin-top:24px"><p>"Demo is works.any(), product is works.all()."</p><cite>Andrej Karpathy</cite></div><div class="keep reveal" style="margin-top:40px;font-size:27px;">첫 아티팩트가 며칠~몇 주, 1~5명. 미국의 트위터 런칭 = 한국의 카카오톡 채널. 단, Prototype first는 "ship garbage fast"가 아니다. 데모가 한 번 되는 것과 제품이 매번 되는 것 사이에 <b>eval과 롱테일 크래프트</b>가 있다.</div>
+  </div>
+  <div class="src">3장 · B 패턴 요약</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 070 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap">
+    <div class="dlabel reveal">PATTERN C</div>
+    <h2 class="reveal">Usage Discovery :<br>일단 공개한 뒤 실제 사용에서 의미를 발견한다</h2>
+    <div class="dsub reveal">사용자에게 "AI로 무엇을 하고 싶나요?"라고 묻는 것보다 알파에서 무엇을 반복하는지 보는 것이 더 정확한 증거였다.</div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 071 -->
+<section class="slide ">
+  <div class="toc reveal">Usage Discovery · Notion</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Notion AI : 가설은 "생성", 실제 1위는 <em>"고쳐 쓰기"</em></h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">C</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">GPT 조기 접근("holy shit, this thing can actually think"). 공동창업자들이 오프사이트 뒤 호텔에 3일 더 머물며 프로토타입</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">글쓰기용 새 UI, 프리셋 + 자유 입력, 스페이스바 진입점</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">한 달도 안 돼 2022.11.16 private alpha(ChatGPT 공개 2주 전). 대기열 목표 20만 → 5주 만에 100만</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">가설은 "블로그 · 보도자료 · 세일즈 이메일 생성". 10주 알파 데이터에서 <b>"Improve writing"이 최다</b>. 사용자는 AI를 수정 도구로 썼다</div></div><div class="b"><div class="k">ITERATION</div><div class="v">메시징 "content creator" → "collaborative partner", 선택 텍스트 기반 재설계, $10 단순 요금. 2023.2 GA</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">이후 최대 페인이 정보 검색으로 확인 → Q&A(2023.11). CMO : "Choose speed over certainty"</div></div></div><div class="oneliner">User centeredness가 줄어든 게 아니라 <b>user learning이 프로토타입 뒤로 이동</b>했다.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/s2c_notion_ai.jpg" alt="Notion AI : 선택 텍스트 기반 인터페이스로 재설계됐다. 알파 데이터가 그렇게 시켰다"></div><div class="cap">Notion AI : 선택 텍스트 기반 인터페이스로 재설계됐다. 알파 데이터가 그렇게 시켰다</div></div></div>
+  </div>
+  <div class="src">Notion blog · Rachel Hepworth 인터뷰 2023</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 072 -->
+<section class="slide ">
+  <div class="toc reveal">Usage Discovery · Google</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Audio Overviews : <em>이상해 보이는 실험</em>이 새 소비 행동이 되다</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">C</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">두 AI 호스트 대화. 팀은 "like, oh yeah, really?" 같은 추임새 · 망설임 · 긴장을 일부러 심었다</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">영어만, 중단 불가, <b>원클릭</b>. "The ease of creation really actually catalyzed so much explosion"</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">2~3주 만에 바이럴 : Karpathy가 2시간 만에 팟캐스트 시리즈, 호스트가 자신이 AI임을 깨닫는 "실존적 위기" 클립</div></div><div class="b"><div class="k">SIGNAL</div><div class="v"><b>팀이 예상 못한 용도</b> : 이력서 · 링크드인 · 일기 · 단톡방 기록 · 신용카드 명세서, 영업 교육자료, VC 실사</div></div><div class="b"><div class="k">ITERATION</div><div class="v">커스텀 지시(2024.10) → 인터랙티브 모드 → 80+ 언어(확장 2주 만에 일일 생성 2배) → 비디오 오버뷰</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">"magic in exchange for a little bit of content"(Raiza Martin)</div></div></div><div class="oneliner">"PDF 읽기 싫을 때 두 AI가 대화해 주면 좋겠다"는 요구를 사전에 수집하는 것보다, <b>작동하는 경험을 보여주고 언제 쓰는지 보는 것</b>이 빠른 종류의 혁신.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_a_notebooklm_audio_overview_ui.jpg" alt="NotebookLM Audio Overview(2024.9.11) : 원클릭으로 두 AI 호스트의 "deep dive" 대화. "still experimental""></div><div class="cap">NotebookLM Audio Overview(2024.9.11) : 원클릭으로 두 AI 호스트의 "deep dive" 대화. "still experimental"</div></div></div>
+  </div>
+  <div class="src">Google Labs 2024.9 · Raiza Martin 인터뷰</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 073 -->
+<section class="slide ">
+  <div class="toc reveal">Usage Discovery · Cursor</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Cursor : Tab → Composer → Agent, <em>사용이 이동하고</em> 회사가 따라갔다</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">C</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">2022 창업, 기계공학 CAD 자동화로 6개월 실패("The founder market fit was horrible") → 자신들이 매일 쓰는 코딩으로 복귀</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">VS Code 포크(2023.3). 자체 모델 <b>Tab</b>(다음 편집 예측)</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">Composer(2024.8 기본 활성) → Agent(2024.11 "an early version of an agent")</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">2026.2 공식 블로그 : "we’ve seen a major shift toward coding with agents"</div></div><div class="b"><div class="k">ITERATION</div><div class="v">요금제가 "요청 수"에서 "에이전트 사용량 풀"로 재편</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">Cursor 2.0 + 자체 Composer 모델(2025.10). Truell : 엔지니어의 일은 "무엇을 만들지 · 어떻게 작동할지 정의"로 이동</div></div></div><div class="oneliner">같은 제품 안에서 사용의 무게중심이 자동완성 → 에이전트로 이동했고, 회사는 그 이동을 따라 폼팩터와 요금을 바꿨다.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_e_cursor_2_multi_agent_ui.jpg" alt="Cursor 2.0(2025.10) : 멀티 에이전트 UI. 자동완성 도구가 에이전트 도구가 됐다"></div><div class="cap">Cursor 2.0(2025.10) : 멀티 에이전트 UI. 자동완성 도구가 에이전트 도구가 됐다</div></div></div>
+  </div>
+  <div class="src">Cursor blog 2026.2.11 · Michael Truell 인터뷰</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 074 -->
+<section class="slide ">
+  <div class="toc reveal">Usage Discovery · OpenAI</div>
+  <div class="content" style="">
+    <h2 class="big reveal">"research preview"는 OpenAI의 <em>관용구</em>다</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">C</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">ChatGPT(2022.11.30)는 InstructGPT와 같은 모델의 파인튜닝이라 "big fundamental advance로 과대포장하고 싶지 않아" research preview로 조용히 공개 → 5일 100만</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">Jan Leike : "We are putting a lot of emphasis on monitoring what people are using the system for, seeing what happens, and then reacting"</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">철학 문서 "Planning for AGI"(2023.2) : "a tight feedback loop of rapid learning and careful iteration". Sora도 아티스트 소수 접근 → 제품</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">4o 이미지 생성 : 회사가 설계한 게 아니라 <b>사용자가 찾은 사용법</b>(지브리풍)</div></div><div class="b"><div class="k">ITERATION</div><div class="v">2025.5 Altman : "soon we have another low key research preview … we will name it better than chatgpt this time in case it takes off"</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">Google Nano Banana(2025.8)는 LMArena에 <b>익명 코드명</b>으로 먼저 올려 블라인드 투표 → 공개 → 3D 피규어 밈 → 신규 1,000만+. 새로운 노출 방식 : 익명 아레나</div></div></div><div class="oneliner">출시는 끝이 아니라 학습 방법이다. 노출 단위를 정하는 것이 기획의 일부가 됐다.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_b_4o_imagegen_chat_incontext_1.jpg" alt="4o 이미지 생성(2025.3.25) : 며칠 만에 지브리풍 변환 트렌드. "our GPUs are melting"(Altman). 1주일에 1억 3천만 사용자 · 7억 장"></div><div class="cap">4o 이미지 생성(2025.3.25) : 며칠 만에 지브리풍 변환 트렌드. "our GPUs are melting"(Altman). 1주일에 1억 3천만 사용자 · 7억 장</div></div></div>
+  </div>
+  <div class="src">OpenAI 2022.11 · 2023.2 · 2025.3 · Google 2025.8</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 075 -->
+<section class="slide ">
+  <div class="toc reveal">Usage Discovery · 한국 · 스타트업</div>
+  <div class="content" style="">
+    <h2 class="big reveal">사용 발견이 <em>회사 정체성</em>을 바꾼다 : 크랙 · 제타 · Character.AI</h2>
+    
+    <div class="gal reveal" style="margin-top:20px"><div class="g"><div class="shot cover" style="height:460px;"><img src="images/ui_h_crack_wrtn_service_1.jpg" alt="뤼튼 → 크랙 : GPT 3 글쓰기 도구(2021) → 무료 챗 포털(2023) → 앱 안의 캐릭터챗 탭(2024)에 예상 밖 체류 · 과금 → 2025.4 독립앱 크랙(첫날 앱스토어 엔터 1위) → 2025 매출 471억(전년 31억), 하루 평균 2시간 → 2026.9 청소년 이용 상한 정책"></div><div class="cap">뤼튼 → 크랙 : GPT 3 글쓰기 도구(2021) → 무료 챗 포털(2023) → 앱 안의 캐릭터챗 탭(2024)에 예상 밖 체류 · 과금 → 2025.4 독립앱 크랙(첫날 앱스토어 엔터 1위) → 2025 매출 471억(전년 31억), 하루 평균 2시간 → 2026.9 청소년 이용 상한 정책</div></div><div class="g"><div class="shot cover" style="height:460px;"><img src="images/kr_zeta_scatterlab.jpg" alt="스캐터랩 이루다 → 제타 : 동반자 챗봇 사용자가 원한 것은 대화가 아니라 캐릭터 · 세계관 · 사건을 직접 만들어 주인공으로 뛰어드는 놀이 → 스토리용 파인튜닝 → 2024.4 제타. 2025 매출 +525%, 일본판 일 평균 3.5시간"></div><div class="cap">스캐터랩 이루다 → 제타 : 동반자 챗봇 사용자가 원한 것은 대화가 아니라 캐릭터 · 세계관 · 사건을 직접 만들어 주인공으로 뛰어드는 놀이 → 스토리용 파인튜닝 → 2024.4 제타. 2025 매출 +525%, 일본판 일 평균 3.5시간</div></div><div class="g"><div class="shot cover" style="height:460px;"><img src="images/ui_g_characterai_series_chat_cta.jpg" alt="Character.AI : 범용 대화 모델을 공개 → 롤플레이 · 컴패니언 사용이 압도, 하루 평균 2시간. Shazeer : "It’s not that we want to fine tune to some particular domain" → 18세 미만 오픈엔드 챗 금지(2025.11). 발견 → 제품화 → 보호장치까지 한 사이클"></div><div class="cap">Character.AI : 범용 대화 모델을 공개 → 롤플레이 · 컴패니언 사용이 압도, 하루 평균 2시간. Shazeer : "It’s not that we want to fine tune to some particular domain" → 18세 미만 오픈엔드 챗 금지(2025.11). 발견 → 제품화 → 보호장치까지 한 사이클</div></div></div><div class="keep reveal" style="margin-top:24px;font-size:23px;">빅테크는 사용 발견을 기능 추가로 흡수하지만(Lensa가 아바타를 피처로), 작은 회사는 <b>회사 정체성이 바뀐다.</b> 그리고 위험도 수일 내 직접 온다.</div>
+  </div>
+  <div class="src">뤼튼 · 스캐터랩 보도 2025~2026 · Character.AI 2025.11</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 076 -->
+<section class="slide ">
+  <div class="toc reveal">Usage Discovery · The Browser Company</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Arc Max : 작은 기능 5개를 한꺼번에 내고 <em>90일 동안 지켜본다</em></h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:8px"><div class="txt" style="flex:0 0 900px"><div style="margin-bottom:14px"><span class="tag dark">C</span></div><div class="bio"><div class="b"><div class="k">TRIGGER</div><div class="v">브라우저에 AI를 어디에 넣을지 아무도 몰랐다</div></div><div class="b"><div class="k">FIRST ARTIFACT</div><div class="v">작은 AI 기능 5개(링크 미리보기, 탭 이름 짓기, 페이지에 질문 등)</div></div><div class="b"><div class="k">EXPOSURE</div><div class="v">옵트인으로 동시 출시</div></div><div class="b"><div class="k">SIGNAL</div><div class="v">"<b>최소 90일 유지하며 무엇을 남길지 결정</b>." 사용 데이터로 keep / kill</div></div><div class="b"><div class="k">ITERATION</div><div class="v">빅테크식 관찰 방식을 택한 스타트업</div></div><div class="b"><div class="k">PRODUCTIZATION</div><div class="v">결과는 2025 Arc 중단 → Dia 집중. 관찰이 답을 주지 않을 때도 있다</div></div></div><div class="oneliner">무엇을 남길지 미리 정하지 않고 <b>기간과 기준</b>만 정했다. 노출 사다리의 한 형태.</div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/ui_g_arc_max_features.jpg" alt="Arc Max(2023.10) : AI 기능 5개를 옵트인으로 한꺼번에 출시"></div><div class="cap">Arc Max(2023.10) : AI 기능 5개를 옵트인으로 한꺼번에 출시</div></div></div>
+  </div>
+  <div class="src">The Browser Company blog 2023.10 · 2025</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 077 -->
+<section class="slide ">
+  <div class="toc reveal">Usage Discovery · 요약</div>
+  <div class="content" style="">
+    <h2 class="big reveal">노출 단위는 갈수록 <em>작고 빨라진다</em></h2>
+    
+    <div class="steps reveal" style="margin-top:36px"><div class="step"><div class="sbox"><small>사내</small>WIP Wednesday · Slack</div><div class="ssub">Artifacts</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>사내</small>도그푸딩 5일 50%</div><div class="ssub">Claude Code</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>소수</small>trusted tester</div><div class="ssub">Astra · Jules</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>익명</small>아레나 블라인드 투표</div><div class="ssub">Nano Banana</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>유료</small>Pro 티어 research preview</div><div class="ssub">Operator · Deep Research</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>전체</small>공개</div><div class="ssub">4o 이미지 생성</div></div></div><div class="keep reveal" style="margin-top:44px;font-size:27px;">공통 신호 : 사내 채택 곡선, Discord · Slack 반응, 벤치마크(Arena Elo), 인프라 한계("GPUs melting"), <b>예상 밖 입력</b>(신용카드 명세서), <b>잘못된 도구로의 시도</b>(Operator → deep research). 노출 단위를 정하는 것이 기획의 일부가 됐다.</div>
+  </div>
+  <div class="src">3장 · C 패턴 요약</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 078 -->
+<section class="slide ">
+  <div class="toc reveal">회사들은 어떻게 · 스타트업 vs 빅테크</div>
+  <div class="content" style="">
+    <h2 class="big reveal">같은 루프, <em>다른 규모와 채널</em></h2>
+    
+    <table class="tbl reveal" style="margin-top:20px;font-size:21px"><tr><th style="width:240px"></th><th style="width:640px">빅테크</th><th>1인 · 소규모 팀</th></tr><tr><td>Trigger</td><td>자사 모델 로드맵을 안다</td><td><b>남의 API 출시일</b>이 기획 시작일 (TypingMind 5일, Bolt "처음 써 본 순간")</td></tr><tr><td>첫 artifact</td><td>연구 프로토타입, 사내 빌드 (분기 단위, 수십 명)</td><td>30시간 · 이틀(마이리얼트립) · 주말(Formula Bot) · 6주(Wispr)</td></tr><tr><td>노출 채널</td><td>trusted tester, Labs, research preview, 키노트</td><td>창업자 트위터, Reddit, Discord, Product Hunt, <b>카카오톡 채널</b></td></tr><tr><td>신호</td><td>채택률, eval, safety, 정성 피드백</td><td><b>결제</b>(첫 주 매출), 공유, churn, 직접 DM</td></tr><tr><td>사용 발견의 결과</td><td>기능 추가로 흡수 (Lensa가 아바타를 피처로)</td><td><b>회사 정체성이 바뀜</b> (뤼튼, 스캐터랩, Suno, Wispr, 라이너)</td></tr><tr><td>위험</td><td>법무 · 정책이 사전에 거름, 대신 출시가 늦음</td><td>수일 내 직접 옴 (ElevenLabs 4chan, Character.AI 소송, 크랙 청소년 상한)</td></tr><tr><td>2025~26 새 국면</td><td>스타트업의 발견을 "산다" (Cal AI → MyFitnessPal, Manus → Meta)</td><td>종착점 중 하나가 빅테크의 피처로 흡수</td></tr></table><div class="keep reveal" style="margin-top:20px;font-size:22px;">작은 팀 사례는 "모두 그렇게 하라"가 아니라 <b>프로토타입 비용이 얼마나 낮아졌을 때 프로세스가 어디까지 압축될 수 있는지</b> 보여주는 극단값으로 읽는다.</div>
+  </div>
+  <div class="src">3장 · 3.4</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 079 -->
+<section class="slide ">
+  <div class="toc reveal">회사들은 어떻게 · 30개 사례를 한 줄로</div>
+  <div class="content" style="">
+    <h2 class="big reveal">핵심은 정해진 순서가 아니라 <em>학습 주기의 짧음과 증거의 다양성</em>이다</h2>
+    
+    <div class="steps reveal" style="margin-top:40px"><div class="step"><div class="sbox"><small>출발</small>Capability / Need / Hunch</div><div class="ssub">어디서든 시작할 수 있다</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>만들기</small>작고 작동하는 artifact</div><div class="ssub">며칠~몇 주</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>노출</small>사내 도그푸딩 또는 제한된 노출</div><div class="ssub">사다리의 한 단</div></div><div class="sarrow">→</div><div class="step now"><div class="sbox"><small>신호</small>behavior + eval + 정성</div><div class="ssub">예상과 다른 사용</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>결정</small>keep / kill / pivot / combine</div><div class="ssub">productize + continuous eval</div></div></div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 080 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap">
+    <div class="dlabel reveal">DISCUSSION</div>
+    <h2 class="reveal">토론 :<br>오픈 퀘스천 5개</h2>
+    <div class="dsub reveal">질문 하나에 한 라운드. 정답 없음. 진행자는 질문을 던지고 강의 · 워크샵의 사례를 "증거"로 꺼내 주는 역할만 한다. 각자 포스트잇에 한 줄씩 답을 적고 시작한다.</div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 081 -->
+<section class="slide ">
+  <div class="toc reveal">토론 · Q1</div>
+  <div class="content" style="">
+    <h2 class="big reveal">우리 조직에서는 Outcome oriented와 Feature(capability) oriented 중 <em>어느 쪽이 더 적합한가</em>? 그리고 실제로 가능한가?</h2>
+    
+    <div class="qblock reveal" style="margin-top:24px;gap:18px">
+        <div class="qrow" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">강의와의 연결</div><div class="qv" style="font-size:27px">1장 NN/g(화면이 아니라 결과) · 5장 5-1 · 5-2</div></div>
+        <div class="qrow" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">꺼낼 수 있는 증거</div><div class="qv" style="font-size:27px">Bolt는 모델이 바뀌자 90일 만에 제품을 냈고, Anthropic은 모델 릴리스마다 playbook을 돌린다. 반대편 : Linear "The hard part is understanding the problem".</div></div>
+        <div class="qrow ask" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">되물음</div><div class="qv" style="font-size:28px">"우리 회사의 백로그에 <b>새로 가능해진 것</b> 칸이 있나? 있다면 누가 채우나?"</div></div>
+      </div>
+  </div>
+  <div class="src">4장 · 토론</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 082 -->
+<section class="slide ">
+  <div class="toc reveal">토론 · Q2</div>
+  <div class="content" style="">
+    <h2 class="big reveal">우리 조직에서 급진적 혁신은 <em>어디서 나왔나</em>? 리서치에서, 기술에서, 우연에서? 지금 우리는 언덕을 오르는 국면인가 점프하는 국면인가</h2>
+    
+    <div class="qblock reveal" style="margin-top:24px;gap:18px">
+        <div class="qrow" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">강의와의 연결</div><div class="qv" style="font-size:27px">1.5장 Norman & Verganti</div></div>
+        <div class="qrow" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">꺼낼 수 있는 증거</div><div class="qv" style="font-size:27px">손들기로 시작. Norman의 11개 사례, Philips CT 스캐너(의미를 바꾸는 리서치), 닌텐도 Wii(리서치가 오히려 막은 사례).</div></div>
+        <div class="qrow ask" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">되물음</div><div class="qv" style="font-size:28px">"우리 서비스에서 <b>지금 언덕의 정상까지</b> 얼마나 남았나? 정상에 거의 왔다면 다음 언덕은 어디서 보이나?"</div></div>
+      </div>
+  </div>
+  <div class="src">4장 · 토론</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 083 -->
+<section class="slide ">
+  <div class="toc reveal">토론 · Q3</div>
+  <div class="content" style="">
+    <h2 class="big reveal">평균 정확도는 "나에 대한 정확도"가 아니다. 우리 서비스에서 <em>가장 도움이 필요한 사용자</em>는 누구이고, 그 사람에게 AI가 잘 작동할까?</h2>
+    
+    <div class="qblock reveal" style="margin-top:24px;gap:18px">
+        <div class="qrow" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">강의와의 연결</div><div class="qv" style="font-size:27px">2장 ⑥(누구에 대한 정확도인가) · 부록 F</div></div>
+        <div class="qrow" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">꺼낼 수 있는 증거</div><div class="qv" style="font-size:27px">힌튼의 트윗 "완치율 90%인 블랙박스 AI 의사와 80%인 인간 의사 중 누구를 고르겠나"에 대한 반박 : "그 90%는 전체 평균이고, 나는 나에 대한 완치율이 궁금하다. 학습 데이터에 나 같은 사례가 없다면?" / 링글 : 튜터 8% vs 학생 23%(서툰 학생 36%). 서비스는 학생을 돕기 위한 것인데 정작 서툰 학생에게 가장 많이 틀린다.</div></div>
+        <div class="qrow ask" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">되물음</div><div class="qv" style="font-size:28px">"우리 앱의 <b>서툰 학생</b>은 누구인가? 그 사람의 데이터는 우리에게 얼마나 있나?"</div></div>
+      </div>
+  </div>
+  <div class="src">4장 · 토론</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 084 -->
+<section class="slide ">
+  <div class="toc reveal">토론 · Q4</div>
+  <div class="content" style="">
+    <h2 class="big reveal">우리 서비스에서 AI가 틀렸을 때 <em>더 나쁜 실수</em>는 무엇이고, 그것을 누가 언제 알아차리는가?</h2>
+    
+    <div class="qblock reveal" style="margin-top:24px;gap:18px">
+        <div class="qrow" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">강의와의 연결</div><div class="qv" style="font-size:27px">2장 ⑥(두 질문) · 5장 5-4(Eval)</div></div>
+        <div class="qrow" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">꺼낼 수 있는 증거</div><div class="qv" style="font-size:27px">Epic 패혈증 모델(AUC 0.83 주장 vs 현장 0.63, 몇 년간 조용한 실패), 토스뱅크(처리율 70% vs 만족도 36%), 링글(도와야 할 사람에게 가장 많이 틀림).</div></div>
+        <div class="qrow ask" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">되물음</div><div class="qv" style="font-size:28px">"정확도 98%라는 벤더에게 <b>뭐라고 되물을 것인가</b>? 우리 데이터로 다시 재 달라고 말할 수 있는 사람이 우리 팀에 있나?"</div></div>
+      </div>
+  </div>
+  <div class="src">4장 · 토론</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 085 -->
+<section class="slide ">
+  <div class="toc reveal">토론 · Q5</div>
+  <div class="content" style="">
+    <h2 class="big reveal">AI가 생성을 싸게 만들면 우리 팀에서 <em>무엇이 희소해지는가</em>? 기획자 · 디자이너의 일은 어디로 이동하나. 무엇을 먼저 보여주고 무엇을 신호로 볼 것인가</h2>
+    
+    <div class="qblock reveal" style="margin-top:24px;gap:18px">
+        <div class="qrow" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">강의와의 연결</div><div class="qv" style="font-size:27px">3장 3.4(스타트업 vs 빅테크) · 5장 5-4 · 6장</div></div>
+        <div class="qrow" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">꺼낼 수 있는 증거</div><div class="qv" style="font-size:27px">Cybernetic Teammate(생성은 평준화, 선택에 판단이 남음), Wen "취향 · 크래프트", Claude Code 도그푸딩 5일 50%, Arc Max 90일.</div></div>
+        <div class="qrow ask" style="padding:26px 34px"><div class="qk" style="font-size:20px;width:200px">되물음</div><div class="qv" style="font-size:28px">"PRD 없이는 예산이 안 나온다면, <b>프로토타입 + eval 3개</b>로 대체할 수 있나?" → 마지막에 "다음 주 월요일에 바꿀 것 하나"를 포스트잇으로 받는다.</div></div>
+      </div>
+  </div>
+  <div class="src">4장 · 토론</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 086 -->
+<section class="slide ">
+  <div class="toc reveal">토론 · 진행자 노트</div>
+  <div class="content" style="">
+    <h2 class="big reveal">토론이 한쪽으로 기울면 <em>진행자가 반대편을 맡는다</em></h2>
+    
+    <div class="quote reveal" style="margin-top:30px"><p>"여러분이 한 시간 만에 만든 것, 옆 사람도 한 시간 만에 만들었습니다. 모두가 만들 수 있으면 만들기는 차별화가 아닙니다. <em>그럼 무엇이 차별화입니까?</em>"</p><cite>만들기 예찬으로 기울 때 던지는 말</cite></div><div class="plist reveal" style="margin-top:36px;gap:14px"><div class="pitem" style="padding:16px 28px"><div class="pn">Q2</div><div class="pk" style="width:300px">손들기로 시작</div><div class="pv">"리서치에서 태어난 급진적 혁신" 질문을 1.5장에서 이어서</div></div><div class="pitem" style="padding:16px 28px"><div class="pn">Q3</div><div class="pk" style="width:300px">워크샵 ⑥에서 이어서</div><div class="pv">각자 답한 "누구에게 가장 많이 틀릴까"를 그대로 꺼낸다</div></div><div class="pitem" style="padding:16px 28px"><div class="pn">Q5</div><div class="pk" style="width:300px">월요일에 바꿀 것 하나</div><div class="pv">포스트잇에 한 줄, 벽(또는 채팅)에 붙인다. 6장 클로징에서 읽어 준다</div></div></div>
+  </div>
+  <div class="src">4장 · 진행 팁</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 087 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap">
+    <div class="dlabel reveal">CHANGES</div>
+    <h2 class="reveal">AI는 제품개발 프로세스를<br>어떻게 바꾸는가 : 무엇이 바뀌고 있나 5</h2>
+    <div class="dsub reveal">지금까지 본 사례들은 결국 하나의 흐름이다. AI 때문에 제품팀이 불확실성을 줄이는 방식이 바뀌고 있다. 다섯 개를 따로 외우지 말고 하나의 lifecycle 변화로 읽는다.</div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 088 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 한 문장</div>
+  <div class="content" style="">
+    <h2 class="big reveal">AI는 불확실성을 "만들기 전에" 줄이던 비중을 낮추고, <em>"만들어 보고 측정하면서"</em> 줄일 수 있게 만든다</h2>
+    
+    <div class="steps reveal" style="margin-top:40px"><div class="step"><div class="sbox"><small>5-1</small>Prototype<br>Economics</div><div class="ssub">프로토타입이 싸졌다</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>5-2</small>Research Through<br>Building</div><div class="ssub">리서치가 뒤로도 간다</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>5-3</small>Prototype<br>as PRD</div><div class="ssub">프로토타입이 스펙이 된다</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>5-4</small>Eval</div><div class="ssub">사용성 테스트로는 부족하다</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>5-5</small>Controlled<br>Rollout</div><div class="ssub">출시가 학습이 된다</div></div></div><div class="keep reveal" style="margin-top:48px;font-size:27px;">예전에는 불확실성을 리서치 · 회의 · 문서로 <b>만들기 전에</b> 줄였다. 지금은 여러 개를 만들어 보고, 써 보게 하고, 재면서 줄일 수 있다. 다섯 개는 Prototype economics → Research → Specification → Evaluation → Release로 이어지는 <b>하나의 lifecycle 변화</b>다.</div>
+  </div>
+  <div class="src">5장 · 개요</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 089 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 5-1 Prototype Economics</div>
+  <div class="content" style="">
+    <h2 class="big reveal">프로토타입의 제작 비용이 <em>급격히 낮아졌다</em></h2>
+    
+    <div class="cmp reveal">
+    <div class="ccol bad"><div class="ct">과거</div><h3>만들기 전에 많이 버린다</h3>
+      <div class="row"><span class="k">순서</span><span>아이디어 많이 내기 → 조사 · 회의 → 몇 개만 선택 → 와이어프레임 → 프로토타입</span></div>
+      <div class="row"><span class="k">이유</span><span>작동하는 프로토타입까지 가는 비용이 컸다. 생각으로 걸러내는 것이 합리적이었다</span></div></div>
+    <div class="ccol good"><div class="ct">지금</div><h3>만들어 보고 버린다</h3>
+      <div class="row"><span class="k">순서</span><span>아이디어 → 바로 작동하는 프로토타입 여러 개 → 써 보고 버리기</span></div>
+      <div class="row"><span class="k">도구</span><span>Figma "Prototypes are the new PRDs". Replit · v0 · Lovable · Bolt · Figma Make가 이 경제를 더 극단적으로 만든다</span></div></div>
+  </div><div class="keep reveal" style="margin-top:40px;font-size:27px;">핵심 : 프로토타입이 싸졌기 때문에 <b>생각으로 제거하던 대안을 실제로 만들어 보고 제거할 수 있게 됐다.</b></div>
+  </div>
+  <div class="src">5장 · 5-1 · Figma blog 2025.12</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 090 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 5-1 Prototype Economics</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Low → High fidelity 대신 <em>Cheap Executable Fidelity</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:36px"><div class="txt" style="flex:0 0 960px"><div class="stats reveal" style="margin-top:0px"><div class="stat"><div class="v">1시간</div><div class="k">공동 탐색</div><div class="d">RoomDreaming(CHI 2024) : 생성 AI로 실제 방의 디자인 대안을 빠르게 생성</div></div><div class="stat"><div class="v">≈ 며칠</div><div class="k">기존 초기 디자인 작업</div><div class="d">디자이너들 : 여러 번의 미팅과 며칠에 걸친 초기 작업과 비슷한 역할</div></div></div><div class="para" style="margin-top:30px">완성도는 낮아도 <b>실제로 작동해서 행동을 볼 수 있는</b> 프로토타입이 더 가치 있다. 정교함의 축이 "얼마나 예쁜가"에서 "돌아가는가"로 옮겨 간다.<small>워크샵에서 만든 v1이 바로 Cheap Executable Fidelity다. 아무도 와이어프레임을 그리지 않았지만 모두 행동을 봤다.</small></div></div><div class="pic"><div class="shot cover" style="height:540px;"><img src="images/ui_e_figma_make_point_and_edit.jpg" alt="Figma Make : 프롬프트에서 바로 작동하는 프로토타입. 만들어 보고 고치고 버린다"></div><div class="cap">Figma Make : 프롬프트에서 바로 작동하는 프로토타입. 만들어 보고 고치고 버린다</div></div></div>
+  </div>
+  <div class="src">5장 · 5-1 · Wang &amp; Su et al., RoomDreaming, CHI 2024</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 091 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 5-2 Research Through Building</div>
+  <div class="content" style="">
+    <h2 class="big reveal">리서치가 항상 <em>만들기 전에만</em> 일어나지 않는다</h2>
+    
+    <div class="cmp reveal">
+    <div class="ccol bad"><div class="ct">전통적인 UCD</div><h3>Research → Problem Definition →<br>Design → Prototype → Test</h3>
+      <div class="row"><span class="k">전제</span><span>만들기 전에 문제를 충분히 알 수 있다</span></div></div>
+    <div class="ccol good"><div class="ct">AI 네이티브 제품</div><h3>Prototype → Use → Observe →<br>Discover the real problem</h3>
+      <div class="row"><span class="k">전제</span><span>사람들이 쓰는 것을 봐야 진짜 문제가 보인다</span></div></div>
+  </div><div class="keep reveal" style="margin-top:40px;font-size:27px;">중요한 것은 리서치가 사라지는 것이 아니라, <b>리서치의 위치가 뒤로도 이동한다</b>는 것이다.</div>
+  </div>
+  <div class="src">5장 · 5-2</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 092 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 5-2 Research Through Building</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Notion AI : 가설은 "처음부터 써 달라", 실제는 <em>"고쳐 달라"</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 1000px"><div class="qblock" style="margin-top:0;gap:14px">
+    <div class="qrow"><div class="qk">Hypothesis</div><div class="qv">블로그 작성 · 보도자료 · 세일즈 이메일 · 처음부터 글 생성</div></div>
+    <div class="qrow"><div class="qk">Prototype</div><div class="qv">private alpha를 빨리 열었다</div></div>
+    <div class="qrow"><div class="qk">Actual Behavior</div><div class="qv">사람들이 반복해서 쓰는 기능은 <b>"Improve Writing"</b>. "AI에게 처음부터 써 달라"보다 "내가 쓴 것을 더 좋게 고쳐 달라"가 훨씬 강했다</div></div>
+    <div class="qrow ask"><div class="qk">Revised</div><div class="qv">포지셔닝이 AI author → AI editor · thought partner로 이동</div></div>
+  </div></div><div class="pic"><div class="shot cover" style="height:560px;"><img src="images/s2c_notion_ai.jpg" alt="Notion AI : 선택 텍스트 기반 인터페이스로 재설계. 알파 데이터가 그렇게 시켰다"></div><div class="cap">Notion AI : 선택 텍스트 기반 인터페이스로 재설계. 알파 데이터가 그렇게 시켰다</div></div></div>
+  </div>
+  <div class="src">5장 · 5-2 · Notion blog · Rachel Hepworth</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 093 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 5-2 Research Through Building</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Sometimes <em>making itself</em> becomes a form of research</h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:36px"><div class="txt" style="flex:0 0 1000px"><div class="para">Claude Artifacts도 먼저 완성된 문제 정의문이 있었던 것이 아니다. 생성된 코드를 옆에서 바로 실행해 보는 <b>사내 프로토타입</b>이 먼저 있었다.<small>그것을 본 팀의 반응을 통해 "AI가 답을 쓰는 것보다, 실제로 쓸 수 있는 것을 만들어 주는 경험이 중요할 수 있겠다"는 제품 가치가 더 선명해졌다.</small></div><div class="quote reveal" style="margin-top:34px"><p>"Research no longer always has to precede making. <em>Sometimes making itself becomes a form of research.</em>"</p><cite>5-2의 핵심 문장</cite></div></div><div class="pic"><div class="shot cover" style="height:560px;"><img src="images/ui_c_artifacts_michael_wang_polished.jpg" alt="Claude Artifacts 사내 프로토타입 : 문제 정의문 대신 작동하는 것이 먼저"></div><div class="cap">Claude Artifacts 사내 프로토타입 : 문제 정의문 대신 작동하는 것이 먼저</div></div></div>
+  </div>
+  <div class="src">5장 · 5-2 · Anthropic "How we built Artifacts"</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 094 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 5-3 Prototype as PRD</div>
+  <div class="content" style="">
+    <h2 class="big reveal">프로토타입이 설명 자료가 아니라 <em>스펙 역할</em>까지 한다</h2>
+    
+    <div class="cmp reveal">
+    <div class="ccol bad"><div class="ct">과거의 PRD</div><h3>"사용자가 문서를 선택하고 Summarize를 클릭하면 AI가 요약을 만들고, 사용자는 regenerate할 수 있다"</h3>
+      <div class="row"><span class="k">문제</span><span>이 문장을 읽고 PM · 디자이너 · 엔지니어는 머릿속에 <b>다른 화면</b>을 상상한다</span></div></div>
+    <div class="ccol good"><div class="ct">프로토타입을 만들어 오면</div><h3>버튼 위치 · 대기 상태 · 응답 형식 · regenerate · 편집 · 오류 처리</h3>
+      <div class="row"><span class="k">효과</span><span>한 번에 논의할 수 있다. 프로토타입이 <b>idea visualization</b>에서 <b>shared specification · boundary object</b>로 바뀐다</span></div></div>
+  </div><div class="keep reveal" style="margin-top:36px;font-size:27px;">Figma가 이것을 가장 직접적으로 말한다 : "Prototypes are the new PRDs". PM이 문서를 쓰기 전에 인터랙티브 프로토타입으로 가정을 검증한다.</div>
+  </div>
+  <div class="src">5장 · 5-3 · Figma blog 2025.12.15</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 095 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 5-3 Prototype as PRD</div>
+  <div class="content" style="">
+    <h2 class="big reveal">PRD가 없어지는 것이 아니다 : <em>Static → Executable specification + decision record</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 1000px"><div class="para">프로토타입이 잘 표현하지 못하는 것은 여전히 문서가 필요하다.</div>
+  <div class="grid3 reveal" style="margin-top:20px;gap:14px">
+    <div class="tile"><div class="th" style="font-size:22px">왜 이것을 하는가</div></div><div class="tile"><div class="th" style="font-size:22px">KPI</div></div><div class="tile"><div class="th" style="font-size:22px">데이터 요건</div></div>
+    <div class="tile"><div class="th" style="font-size:22px">보안 · 정책</div></div><div class="tile"><div class="th" style="font-size:22px">접근성</div></div><div class="tile"><div class="th" style="font-size:22px">롤아웃</div></div>
+    <div class="tile"><div class="th" style="font-size:22px">엣지 케이스</div></div><div class="tile"><div class="th" style="font-size:22px">비기능 요건</div></div><div class="tile hot"><div class="th" style="font-size:22px">결정 기록</div></div>
+  </div>
+  <div class="oneliner" style="margin-top:24px">더 정확한 변화 : PRD disappears가 아니라 <b>Static specification → Executable specification + decision record</b></div></div><div class="pic"><div class="shot cover" style="height:560px;"><img src="images/s2b_figma_prototypes_new_prds.jpg" alt="Figma : 내부 PM들이 Make로 먼저 만들고, 남은 결정을 문서로"></div><div class="cap">Figma : 내부 PM들이 Make로 먼저 만들고, 남은 결정을 문서로</div></div></div>
+  </div>
+  <div class="src">5장 · 5-3</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 096 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 5-4 Eval</div>
+  <div class="content" style="">
+    <h2 class="big reveal">AI 제품에서는 <em>사용성 테스트만으로</em> 충분하지 않다</h2>
+    
+    <table class="tbl reveal" style="margin-top:24px;font-size:25px"><tr><th style="width:360px">층</th><th>무엇을 보나</th></tr><tr><td><b>Interface Eval</b></td><td>사용자가 기능을 찾는가, 플로우를 이해하는가, 통제감을 느끼는가</td></tr><tr class="hot"><td><b>Model · Output Eval</b></td><td>정확한가, 관련 있는가, 충분히 완전한가, 지어내지 않는가, 톤이 적절한가, 근거에 기반하는가</td></tr><tr><td><b>System Eval</b></td><td>지연 시간, 도구 호출 성공률, 오류율, 비용</td></tr><tr><td><b>Behavioral Eval</b></td><td>regenerate를 몇 번 하는가, 사람이 얼마나 수정하는가, 포기하는가, 다음에도 다시 쓰는가</td></tr></table><div class="keep reveal" style="margin-top:34px;font-size:27px;">전통적인 소프트웨어는 버튼을 누르면 거의 같은 결과가 나온다. 그래서 찾을 수 있는가 · 이해하는가 · 과제를 완료하는가만 보면 됐다. <b>AI는 같은 인터페이스에서도 출력이 계속 달라진다.</b> 그래서 평가 대상이 두 층 이상으로 나뉜다.</div>
+  </div>
+  <div class="src">5장 · 5-4</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 097 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 5-4 Eval</div>
+  <div class="content" style="">
+    <h2 class="big reveal">디자인 대상은 <em>UI + Model Behavior</em>다</h2>
+    
+    <div class="gal reveal" style="margin-top:24px"><div class="g"><div class="shot cover" style="height:470px;"><img src="images/s2c_chatgpt_canvas.jpg" alt="OpenAI Canvas : "에디터 UI가 편한가"만 본 것이 아니다. 언제 Canvas를 열어야 하는가, 어느 부분을 수정해야 하는가, 코멘트가 얼마나 정확한가, 타깃 편집이 제대로 되는가 같은 모델 행동 자체를 eval했다"></div><div class="cap">OpenAI Canvas : "에디터 UI가 편한가"만 본 것이 아니다. 언제 Canvas를 열어야 하는가, 어느 부분을 수정해야 하는가, 코멘트가 얼마나 정확한가, 타깃 편집이 제대로 되는가 같은 모델 행동 자체를 eval했다</div></div><div class="g"><div class="shot" style="height:470px;"><img src="images/ui_i_replit_eval_old_vs_new_loop.jpg" alt="Replit Agent : 벤치마크 점수로 끝내기 어렵다. 사용자는 repo diff가 벤치마크상 좋아 보이는지가 아니라 "내가 만든 앱이 실제로 돌아가느냐"를 본다. 프로덕션 행동을 다시 eval과 개선 루프로"></div><div class="cap">Replit Agent : 벤치마크 점수로 끝내기 어렵다. 사용자는 repo diff가 벤치마크상 좋아 보이는지가 아니라 "내가 만든 앱이 실제로 돌아가느냐"를 본다. 프로덕션 행동을 다시 eval과 개선 루프로</div></div></div><div class="oneliner" style="margin-top:26px">Build → Eval → Observe → Adjust → Eval이 <b>제품 lifecycle 자체</b>가 된다. 워크샵 ⑥의 "어떤 실수가 더 나쁜가 · 누구에게 가장 많이 틀릴까"가 eval의 첫 줄이다.</div>
+  </div>
+  <div class="src">5장 · 5-4 · OpenAI Canvas 2024.10 · Replit "Closing the loop" 2026 · 부록 F</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 098 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 5-5 Controlled Rollout</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Launch가 "완성 후 공개"가 아니라 <em>"학습을 위한 제한 공개"</em>가 된다</h2>
+    
+    <div class="grid3 reveal" style="grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px">
+    <div class="tile"><div class="th">Research Preview</div></div><div class="tile"><div class="th">Alpha · Private Alpha</div></div><div class="tile"><div class="th">Labs</div></div><div class="tile"><div class="th">Beta</div></div>
+    <div class="tile"><div class="th">Trusted Testers</div></div><div class="tile"><div class="th">Early Access</div></div><div class="tile"><div class="th">Technical Preview</div></div><div class="tile hot"><div class="th">Launch to Learn</div></div>
+  </div><div class="keep reveal" style="margin-top:40px;font-size:27px;">AI 제품 사례를 보면 이상할 정도로 이런 단어가 많다. <b>실제 사용 전에 모든 실패 모드를 알기 어렵기 때문</b>이다. 그래서 처음부터 모두에게 배포하지 않고, 작은 사용자에게 노출하면서 제품을 학습하는 것이 프로세스 안으로 들어온다.</div>
+  </div>
+  <div class="src">5장 · 5-5</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 099 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 5-5 Controlled Rollout</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Operator : <em>Research Preview 자체가</em> 제품 리서치 단계였다</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:10px"><div class="txt" style="flex:0 0 1060px"><div class="steps reveal" style="margin-top:0px"><div class="step"><div class="sbox"><small>1</small>CUA 역량</div><div class="ssub">스크린샷을 보고 클릭하는 모델</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>2</small>Research Preview</div><div class="ssub">일부 Pro 사용자</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>3</small>실제 웹 과제 관찰</div><div class="ssub">사용성 · 신뢰성 · 안전 · 프롬프트 인젝션</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>4</small>ChatGPT agent에 통합</div><div class="ssub">deep research와 합침</div></div></div><div class="qblock" style="margin-top:26px;gap:12px">
+      <div class="qrow"><div class="qk">Copilot Labs</div><div class="qv">Microsoft : 아직 완성되지 않은 실험 기능을 실제 사람이 사용하고 피드백을 주는 공간. Copilot Vision, Think Deeper가 여기서 먼저 실험됐다</div></div>
+      <div class="qrow"><div class="qk">Notion AI</div><div class="qv">private alpha를 빨리 열고 실제 행동을 본 뒤 제품 방향을 수정했다</div></div>
+    </div></div><div class="pic"><div class="shot cover" style="height:560px;"><img src="images/ui_b_operator_tripadvisor.jpg" alt="Operator(2025.1) : "research preview … will evolve based on user feedback". 바로 모든 사용자에게 들어가지 않았다"></div><div class="cap">Operator(2025.1) : "research preview … will evolve based on user feedback". 바로 모든 사용자에게 들어가지 않았다</div></div></div>
+  </div>
+  <div class="src">5장 · 5-5 · OpenAI 2025.1 · 2025.7 · Microsoft Copilot Labs</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 100 -->
+<section class="slide ">
+  <div class="toc reveal">무엇이 바뀌나 · 하나의 흐름으로</div>
+  <div class="content" style="">
+    <h2 class="big reveal">다섯 개는 <em>하나의 lifecycle 변화</em>다</h2>
+    
+    <div class="cmp reveal">
+    <div class="ccol bad"><div class="ct">과거</div><h3>불확실성을 만들기 전에 줄인다</h3>
+      <div class="row"><span class="k">흐름</span><span>Research → 무엇을 만들지 결정 → PRD → 몇 개만 Prototype → Usability Test → Launch</span></div></div>
+    <div class="ccol good"><div class="ct">AI 시대</div><h3>만들어 보고 측정하면서 줄인다</h3>
+      <div class="row"><span class="k">흐름</span><span>Need + Capability Discovery → 여러 Working Prototype → Research through actual use → Prototype 자체로 팀 align → Eval → Controlled Rollout → 실제 behavior 관찰 → Keep / Kill / Pivot / Productize</span></div></div>
+  </div><div class="oneliner" style="margin-top:30px;font-size:27px;padding:26px 34px">AI는 제품팀이 불확실성을 "만들기 전에" 줄이던 비중을 낮추고, <b>"만들어 보고 측정하면서" 줄일 수 있게 만든다.</b> 오늘 워크샵의 루프(카드 → v1 → 화면 공유 → 두 질문 → 버린 버전)가 이 lifecycle의 축소판이다.</div>
+  </div>
+  <div class="src">5장 · 5-6</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 101 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap">
+    <div class="dlabel reveal">CONCLUSION</div>
+    <h2 class="reveal">그래서 AI 시대의 서비스 기획은<br>어떻게 해야 하는가</h2>
+    <div class="dsub reveal">이 강의는 "UCD를 버려라"도 "UCD를 지켜라"도 아니다. 하루 동안 본 것은 출발점과 검증 방식이 여러 개가 되었다는 사실이다.</div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 102 -->
+<section class="slide ">
+  <div class="toc reveal">결론 · 정답이 아니라 선택지</div>
+  <div class="content" style="">
+    <h2 class="big reveal">기획자의 일은 하나를 믿는 것이 아니라 <em>지금 국면에 맞는 출발점과 증거를 고르는 것</em>이다</h2>
+    
+    <div class="concl reveal" style="margin-top:36px">
+    <div class="cbox"><div class="cn">1</div><h3>출발점은<br>하나가 아니다</h3><p>Need Discovery, Capability Discovery, Prototype Discovery 모두 정당한 시작이다. 다만 어디서 출발했든 productization은 사용자 · 맥락 · 신뢰 · 운영의 문제로 돌아온다.</p></div>
+    <div class="cbox hot"><div class="cn">2</div><h3>리서치의 위치는<br>고정되어 있지 않다</h3><p>만들기 전에 해야 하는 리서치(고위험 워크플로, 권한 · 책임, 규제, 접근성)와 만든 뒤에 더 잘 보이는 리서치(무엇을 반복 사용하나, 언제 믿고 언제 수정하나, 예상 밖 사용)가 있다. 때로는 만들기가 가장 빠른 리서치다.</p></div>
+    <div class="cbox"><div class="cn">3</div><h3>생성이 싸질수록<br>선택 · 검증 · 책임이 비싸진다</h3><p>프로토타입은 늘고 판단은 희소해진다. 그래서 eval · 통제된 노출 · 인간 리뷰가 새 프로세스의 정식 구성요소가 된다.</p></div>
+  </div>
+  </div>
+  <div class="src">6장 · 6.1</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 103 -->
+<section class="slide ">
+  <div class="toc reveal">결론 · 상황별 출발점 가이드</div>
+  <div class="content" style="">
+    <h2 class="big reveal"><em>탐색(언덕 점프)</em>에는 만들기와 역량이, <em>최적화(언덕 오르기)</em>에는 리서치와 사용자가 더 잘 맞는다</h2>
+    
+    <table class="tbl reveal" style="margin-top:16px;font-size:20px"><tr><th style="width:620px">지금 우리 상황이 이렇다면</th><th style="width:420px">출발점</th><th style="width:300px">먼저 줄일 불확실성</th><th>대표 사례</th></tr><tr><td>새 모델 역량이 분기마다 도착하고, 프로토타입이 몇 시간이면 나오고, 틀려도 버리면 그만인 영역</td><td><b>역량에서 출발, 만들며 리서치</b></td><td>Capability · Interaction</td><td>Artifacts, Bolt, Photo AI, 오늘 워크샵</td></tr><tr><td>문제 공간이 안정적이고 잘 알려져 있으며, 지금 언덕의 정상까지 아직 멀다</td><td><b>사용자 필요에서 출발, 만들기 전에 리서치</b></td><td>Desirability</td><td>대부분의 기존 제품 개선, Granola의 "사람 메모 중심"</td></tr><tr><td>고위험 · 규제 영역(의료 · 금융 · 안전 · 공공), 틀린 것의 비용이 크다</td><td><b>사용자 필요 + 오류 비용에서 출발, 통제된 노출</b></td><td>Trust · Accountability, Integration</td><td>Epic 패혈증(반면교사), Operator의 Pro 한정 preview</td></tr><tr><td>차별화가 "무엇을 만들까"가 아니라 "누구를 얼마나 깊이 이해하나"에 달려 있다</td><td><b>의미에서 출발(design driven), 깊은 정성 리서치</b></td><td>Desirability(의미)</td><td>Philips CT 스캐너, Swatch, Wispr의 "데모 밖으로"</td></tr><tr><td>무엇이 될지 아무도 모른다, 팀의 흥분이 유일한 데이터다</td><td><b>일단 만들어 소수에게 보여주고 관찰</b></td><td>Interaction → Desirability 순</td><td>Notion AI 알파, Audio Overviews, Suno의 Bark</td></tr></table><div class="keep reveal" style="margin-top:18px;font-size:22px;">대부분의 팀은 둘 다를 번갈아 한다. 어느 줄에 있는지는 프로젝트마다, 분기마다 다시 판단한다.</div>
+  </div>
+  <div class="src">6장 · 6.2</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 104 -->
+<section class="slide ">
+  <div class="toc reveal">결론 · 기획 캔버스</div>
+  <div class="content" style="">
+    <h2 class="big reveal">AI 시대 서비스 기획 캔버스 : <em>필요한 칸만</em> 쓴다</h2>
+    
+    <div class="plist reveal" style="margin-top:10px;gap:14px"><div class="pitem" style="padding:11px 28px"><div class="pn">1</div><div class="pk" style="width:300px">출발점</div><div class="pv">Need(워크플로 · 페인 · 우회책) / Capability(새로 가능해진 것) / Hunch(만들어 본 것의 반응). 하나 이상</div></div><div class="pitem" style="padding:11px 28px"><div class="pn">2</div><div class="pk" style="width:300px">줄일 불확실성</div><div class="pv">Desirability / Capability / Interaction / Integration / Trust · Accountability 중 무엇을 가장 싼 증거로 먼저</div></div><div class="pitem" style="padding:11px 28px"><div class="pn">3</div><div class="pk" style="width:300px">작동하는 프로토타입</div><div class="pv">1개 이상, 같은 목표 다른 가설</div></div><div class="pitem" style="padding:11px 28px"><div class="pn">4</div><div class="pk" style="width:300px">도그푸딩 + Failure Log</div><div class="pv">틀린 답 · 빠진 맥락 · 타이밍 · 과잉 실행 · 지연 · 고치기 힘든 output</div></div><div class="pitem hot" style="padding:11px 28px"><div class="pn">5</div><div class="pk" style="width:300px">평가</div><div class="pv">어떤 실수가 더 나쁜가 · 누구에 대한 정확도인가 · 모델 지표 + 경험 지표</div></div><div class="pitem" style="padding:11px 28px"><div class="pn">6</div><div class="pk" style="width:300px">노출 사다리</div><div class="pv">사내 → 소수 → research preview → beta → GA. 각 단의 신호와 kill 기준</div></div><div class="pitem" style="padding:11px 28px"><div class="pn">7</div><div class="pk" style="width:300px">Behavior + Interview</div><div class="pv">telemetry는 "무엇을", interview는 "왜"</div></div><div class="pitem" style="padding:11px 28px"><div class="pn">8</div><div class="pk" style="width:300px">Keep / Kill / Pivot</div><div class="pv">Productize + Continuous Eval. 예상 밖 사용이 핵심 신호일 수 있다</div></div></div>
+  </div>
+  <div class="src">6장 · 6.3</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 105 -->
+<section class="slide ">
+  <div class="toc reveal">결론 · 산출물</div>
+  <div class="content" style="">
+    <h2 class="big reveal">버리는 것이 아니라 <em>비중이 바뀐다</em></h2>
+    
+    <table class="tbl reveal" style="margin-top:20px;font-size:23px"><tr><th style="width:520px">기존 산출물</th><th>함께 두는 산출물</th></tr><tr><td>Persona</td><td>Context · job · constraint map (+ 합성 사용자로 리허설)</td></tr><tr><td>Journey Map</td><td>Human · AI handoff / agency map</td></tr><tr class="hot"><td>PRD</td><td>프로토타입 + decision log + constraint spec + eval 세트</td></tr><tr><td>Wireframe</td><td>실행 가능한 인터랙션 프로토타입</td></tr><tr><td>Usability test plan</td><td>Eval 세트 + 사용성 + 실패 시나리오</td></tr><tr><td>Success metric</td><td>제품 지표 + 모델 지표 + 인간 검토 비용</td></tr><tr><td>Edge cases</td><td>Failure taxonomy · recovery design ("when wrong")</td></tr><tr><td>Launch checklist</td><td>Progressive rollout + monitoring + rollback</td></tr></table>
+  </div>
+  <div class="src">6장 · 6.4</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 106 -->
+<section class="slide ">
+  <div class="toc reveal">결론 · 과장하면 안 되는 것</div>
+  <div class="content" style="">
+    <h2 class="big reveal"><em>양쪽 모두</em> 과장하면 안 된다</h2>
+    
+    <div class="lab-steps reveal" style="margin-top:20px;gap:14px">
+    <div class="brk"><div class="x">✗</div><div class="w">"Design Thinking is dead"</div><div class="why">죽은 것은 <b>고정된 의례와 순서</b>다. empathize · prototype · test · iterate는 살아 있다</div></div>
+    <div class="brk"><div class="x">✗</div><div class="w">"UCD만이 답이다"</div><div class="why">Norman의 11개와 3장의 30개 사례가 보여주듯 새 언덕은 자주 <b>역량과 우연</b>에서 시작한다</div></div>
+    <div class="brk"><div class="x">✗</div><div class="w">"Prototype first = ship garbage fast"</div><div class="why">학계는 속도와 민주화만큼 <b>reliability · integration · accountability · deskilling</b>을 보고한다</div></div>
+    <div class="brk"><div class="x">✗</div><div class="w">"행동 데이터가 인터뷰를 대체한다"</div><div class="why">사용은 "무엇을"을 보여주지만 <b>"왜", "무엇을 포기했나", "누가 배제됐나"</b>를 설명하지 않는다</div></div>
+    <div class="brk"><div class="x">✗</div><div class="w">"Capability first가 모든 제품의 출발점"</div><div class="why">역량은 새로운 탐색 경로이지 <b>사용자 가치의 대체물</b>이 아니다</div></div>
+  </div>
+  </div>
+  <div class="src">6장 · 6.5</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 107 -->
+<section class="slide s-close">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="content" style="top:150px">
+    <div class="kicker reveal">마지막 문장</div>
+    <h2 class="reveal">문제를 찾는 것만큼 새로 가능해진 것을 발견하십시오.<br>만든 것은 반드시 사람에게 써 보게 하십시오.<br>그리고 어느 쪽에서 시작할지는 매번 다시 고르십시오.</h2>
+    <div class="habits reveal">
+      <div class="habit"><div class="hn">발견</div><p>새로 가능해진 것</p><small>역량 카드, 모델 릴리스, 남의 API 출시일</small></div>
+      <div class="habit"><div class="hn">노출</div><p>사람에게 써 보게</p><small>Slack · 도그푸딩 · trusted tester · 화면 공유</small></div>
+      <div class="habit"><div class="hn">판단</div><p>매번 다시 고르기</p><small>점프인가 오르기인가. 그 판단이 AI 시대의 서비스 디자인이다</small></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 108 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap">
+    <div class="dlabel reveal">WORKSHOP</div>
+    <h2 class="reveal">핸즈온 워크샵 :<br>역량 카드에서 작동하는 앱까지</h2>
+    <div class="dsub reveal">각자 역량 카드를 뽑고, 앱 컨셉을 한 줄로 정한 뒤, Google AI Studio로 바로 만든다. 만든 것은 화면 공유로 보여주고, 마지막에 "내 서비스가 잘 되고 있는지 어떻게 알까"를 함께 생각한다.</div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 109 -->
+<section class="slide ">
+  <div class="toc reveal">워크샵 · 한 줄 규칙</div>
+  <div class="content" style="">
+    <h2 class="big reveal">"이게 무슨 문제를 풀죠?"는 <em>만든 뒤에</em> 묻는다</h2>
+    
+    <div class="steps reveal" style="margin-top:40px"><div class="step"><div class="sbox"><small>1</small>역량을 본다</div><div class="ssub">카드 3장 중 하나 또는 조합</div></div><div class="sarrow">→</div><div class="step now"><div class="sbox"><small>2</small>만든다</div><div class="ssub">AI Studio에서 작동하는 v1</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>3</small>보여준다</div><div class="ssub">화면 공유</div></div><div class="sarrow">→</div><div class="step"><div class="sbox"><small>4</small>잘 되는지 묻는다</div><div class="ssub">어떤 실수가 더 나쁜가</div></div></div><div class="keep reveal" style="margin-top:48px;font-size:27px;">테마는 자유. 페르소나 · 저니맵 · 문제 정의문 · 워크시트는 없다. 남는 것은 <b>역량 카드 1장, 컨셉 한 줄, 작동하는 링크</b>다. 이 순서가 1장의 Solution first, 1.5장의 Technology first를 몸으로 해 보는 것이다.</div>
+  </div>
+  <div class="src">2장 · 2.0 한 문단 요약</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 110 -->
+<section class="slide ">
+  <div class="toc reveal">워크샵 · 역량 카드 12장</div>
+  <div class="content" style="">
+    <h2 class="big reveal">AI가 새로 할 수 있게 된 <em>감각 · 행동 · 판단</em> 12장</h2>
+    
+    <div class="deckgrid reveal" style="margin-top:14px;gap:14px"><div class="dcard"><div class="n">C1</div><div class="e">🧠</div><b>기억하는 AI</b><small>Memory</small></div><div class="dcard"><div class="n">C2</div><div class="e">🤖</div><b>행동하는 AI</b><small>Agent · Computer Use</small></div><div class="dcard"><div class="n">C3</div><div class="e">👁️</div><b>보는 AI</b><small>Vision</small></div><div class="dcard"><div class="n">C4</div><div class="e">🪪</div><b>사람을 알아보는 AI</b><small>Face · Speaker Recognition</small></div><div class="dcard"><div class="n">C5</div><div class="e">🎙️</div><b>듣는 AI</b><small>Speech to Text</small></div><div class="dcard"><div class="n">C6</div><div class="e">🗣️</div><b>말하는 AI</b><small>Voice Generation · Cloning</small></div><div class="dcard"><div class="n">C7</div><div class="e">🎨</div><b>그리고 찍는 AI</b><small>Image · Video</small></div><div class="dcard"><div class="n">C8</div><div class="e">🎵</div><b>음악 · 소리 만드는 AI</b><small>Music · Sound</small></div><div class="dcard"><div class="n">C9</div><div class="e">🌐</div><b>실시간 통역하는 AI</b><small>Live Translation</small></div><div class="dcard"><div class="n">C10</div><div class="e">📈</div><b>예측 · 추천 · 감지하는 AI</b><small>Prediction · Anomaly</small></div><div class="dcard"><div class="n">C11</div><div class="e">🩺</div><b>몸과 환경의 신호를 읽는 AI</b><small>Sensor · Wearable · IoT</small></div><div class="dcard"><div class="n">C12</div><div class="e">🦾</div><b>몸을 움직이는 AI</b><small>Robot · Autonomous · Embodied</small></div></div><div class="keep reveal" style="margin-top:18px;font-size:22px;">글로 읽고 쓰고 대화하기(요약 · 작문 · 역할 연기 · 긴 글 읽기 · 검색 근거 · 추론)와 코드 만들기는 <b>모든 카드에 기본으로 딸린 재료</b>(AI Studio가 제공)로 취급한다. 웹페이지(index.html)에서 Pick! 을 누르면 3장이 랜덤으로 뒤집힌다.</div>
+  </div>
+  <div class="src">2장 · 2.3 역량 카드 · index.html 카드 덱</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 111 -->
+<section class="slide ">
+  <div class="toc reveal">워크샵 · Pick!</div>
+  <div class="content" style="">
+    <h2 class="big reveal">3장이 뒤집힌다. <em>하나를 쓰거나 조합한다</em></h2>
+    
+    <div class="split reveal" style="gap:50px;margin-top:10px"><div class="txt" style="flex:0 0 1100px"><div class="lab-steps reveal" style="margin-top:0;gap:18px">
+    <div class="lstep"><div class="num">1</div><div class="tx">index.html의 카드 덱에서 <b>Pick!</b> 을 누른다<small>12장이 이모지만 보이는 상태로 시작하고, 3장이 랜덤으로 뒤집힌다. "다시 섞기"로 되돌리고 "전부 보기"로 12장을 모두 열 수 있다</small></div></div>
+    <div class="lstep"><div class="num">2</div><div class="tx">뒷면을 읽는다 : 큰 이름 · 한 줄 설명 · 실제 제품 예 · 시동 프롬프트<small>3장에서 볼 사례 대부분이 이 12장 중 하나에서 출발했다</small></div></div>
+    <div class="lstep hot"><div class="num">3</div><div class="tx">3장 중 하나를 쓰거나, 두세 장을 조합한다<small>예 : 🗣️ 말하는 AI + 🪪 사람을 알아보는 AI = "아는 사람 목소리로 대신 초인종에 답해 주는 앱"</small></div></div>
+  </div></div><div class="pic"><div class="dcard" style="min-height:560px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center"><div class="e" style="font-size:150px">🎴</div><b style="font-size:30px;margin-top:30px">Pick! 카드 3장 뽑기</b><small style="font-size:21px;margin-top:14px">앞면 : 이모지와 번호만<br>뒷면 : 이름 · 설명 · 예시 제품 · 프롬프트</small></div></div></div>
+  </div>
+  <div class="src">2장 · 2.3 · index.html</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 112 -->
+<section class="slide ">
+  <div class="toc reveal">워크샵 · 앱 컨셉 한 줄</div>
+  <div class="content" style="">
+    <h2 class="big reveal">"[누가] [언제] 쓰는, [역량]으로 [무엇]을 해 주는 앱"</h2>
+    
+    <div class="lab-steps reveal" style="margin-top:36px;gap:20px">
+    <div class="lstep"><div class="num">💬</div><div class="tx">"<b>혼자 사는 사람</b>이 <b>초인종이 울릴 때</b> 쓰는, <b>말하는 AI</b>로 <b>남자 목소리로 대신 대답</b>해 주는 앱"<small>🗣️ 말하는 AI 하나로</small></div></div>
+    <div class="lstep"><div class="num">💬</div><div class="tx">"<b>회의가 많은 팀장</b>이 <b>회의 직후</b> 쓰는, <b>듣는 AI + 기억하는 AI</b>로 <b>내 할 일만 뽑아 주는</b> 앱"<small>🎙️ + 🧠 조합</small></div></div>
+    <div class="lstep hot"><div class="num">💬</div><div class="tx">"<b>혼자 사는 부모님</b>을 위해 <b>매일 아침</b> 쓰는, <b>몸의 신호를 읽는 AI</b>로 <b>이상하면 자식에게 알려 주는</b> 앱"<small>🩺 하나. 데이터는 샘플</small></div></div>
+  </div><div class="keep reveal" style="margin-top:40px;font-size:27px;">채팅창에 한 줄 올리고 시작한다. 이 한 줄이 워크샵의 유일한 "문서"다. NN/g 식으로 말하면 화면이 아니라 <b>"누구의 무엇이 달라지는가"</b>를 먼저 쓰는 것.</div>
+  </div>
+  <div class="src">2장 · 2.1 ③</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 113 -->
+<section class="slide ">
+  <div class="toc reveal">워크샵 · 각자 빌드</div>
+  <div class="content" style="">
+    <h2 class="big reveal">AI Studio Build : <em>아주 간단한 컨셉, 골든패스 1개</em></h2>
+    
+    <div class="lab-steps reveal" style="margin-top:30px;gap:18px">
+    <div class="lstep"><div class="num">1</div><div class="tx">카드 뒷면의 <b>시동 프롬프트</b>를 붙여넣고, 그 아래 컨셉 한 줄을 붙인다<small>예 : "텍스트를 넣으면 고른 목소리로 읽어 주는 웹앱(브라우저 음성 합성)" + "혼자 사는 사람의 초인종에 남자 목소리로 대신 대답"</small></div></div>
+    <div class="lstep"><div class="num">2</div><div class="tx">골든패스 하나만 끝까지 통하게 만든다<small>처음 열었을 때 → 한 번의 입력 → 한 번의 결과. 설정 화면 · 로그인 · 예외 처리는 나중</small></div></div>
+    <div class="lstep hot"><div class="num">3</div><div class="tx">안 되면 목업 데이터 · 데모로 간다<small>센서 · 로봇 · 얼굴 인식 · 외부 API는 무료 툴에서 못 붙일 수 있다. 그 역량이 있다고 가정하고 샘플 데이터로 흐름만 만든다. 동작하면 좋고, 아니면 목업으로 가능성을 탐색한다</small></div></div>
+    <div class="lstep"><div class="num">4</div><div class="tx">공유 링크를 만들어 휴식 전에 채팅창에 올린다<small>AI Studio의 UI 명칭 · 무료 한도 · 공유 방식은 진행 전에 재확인한다</small></div></div>
+  </div>
+  </div>
+  <div class="src">2장 · 2.1 ④ · Google AI Studio Build</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 114 -->
+<section class="slide">
+  <div class="toc reveal">워크샵 · 첫 프로토타입</div>
+  <div class="content">
+    <h2 class="big reveal">Google Glass 첫 프로토타입은 <em>옷걸이와 프로젝터</em>였다</h2>
+    <div class="split reveal" style="gap:70px;margin-top:44px;align-items:center">
+      <div class="pic" style="flex:0 0 940px"><div class="shot auto"><img src="images/kn_google_glass_prototype.jpg" alt="Google Glass 첫 프로토타입 : Coat hanger · Sheet Protector · Plexiglas · Pico projector · Netbook (Google+ 영상)"></div></div>
+      <div class="pic" style="flex:1"><img src="images/kn_google_glass_product.jpg" alt="Google Glass 제품" style="width:100%;height:auto"></div>
+    </div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 115 -->
+<section class="slide s-stmt">
+  <div class="st reveal"><h2>Build! <span style="color:var(--brand-lite)">(15mins)</span></h2></div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 116 -->
+<section class="slide s-stmt">
+  <div class="st reveal"><h2>Share <span style="color:var(--brand-lite)">(3mins each)</span></h2><div class="sub2">Card &amp; Concept &amp; Solution</div></div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 117 -->
+<section class="slide s-divider">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="dwrap">
+    <div class="dlabel reveal">APPENDIX</div>
+    <h2 class="reveal">Appendix</h2>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 118 -->
+<section class="slide s-hook">
+  <div class="ring"></div><div class="orb"></div>
+  <div class="q reveal"><h2>여러분이 아는 제품 중<br><em>유저 리서치에서 태어난</em><br>급진적 혁신이 있습니까?</h2></div>
+  
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 119 -->
+<section class="slide s-dark">
+  <div class="duo">
+    <div class="d1" style="width:847px;flex:none"><img src="images/kn_faster_horses_quote.jpg" alt="If I had asked people what they wanted, they would have said faster horses. — Henry Ford"></div>
+    <div class="d2" style="flex:1"><img src="images/kn_henry_ford.jpg" alt="Henry Ford와 자동차"></div>
+  </div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 120 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman 2010</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Technology first → invention second → <em>needs last</em></h2>
+    
+    <div class="quote reveal" style="margin-top:30px"><p>"design research is great when it comes to improving existing product categories but <em>essentially useless</em> when it comes to new, innovative breakthroughs."</p><cite>Don Norman, "Technology First, Needs Last : The Research Product Gulf", interactions 2010</cite></div><div class="blist reveal" style="margin-top:40px;gap:20px;font-size:27px"><div class="bli">"New conceptual breakthroughs are invariably driven by the development of new technologies."</div><div class="bli">비행기 · 자동차 · 전화 · 라디오 · TV · 컴퓨터 · 인터넷 · 휴대폰에 대해 : "What role did design research play? <b>No role.</b> All were driven by technology."</div><div class="bli">발명가의 동기 : "…invent because they are inventors. They create for the same reason that people climb mountains : to demonstrate that they can do so."</div></div>
+  </div>
+  <div class="src">Norman 2010 · IASDR 2009(서울) · IIT Design Research Conference 2010</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 121 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman & Verganti 2014</div>
+  <div class="content" style="">
+    <h2 class="big reveal">반례를 찾으려 했지만, <em>실패했다</em></h2>
+    
+    <div class="quote reveal" style="margin-top:30px"><p>"Norman was bothered by his analysis and tried to find examples that refuted this conclusion; <em>he failed.</em> Every radical innovation he investigated was done without design research, without careful analysis of a person’s or even a society’s needs."</p><cite>Norman & Verganti, Design Issues 30(1), 2014, p.79</cite></div><div class="keep reveal" style="margin-top:44px;font-size:27px;">그 목록은 디자인 리서치가 존재하기 훨씬 전부터 시작한다 : 실내 배관, 가정용 전등, 자동차와 비행기, 라디오와 TV. 그리고 오늘날의 Facebook · Twitter까지, "만든 사람들이 그냥 <b>재미있어 보여서</b>" 시도한 것들이다.</div><div class="keep reveal" style="margin-top:20px;font-size:24px;">같은 단락의 나머지 반쪽은 이 장의 끝에서 본다. 먼저 그가 직접 열거한 11개를 하나씩 보자.</div>
+  </div>
+  <div class="src">Norman &amp; Verganti 2014</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 122 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman의 사례 · Airplane</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Airplane : <em>1903, 라이트 형제</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 800px"><div class="qblock" style="margin-top:0;gap:18px">
+        <div class="qrow" style="padding:26px 32px"><div class="qk" style="font-size:20px">Norman의 해석</div><div class="qv" style="font-size:27px">기술 가능성이 먼저였다. 두 자전거 제작자가 "날 수 있는가"를 증명하려 했다.</div></div>
+        <div class="qrow ask" style="padding:26px 32px"><div class="qk" style="font-size:20px">UCD 관점에서</div><div class="qv" style="font-size:27px">사용자가 "비행기"라는 unmet need를 직접 요구한 것이 아니다. 인터뷰로는 "더 빠른 기차"가 나왔을 것이다.</div></div>
+      </div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/hist_airplane.jpg" alt="키티호크 첫 비행, 1903.12.17. John T. Daniels 촬영 (퍼블릭 도메인)"></div><div class="cap">키티호크 첫 비행, 1903.12.17. John T. Daniels 촬영 (퍼블릭 도메인)</div></div></div>
+  </div>
+  <div class="src">Wikimedia Commons · Norman 2010</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 123 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman의 사례 · Automobile</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Automobile : <em>1886, Benz Patent Motorwagen</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 800px"><div class="qblock" style="margin-top:0;gap:18px">
+        <div class="qrow" style="padding:26px 32px"><div class="qk" style="font-size:20px">Norman의 해석</div><div class="qv" style="font-size:27px">기술 주도. 기존의 이동 욕구와 새로운 technical means(내연기관)가 결합했다.</div></div>
+        <div class="qrow ask" style="padding:26px 32px"><div class="qk" style="font-size:20px">UCD 관점에서</div><div class="qv" style="font-size:27px">"더 빠른 말"을 물었다면 나오지 않았을 것. 욕구는 있었지만 해법은 사용자에게서 나오지 않았다.</div></div>
+      </div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/hist_automobile.jpg" alt="Benz Patent Motorwagen, 1886 (퍼블릭 도메인)"></div><div class="cap">Benz Patent Motorwagen, 1886 (퍼블릭 도메인)</div></div></div>
+  </div>
+  <div class="src">Wikimedia Commons · Norman 2010</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 124 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman의 사례 · Telephone</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Telephone : <em>1876, Alexander Graham Bell</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 800px"><div class="qblock" style="margin-top:0;gap:18px">
+        <div class="qrow" style="padding:26px 32px"><div class="qk" style="font-size:20px">Norman의 해석</div><div class="qv" style="font-size:27px">기술 주도. 초기 용도와 사회적 의미는 사후적으로 발전했다.</div></div>
+        <div class="qrow ask" style="padding:26px 32px"><div class="qk" style="font-size:20px">UCD 관점에서</div><div class="qv" style="font-size:27px">전신 회사는 "장난감"이라며 특허 매입을 거절했다. 당시 사용자 조사를 했다면 같은 답이 나왔을 것이다.</div></div>
+      </div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/hist_telephone.jpg" alt="Bell의 1892년 뉴욕 · 시카고 장거리 통화 (퍼블릭 도메인)"></div><div class="cap">Bell의 1892년 뉴욕 · 시카고 장거리 통화 (퍼블릭 도메인)</div></div></div>
+  </div>
+  <div class="src">Wikimedia Commons · Norman 2010</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 125 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman의 사례 · Radio</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Radio : <em>1920년대 가정 보급</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 800px"><div class="qblock" style="margin-top:0;gap:18px">
+        <div class="qrow" style="padding:26px 32px"><div class="qk" style="font-size:20px">Norman의 해석</div><div class="qv" style="font-size:27px">무선 전파라는 capability가 사용처(방송 · 거실의 가족)를 만들어냈다.</div></div>
+        <div class="qrow ask" style="padding:26px 32px"><div class="qk" style="font-size:20px">UCD 관점에서</div><div class="qv" style="font-size:27px">"저녁에 온 가족이 한 상자 앞에 모여 앉고 싶다"는 요구는 라디오 이전에 존재하지 않았다. 2024년 Audio Overviews와 같은 구조.</div></div>
+      </div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/hist_radio.jpg" alt="1926년 미국 농가의 라디오 청취 (미국 국립문서보관소, 퍼블릭 도메인)"></div><div class="cap">1926년 미국 농가의 라디오 청취 (미국 국립문서보관소, 퍼블릭 도메인)</div></div></div>
+  </div>
+  <div class="src">Wikimedia Commons · Norman 2010</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 126 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman의 사례 · Television</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Television : <em>1950년대 가정 보급</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 800px"><div class="qblock" style="margin-top:0;gap:18px">
+        <div class="qrow" style="padding:26px 32px"><div class="qk" style="font-size:20px">Norman의 해석</div><div class="qv" style="font-size:27px">기술 주도. 새로운 medium이 저녁 시간 · 거실 배치 · 가족 의례라는 behavior를 형성했다.</div></div>
+        <div class="qrow ask" style="padding:26px 32px"><div class="qk" style="font-size:20px">UCD 관점에서</div><div class="qv" style="font-size:27px">제품이 행동을 만들었지, 행동 관찰이 제품을 만든 것이 아니다.</div></div>
+      </div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/hist_television.jpg" alt="1958년 TV를 보는 가족 (퍼블릭 도메인)"></div><div class="cap">1958년 TV를 보는 가족 (퍼블릭 도메인)</div></div></div>
+  </div>
+  <div class="src">Wikimedia Commons · Norman 2010</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 127 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman의 사례 · Computer</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Computer : <em>1946, ENIAC</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 800px"><div class="qblock" style="margin-top:0;gap:18px">
+        <div class="qrow" style="padding:26px 32px"><div class="qk" style="font-size:20px">Norman의 해석</div><div class="qv" style="font-size:27px">기술 주도. 최초 발명은 군사 · 과학 계산이 목적이었다.</div></div>
+        <div class="qrow ask" style="padding:26px 32px"><div class="qk" style="font-size:20px">UCD 관점에서</div><div class="qv" style="font-size:27px">user research의 산물로 보기 어렵다. 이후 수십 년의 사용자 중심 개선이 "개인용"이라는 의미를 붙였다.</div></div>
+      </div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/hist_computer.jpg" alt="ENIAC 프로그래머 Betty Snyder와 Glen Beck (미 육군, 퍼블릭 도메인)"></div><div class="cap">ENIAC 프로그래머 Betty Snyder와 Glen Beck (미 육군, 퍼블릭 도메인)</div></div></div>
+  </div>
+  <div class="src">Wikimedia Commons · Norman 2010</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 128 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman의 사례 · Personal Computer</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Personal Computer : <em>1975, Altair 8800 → Apple II</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 800px"><div class="qblock" style="margin-top:0;gap:18px">
+        <div class="qrow" style="padding:26px 32px"><div class="qk" style="font-size:20px">Norman의 해석</div><div class="qv" style="font-size:27px">기술을 개인 사용 맥락으로 재해석했다.</div></div>
+        <div class="qrow ask" style="padding:26px 32px"><div class="qk" style="font-size:20px">UCD 관점에서</div><div class="qv" style="font-size:27px">취미가들의 "갖고 싶다"가 시장 조사보다 먼저였다. HP 계산기도 마케팅이 반대했지만 창업자가 갖고 싶어서 만들었다.</div></div>
+      </div></div><div class="pic"><div class="shot cover" style="height:600px;"><img src="images/hist_personal_computer.jpg" alt="Altair 8800, 1975 (퍼블릭 도메인)"></div><div class="cap">Altair 8800, 1975 (퍼블릭 도메인)</div></div></div>
+  </div>
+  <div class="src">Wikimedia Commons · Norman 2010</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 129 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman의 사례 · Internet</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Internet : <em>ARPANET 1969 → 1977 지도</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 800px"><div class="qblock" style="margin-top:0;gap:18px">
+        <div class="qrow" style="padding:26px 32px"><div class="qk" style="font-size:20px">Norman의 해석</div><div class="qv" style="font-size:27px">기술 · infrastructure 주도. 응용과 의미(이메일 · 웹 · SNS)는 이후에 폭발적으로 등장했다.</div></div>
+        <div class="qrow ask" style="padding:26px 32px"><div class="qk" style="font-size:20px">UCD 관점에서</div><div class="qv" style="font-size:27px">인프라가 먼저 깔리고 용도는 수십 년에 걸쳐 발견됐다. 오늘의 파운데이션 모델이 같은 위치에 있다.</div></div>
+      </div></div><div class="pic"><div class="shot" style="height:600px;"><img src="images/hist_internet.jpg" alt="ARPANET 논리 지도, 1977.3 (퍼블릭 도메인)"></div><div class="cap">ARPANET 논리 지도, 1977.3 (퍼블릭 도메인)</div></div></div>
+  </div>
+  <div class="src">Wikimedia Commons · Norman 2010</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 130 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman의 사례 · SMS Text Messaging</div>
+  <div class="content" style="">
+    <h2 class="big reveal">SMS Text Messaging : <em>1992~</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 800px"><div class="qblock" style="margin-top:0;gap:18px">
+        <div class="qrow" style="padding:26px 32px"><div class="qk" style="font-size:20px">Norman의 해석</div><div class="qv" style="font-size:27px">기술 affordance의 예상 밖 사용. 통신망 제어 채널에 남는 160자 공간이라는 작은 capability.</div></div>
+        <div class="qrow ask" style="padding:26px 32px"><div class="qk" style="font-size:20px">UCD 관점에서</div><div class="qv" style="font-size:27px">독자적 behavior(문자 문화)로 성장했다. 3장 C 패턴(Usage Discovery)의 원형. 아무도 "160자 메시지"를 요구하지 않았다.</div></div>
+      </div></div><div class="pic"><div class="shot" style="height:600px;"><img src="images/hist_sms.jpg" alt="Nokia 3310 (퍼블릭 도메인)"></div><div class="cap">Nokia 3310 (퍼블릭 도메인)</div></div></div>
+  </div>
+  <div class="src">Wikimedia Commons · Norman 2010</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 131 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman의 사례 · Cellphone</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Cellphone : <em>1983, Motorola DynaTAC</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 800px"><div class="qblock" style="margin-top:0;gap:18px">
+        <div class="qrow" style="padding:26px 32px"><div class="qk" style="font-size:20px">Norman의 해석</div><div class="qv" style="font-size:27px">기술 주도. 이후 수많은 UCD 개선(크기 · 배터리 · UI)이 축적됐다.</div></div>
+        <div class="qrow ask" style="padding:26px 32px"><div class="qk" style="font-size:20px">UCD 관점에서</div><div class="qv" style="font-size:27px">급진 혁신 뒤에 HCD가 온다는 원문의 예. 첫 제품은 벽돌이었고, 사용자와 함께 20년을 다듬어 오늘의 폰이 됐다.</div></div>
+      </div></div><div class="pic"><div class="shot" style="height:600px;"><img src="images/hist_cellphone.jpg" alt="Motorola DynaTAC 8000X (CC BY SA 3.0, Wikimedia Commons)"></div><div class="cap">Motorola DynaTAC 8000X (CC BY SA 3.0, Wikimedia Commons)</div></div></div>
+  </div>
+  <div class="src">Wikimedia Commons · Norman 2010</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 132 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Norman의 사례 · Indoor plumbing · Electric lighting</div>
+  <div class="content" style="">
+    <h2 class="big reveal">Indoor plumbing · Electric lighting : <em>1879~, 에디슨의 전구와 배전</em></h2>
+    
+    <div class="split reveal" style="gap:44px;margin-top:10px"><div class="txt" style="flex:0 0 800px"><div class="qblock" style="margin-top:0;gap:18px">
+        <div class="qrow" style="padding:26px 32px"><div class="qk" style="font-size:20px">Norman의 해석</div><div class="qv" style="font-size:27px">급진적 infrastructure 변화와 need articulation의 시차. 전구가 아니라 발전 · 배전 시스템 전체의 발명이었다.</div></div>
+        <div class="qrow ask" style="padding:26px 32px"><div class="qk" style="font-size:20px">UCD 관점에서</div><div class="qv" style="font-size:27px">사람들은 전등을 "요구"하기 전에 전등을 받았다. 요구는 받은 뒤에 언어화됐다.</div></div>
+      </div></div><div class="pic"><div class="shot" style="height:600px;"><img src="images/hist_infrastructure.jpg" alt="에디슨 전구, 1879~80 (CC BY 3.0, Wikimedia Commons)"></div><div class="cap">에디슨 전구, 1879~80 (CC BY 3.0, Wikimedia Commons)</div></div></div>
+  </div>
+  <div class="src">Wikimedia Commons · Norman &amp; Verganti 2014</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 133 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · 2014년의 추가 사례</div>
+  <div class="content" style="">
+    <h2 class="big reveal">논문 본문이 더한 사례 : <em>리서치가 오히려 막은</em> 경우도 있다</h2>
+    
+    <div class="plist reveal" style="margin-top:24px;gap:14px"><div class="pitem hot" style="padding:18px 30px"><div class="pn">Wii</div><div class="pk" style="width:240px">닌텐도 Wii</div><div class="pv">소니 · MS도 같은 센서를 알았지만 유저 리서치가 "더 좋은 그래픽"을 답해 버렸다. 리서치는 지금 언덕의 정상을 가리킨다</div></div><div class="pitem" style="padding:18px 30px"><div class="pn">Swatch</div><div class="pk" style="width:240px">Swatch</div><div class="pv">아무도 패션 시계를 원하지 않았고 첫 반응은 미지근했다. 시계의 <b>의미</b>를 바꾼 사례</div></div><div class="pitem" style="padding:18px 30px"><div class="pn">HP</div><div class="pk" style="width:240px">HP 계산기</div><div class="pv">마케팅이 반대했지만 창업자가 갖고 싶어서 만들었다</div></div><div class="pitem" style="padding:18px 30px"><div class="pn">Apple</div><div class="pk" style="width:240px">Newton · QuickTake</div><div class="pv">옳은 아이디어도 시점이 틀리면 죽는다. 당시 임원이 Norman 본인</div></div><div class="pitem" style="padding:18px 30px"><div class="pn">SNS</div><div class="pk" style="width:240px">Facebook · Twitter</div><div class="pv">"만든 사람들이 그냥 재미있어 보여서." 오늘의 Character.AI · 크랙과 같은 구조</div></div></div>
+  </div>
+  <div class="src">Norman &amp; Verganti 2014</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 134 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · 같은 단락의 나머지 반쪽</div>
+  <div class="content" style="">
+    <h2 class="big reveal">그러나 일단 만들어진 뒤에는, <em>HCD가 invaluable</em>했다</h2>
+    
+    <div class="quote reveal" style="margin-top:30px"><p>"Once the radical innovation had been developed, however, <em>HCD was invaluable</em> as a way of improving the product and enhancing its appeal, good examples being the way that Google, Facebook, and Twitter have modified themselves since their initial introduction, or how automobile manufacturers slowly and continuously modify their offerings."</p><cite>Norman & Verganti 2014, p.79 · 앞 슬라이드 "he failed"와 같은 단락</cite></div><div class="keep reveal" style="margin-top:44px;font-size:27px;">강의에서 절대 빼먹으면 안 되는 문장. Norman은 HCD를 버리라고 한 것이 아니라 <b>HCD가 잘하는 일의 위치</b>를 말했다. 11개 사례 모두 출시 후 수십 년의 사용자 중심 개선이 붙었다.</div>
+  </div>
+  <div class="src">Norman &amp; Verganti 2014</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 135 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Figure 4</div>
+  <div class="content" style="">
+    <h2 class="big reveal">기술 변화 × 의미 변화 : <em>의미를 바꾸는 리서치</em>는 급진 혁신에 닿는다</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:10px"><div class="txt" style="flex:0 0 1000px"><div class="qblock" style="margin-top:0">
+    <div class="qrow"><div class="qk">Market Pull</div><div class="qv">기술 점진 × 의미 점진 = <b>HCD</b>. 지금 언덕 오르기. 대부분의 일상 제품 개선</div></div>
+    <div class="qrow"><div class="qk">Technology Push</div><div class="qv">기술 급진 × 의미 점진. 앞의 11개 사례 대부분</div></div>
+    <div class="qrow ask"><div class="qk">Meaning Driven</div><div class="qv">기술 점진 × 의미 급진 : Swatch(시계 = 패션), 미니스커트(기술 0), Wii(값싼 센서 + 온 가족의 놀이). Verganti의 기여 : 디자인 리서치도 여기에 기여할 수 있다</div></div>
+    <div class="qrow"><div class="qk">Tech Epiphany</div><div class="qv">기술 급진 × 의미 급진 : iPhone. 멀티터치는 20년 전부터 연구실에 있었고 애플이 한 일은 조합 · 타이밍 · 의미 부여</div></div>
+  </div></div><div class="pic"><div class="shot" style="height:580px;"><img src="images/s1_norman_verganti_fig4_tech_x_meaning.jpg" alt="Norman &amp; Verganti 2014, Figure 4"></div><div class="cap">Norman & Verganti 2014, Figure 4</div></div></div>
+  </div>
+  <div class="src">Norman &amp; Verganti 2014</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 136 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · Figure 5</div>
+  <div class="content" style="">
+    <h2 class="big reveal">디자인 리서치의 4분면 : Philips CT 스캐너는 <em>기계가 아니라 검사실의 의미</em>를 바꿨다</h2>
+    
+    <div class="split reveal" style="gap:40px;margin-top:36px"><div class="txt" style="flex:0 0 940px"><div class="para">실용성 고려 여부 × 새로운 의미 해석 여부로 나누면, <b>HCD 리서치</b>는 "실용성 O · 새 의미 X"(점진 혁신)에, <b>Design Driven 리서치</b>는 "실용성 O · 새 의미 O"(급진 혁신)에 놓인다.<small>Philips CT 스캐너 검사실 : 무서운 검사 → 아이가 편안한 경험. 스캐너 자체가 아니라 검사실 환경의 의미를 바꿔, 수년간의 디자인 리서치로 도달했다. 리서치가 급진 혁신에 기여한 반전 사례.</small></div>
+  <div class="oneliner" style="margin-top:30px">Norman이 비판한 것은 "관찰 → 언어화된 요구 → 반복 개선"이라는 <b>관행적 프로세스</b>다. 의미를 탐색하는 리서치는 그 바깥에 있다.</div></div><div class="pic"><div class="shot" style="height:560px;"><img src="images/s1_norman_verganti_fig5_research_quadrangle.jpg" alt="Norman &amp; Verganti 2014, Figure 5 : 디자인 리서치의 4분면"></div><div class="cap">Norman & Verganti 2014, Figure 5 : 디자인 리서치의 4분면</div></div></div>
+  </div>
+  <div class="src">Norman &amp; Verganti 2014</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 137 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · 과장 방지</div>
+  <div class="content" style="">
+    <h2 class="big reveal">이 주장을 <em>어디까지</em> 믿을 것인가</h2>
+    
+    <div class="cards reveal" style="margin-top:40px"><div class="card"><div class="no">1</div><h3>반례를 못 찾은 것은<br>불가능의 증명이 아니다</h3><p>radical · incremental은 연속적이고, 어떤 제품이 어떤 프로세스에서 "태어났다"고 인과적으로 추적하기도 어렵다는 후속 비판이 있다.</p></div><div class="card"><div class="no">2</div><h3>Norman이 비판한 HCD는<br>관행적 프로세스다</h3><p>참여 디자인, 코디자인, lead user, speculative design, design driven innovation처럼 더 넓은 방법은 새로운 의미와 가능성을 탐색할 수 있다.</p></div><div class="card hot"><div class="no">3</div><h3>스파크가 기술이어도<br>채택은 사용자 학습이 만든다</h3><p>11개 사례 모두 출시 후 수십 년의 사용자 중심 개선이 붙었다. 3장의 AI 사례들도 예외 없이 trusted tester · alpha · telemetry · 안전 리뷰로 돌아온다.</p></div></div>
+  </div>
+  <div class="src">Norman &amp; Verganti 2014 · 후속 논의</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+<!-- 138 -->
+<section class="slide ">
+  <div class="toc reveal">급진적 혁신 · 이 장의 한 줄</div>
+  <div class="content" style="">
+    <h2 class="big reveal">지금 우리는 언덕을 <em>점프하는</em> 국면인가, <em>오르는</em> 국면인가</h2>
+    
+    <div class="cmp reveal">
+    <div class="ccol good"><div class="ct">점프 (탐색)</div><h3>새 언덕의 출발점은<br>사용자 필요만이 아니다</h3>
+      <div class="row"><span class="k">출발</span><span>기술 · 의미 · 우연 · "재미있어 보여서"</span></div>
+      <div class="row"><span class="k">잘 맞는 것</span><span>만들기, 역량, 소수에게 보여주기</span></div></div>
+    <div class="ccol bad"><div class="ct">오르기 (최적화)</div><h3>언덕을 오르는 일은<br>여전히 사용자와 함께 한다</h3>
+      <div class="row"><span class="k">출발</span><span>관찰, 언어화된 요구, 반복 개선</span></div>
+      <div class="row"><span class="k">잘 맞는 것</span><span>리서치, 사용자, HCD</span></div></div>
+  </div><div class="keep reveal" style="margin-top:36px;font-size:27px;">어느 쪽이 정답이 아니라, <b>지금 우리가 어느 국면인지</b>를 아는 것이 기획의 첫 판단이다. 아까 손들기 질문으로 돌아가자 : 떠오른 제품은 어느 국면에서 태어났고, 어느 국면에서 자랐는가?</div>
+  </div>
+  <div class="src">1.5장 요약</div>
+  <div class="credit">Soomin Kim · smsoominkim@gmail.com</div>
+</section>
+
+</main>
+</div>
+<div class="pageno" id="pageno"></div>
+<div class="navhint" id="navhint">← → 방향키 · 스페이스 · 스와이프로 넘기기 · 138장</div>
+<div class="edit-hotzone"></div>
+<button class="edit-toggle" id="editToggle" title="편집 모드 (E)">✏️</button>
+
+<script>
+class SlidePresentation{
+  constructor(){
+    this.slides=document.querySelectorAll('.slide');
+    this.i=0;this.stage=document.getElementById('deckStage');
+    this.setupScale();this.setupKeys();this.setupTouch();this.setupWheel();
+    const h=parseInt(location.hash.replace('#',''),10);
+    this.show(isNaN(h)?0:h-1);
+  }
+  setupScale(){
+    const s=()=>{const f=Math.min(innerWidth/1920,innerHeight/1080);
+      const x=(innerWidth-1920*f)/2,y=(innerHeight-1080*f)/2;
+      this.stage.style.transform=`translate(${x}px,${y}px) scale(${f})`;};
+    s();addEventListener('resize',s);
+  }
+  setupKeys(){addEventListener('keydown',e=>{
+    if(e.target.getAttribute&&e.target.getAttribute('contenteditable')==='true')return;
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();this.show(this.i+1)}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();this.show(this.i-1)}
+    if(e.key==='Home')this.show(0);if(e.key==='End')this.show(this.slides.length-1);
+  })}
+  setupTouch(){let x0=null;
+    addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
+    addEventListener('touchend',e=>{if(x0===null)return;
+      const dx=e.changedTouches[0].clientX-x0;
+      if(Math.abs(dx)>60)this.show(this.i+(dx<0?1:-1));x0=null},{passive:true});
+  }
+  setupWheel(){let t=0;addEventListener('wheel',e=>{
+    const now=Date.now();if(now-t<450)return;
+    if(Math.abs(e.deltaY)>25){t=now;this.show(this.i+(e.deltaY>0?1:-1))}
+  },{passive:true})}
+  show(n){
+    this.i=Math.max(0,Math.min(n,this.slides.length-1));
+    this.slides.forEach((s,k)=>{s.classList.toggle('active',k===this.i);s.classList.toggle('visible',k===this.i)});
+    document.getElementById('pageno').textContent=(this.i+1)+' / '+this.slides.length;
+    history.replaceState(null,'','#'+(this.i+1));
+  }
+}
+const deck=new SlidePresentation();
+const editor={isActive:false,
+  toggleEditMode(){this.isActive=!this.isActive;
+    document.getElementById('editToggle').classList.toggle('active',this.isActive);
+    document.querySelectorAll('.slide h1,.slide h2,.slide h3,.slide p,.slide .tx,.slide .sub,.slide .a,.slide .row,.slide .kicker,.slide .keep,.slide .lede,.slide .bli,.slide .bigline,.slide .toc,.slide .why,.slide .w,.slide .bl,.slide .cap,.slide .v,.slide .pv,.slide .pk,.slide .qv,.slide .para,.slide .oneliner,.slide td,.slide small,.slide .tr,.slide .gd,.slide .gt,.slide .qtext,.slide .ht')
+      .forEach(el=>el.setAttribute('contenteditable',this.isActive?'true':'false'));
+    if(!this.isActive)this.save();},
+  save(){try{localStorage.setItem('deck-l06final-edits',document.querySelector('.deck-stage').innerHTML)}catch(e){}},
+  load(){try{const s=localStorage.getItem('deck-l06final-edits');if(s&&confirm('저장된 수정본이 있습니다. 불러올까요?')){document.querySelector('.deck-stage').innerHTML=s;deck.slides=document.querySelectorAll('.slide');deck.show(0)}}catch(e){}}
+};
+const hotzone=document.querySelector('.edit-hotzone'),tog=document.getElementById('editToggle');let ht=null;
+hotzone.addEventListener('mouseenter',()=>{clearTimeout(ht);tog.classList.add('show')});
+hotzone.addEventListener('mouseleave',()=>{ht=setTimeout(()=>{if(!editor.isActive)tog.classList.remove('show')},400)});
+tog.addEventListener('mouseenter',()=>clearTimeout(ht));
+tog.addEventListener('mouseleave',()=>{ht=setTimeout(()=>{if(!editor.isActive)tog.classList.remove('show')},400)});
+tog.addEventListener('click',()=>editor.toggleEditMode());
+hotzone.addEventListener('click',()=>editor.toggleEditMode());
+addEventListener('keydown',e=>{if((e.key==='e'||e.key==='E')&&!(e.target.getAttribute&&e.target.getAttribute('contenteditable')==='true'))editor.toggleEditMode()});
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();editor.save()}});
+editor.load();
+(()=>{const h=document.getElementById('navhint');if(!h)return;setTimeout(()=>h.classList.add('show'),600);const hide=()=>{h.classList.remove('show');setTimeout(()=>h.remove(),600)};setTimeout(hide,6500);['keydown','touchstart','wheel'].forEach(ev=>addEventListener(ev,hide,{once:true,passive:true}))})();
+</script>
+
+</body>
+</html>
